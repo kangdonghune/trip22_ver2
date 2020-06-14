@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">LastPlease</string>
+    <string name="rememberlogin" translatable="false">Remember your login information</string>
+
+    <string name="give_correct_information">Please your give correct information. Because, your email needs to be verification.</string>
+    <string name="register_success_popup" translatable="false">Registered successfully.\nVerification email has been sent.\nPlease verify email.</string>
+    <string name="already_have_account" translatable="false">Already have an account?</string>
+    <string name="wait" translatable="false">Please wait a moment....</string>
+    <string name="accounting" translatable="false">Creating new account</string>
+
+    <string name="traveler" translatable="false">Traveler</string>
+    <string name="local" translatable="false">Local</string>
+
+    <string name="languagechoice" translatable="false">choose language you can speak </string>
+    <string name="English" translatable="false">English </string>
+    <string name="Korean" translatable="false">Korean </string>
+    <string name="korean" translatable="false">korean</string>
+    <string name="Chinese" translatable="false">Chinese </string>
+    <string name="interestchoice" translatable="false">What are you interested in? </string>
+    <string name="restaurant" translatable="false">Restaurant</string>
+    <string name="culture" translatable="false">Culture</string>
+    <string name="show" translatable="false">Show</string>
+    <string name="art" translatable="false">Art</string>
+    <string name="shopping" translatable="false">Shopping</string>
+    <string name="sights" translatable="false">Sights</string>
+    <string name="walk" translatable="false">Walk</string>
+
+    <string name="location" translatable="false">Location </string>
+    <string name="display_name" translatable="false">Display User Name</string>
+    <string name="username" translatable="false">Display name</string>
+    <string name="default_status" translatable="false">Introduce</string>
+    <string name="default_keyword" translatable="false">Please fill in the fields of interest</string>
+
+    <string name="recent" translatable="false">Recent Order</string>
+    <string name="likeOrder" translatable="false">Like Order</string>
+    <string name="title_activity_chat_image_viewer" translatable="false">ImageViewer</string>
+</resources>
