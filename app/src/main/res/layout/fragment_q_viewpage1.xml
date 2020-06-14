@@ -26,6 +26,7 @@
        android:layout_marginTop="52dp"
        android:layout_marginBottom="118dp"
        android:src="@drawable/btn_findbuddy"
+       android:onClick="findbuddy"
        app:layout_constraintBottom_toBottomOf="parent"
        app:layout_constraintEnd_toEndOf="parent"
        app:layout_constraintHorizontal_bias="0.497"
