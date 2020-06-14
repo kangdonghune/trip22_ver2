@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+import com.example.lastplease.Feed.FeedWriteActivity;
 import com.example.lastplease.LoginRegiser.LoginActivity;
 import com.example.lastplease.R;
 import com.example.lastplease.Travler.SettingActivity;
@@ -80,6 +81,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 closeFABMenu();
+            }
+        });
+
+        fab1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MainActivity.this, FeedWriteActivity.class);
+                startActivity(intent);
             }
         });
 
