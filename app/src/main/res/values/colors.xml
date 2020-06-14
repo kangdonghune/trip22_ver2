@@ -20,4 +20,15 @@
     <color name="glow_color_red">#FF4C98</color>
     <color name="pink_1">#FFC4C4</color>
     <color name="black_overlay">#90000000</color>
+
+    <color name="colorMyMessage">#68AFC7</color>
+    <color name="colorOtherMessage">#BFDCEB</color>
+    <color name="colorGray">#C2D7E2</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="background_color">#00CCFF</color>
+    <color name="glow_color">#6AE1FF</color>
+
+
+
+
 </resources>

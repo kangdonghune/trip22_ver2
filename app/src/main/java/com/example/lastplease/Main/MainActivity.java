@@ -3,7 +3,10 @@ package com.example.lastplease.Main;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import android.animation.Animator;
@@ -18,6 +21,8 @@ import android.widget.LinearLayout;
 import com.example.lastplease.LoginRegiser.LoginActivity;
 import com.example.lastplease.R;
 import com.example.lastplease.Travler.SettingActivity;
+import com.example.lastplease.profile.ProfileFragment;
+import com.example.lastplease.utils.FeedWriteActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -33,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
     private FragmentPagerAdapter fragmentPagerAdapter;
+    ProfileFragment pf;
 
     //플롯 버튼
     FloatingActionButton fab, fab1, fab2, fab3, fab4;
@@ -50,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
         ViewPager viewPager = findViewById(R.id.view_pager);
         fragmentPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-
+        pf=new ProfileFragment();
         viewPager.setAdapter(fragmentPagerAdapter);
 
         //플롯 버튼 제어
@@ -83,6 +89,25 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        fab1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fab.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent writeFeed=new Intent(MainActivity.this, FeedWriteActivity.class);
+                        startActivity(writeFeed);
+                    }
+                });
+            }
+        });
+
+        fab2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                replaceFragment(pf);
+            }
+        });
 
         fab4.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -211,5 +236,12 @@ public class MainActivity extends AppCompatActivity {
         loginIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(loginIntent);
         finish();
+    }
+
+    public void replaceFragment(Fragment fragment){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.first, fragment);
+        fragmentTransaction.commit();
     }
 }

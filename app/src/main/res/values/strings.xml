@@ -10,6 +10,7 @@
 
     <string name="traveler" translatable="false">Traveler</string>
     <string name="local" translatable="false">Local</string>
+    <string name="introduce" translatable="false">introduce</string>
 
     <string name="languagechoice" translatable="false">choose language you can speak </string>
     <string name="English" translatable="false">English </string>
@@ -24,6 +25,11 @@
     <string name="shopping" translatable="false">Shopping</string>
     <string name="sights" translatable="false">Sights</string>
     <string name="walk" translatable="false">Walk</string>
+    <string name="add_to_wishlist" translatable="false">Add to Wishlist</string>
+    <string name="add_friend" translatable="false">Add friend</string>
+    <string name="cancel_invite" translatable="false">Cancel invite</string>
+    <string name="remove_wishlist" translatable="false">Remove</string>
+
 
     <string name="location" translatable="false">Location </string>
     <string name="display_name" translatable="false">Display User Name</string>
@@ -37,4 +43,12 @@
 
     <string name="NEXT">NEXT</string>
     <string name="wherevisit">wherevisit</string>
+
+    <string name="feedlist" translatable="false">Feed List</string>
+
+    <string name="declaration" translatable="false">Declaration</string>
+    <string name="end" translatable="false">Matching End</string>
+
+    <string name="message" translatable="false">Message...</string>
+
 </resources>

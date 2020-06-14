@@ -1,0 +1,6 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/listmenu_report"
+        android:title="@string/declaration"/>
+    <item android:id="@+id/listmenu_endmatch"
+        android:title="@string/end"/>
+</menu>

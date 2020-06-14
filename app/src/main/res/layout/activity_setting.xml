@@ -39,15 +39,16 @@
                     android:src="@drawable/ic_edit_circle"
                     android:visibility="visible" />
             </FrameLayout>
-            <TextView
-                android:layout_width="match_parent"
+            <EditText
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/set_user_name"
+                android:inputType="textMultiLine"
+                android:hint="@string/username"
                 android:textAlignment="center"
-                android:id="@+id/userName"
-                android:textSize="26sp"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:text="hi"/>
+                android:textColorHint="@color/colorPrimaryLight"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold" />
 
             <EditText
                 android:layout_width="match_parent"

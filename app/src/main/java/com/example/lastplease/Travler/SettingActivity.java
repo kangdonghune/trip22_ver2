@@ -112,7 +112,7 @@ public class SettingActivity extends AppCompatActivity {
         r3=(RadioButton)findViewById(R.id.language_Chinese);
 
         updateAccountSettings = (Button) findViewById(R.id.update_settings_button);
-        userName = (TextView) findViewById(R.id.userName);
+        userName = (TextView) findViewById(R.id.set_user_name);
         userStatus = (EditText) findViewById(R.id.set_profile_status);
         ivUser = (CircleImageView) findViewById(R.id.ivUser);
         editPhotoIcon = findViewById(R.id.editPhotoIcon);
