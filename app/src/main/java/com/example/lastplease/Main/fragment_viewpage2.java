@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.lastplease.Feed.FeedDetailActivity;
 import com.example.lastplease.Feed.fullScreenImageViewer;
 import com.example.lastplease.R;
 
@@ -183,17 +184,17 @@ public class fragment_viewpage2 extends Fragment {
                                                     }
                                                 }
                                             });
-//                                            holder.itemView.setOnClickListener(new View.OnClickListener() {
-//                                                @Override
-//                                                public void onClick(View v) {
-//                                                    if(task.getResult().getDocuments().get(position).contains("uid")){
-//                                                        final Intent detail = new Intent(getContext(), FeedDetailActivity.class);
-//                                                        detail.putExtra("userId", task.getResult().getDocuments().get(position).get("uid").toString());
-//                                                        detail.putExtra("feedId",task.getResult().getDocuments().get(position).getId());
-//                                                        startActivity(detail);
-//                                                    }
-//                                                }
-//                                            });
+                                            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    if(task.getResult().getDocuments().get(position).contains("uid")){
+                                                        final Intent detail = new Intent(getContext(), FeedDetailActivity.class);
+                                                        detail.putExtra("userId", task.getResult().getDocuments().get(position).get("uid").toString());
+                                                        detail.putExtra("feedId",task.getResult().getDocuments().get(position).getId());
+                                                        startActivity(detail);
+                                                    }
+                                                }
+                                            });
                                             holder.btn_like.setOnLikeListener(new OnLikeListener() {
                                                 @Override
                                                 public void liked(LikeButton likeButton) {
