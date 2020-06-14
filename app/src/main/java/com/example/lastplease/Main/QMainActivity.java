@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import com.example.lastplease.LoginRegiser.LoginActivity;
+import com.example.lastplease.Profile.ProfileActivity;
 import com.example.lastplease.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -65,11 +66,11 @@ public class QMainActivity extends AppCompatActivity {
                 }
             }
         });
-
-        fabBGLayout.setOnClickListener(new View.OnClickListener() {
+        fab2.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                closeFABMenu();
+            public void onClick(View v) {
+                Intent profile=new Intent(QMainActivity.this, ProfileActivity.class);
+                startActivity(profile);
             }
         });
 
@@ -101,6 +102,15 @@ public class QMainActivity extends AppCompatActivity {
                 builder.show();
             }
         });
+
+        fabBGLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                closeFABMenu();
+            }
+        });
+
+
     }
     private void showFABMenu() {
         isFABOpen = true;

@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 
 import com.example.lastplease.Feed.FeedWriteActivity;
 import com.example.lastplease.LoginRegiser.LoginActivity;
+import com.example.lastplease.Profile.ProfileActivity;
 import com.example.lastplease.R;
 import com.example.lastplease.Travler.SettingActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -87,8 +88,15 @@ public class MainActivity extends AppCompatActivity {
         fab1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this, FeedWriteActivity.class);
-                startActivity(intent);
+                Intent feedWrite=new Intent(MainActivity.this, FeedWriteActivity.class);
+                startActivity(feedWrite);
+            }
+        });
+        fab2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent profile=new Intent(MainActivity.this, ProfileActivity.class);
+                startActivity(profile);
             }
         });
 

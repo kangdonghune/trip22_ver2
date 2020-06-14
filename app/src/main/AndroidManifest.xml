@@ -14,9 +14,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Feed.FeedWriteActivity"></activity>
-        <activity android:name=".Feed.OtherProfileActivity" />
-        <activity android:name=".Feed.FeedDetailActivity" />
+        <activity
+            android:name=".Feed.FeedWriteActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".Feed.OtherProfileActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".Profile.ProfileActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".Feed.FeedDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".Travler.SettingActivity"
             android:theme="@style/AppTheme.NoActionBar" />

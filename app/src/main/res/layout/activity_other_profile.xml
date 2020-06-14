@@ -50,6 +50,7 @@
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
                         android:layout_marginLeft="12dp"
+                        android:layout_marginTop="5dp"
                         android:orientation="vertical"
                         >
                         <TextView
@@ -59,63 +60,59 @@
                             android:textColor="@color/white"
                             android:textSize="25sp"
                             android:gravity="left"
-                            android:id="@+id/profile_name"
-                            android:layout_marginTop="10dp"/>
+                            android:id="@+id/profile_name" />
                         <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="bottom">
-
-                            <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginTop="4dp"
+                                android:src="@drawable/ic_location_on_black_24dp"/>
+                            <TextView
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content">
-                                <ImageView
-                                    android:layout_width="25dp"
-                                    android:layout_height="25dp"
-                                    android:layout_marginTop="4dp"
-                                    android:src="@drawable/ic_location_on_black_24dp"/>
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="3dp"
-                                    android:textSize="20sp"
-                                    android:text="Seoul"
-                                    android:id="@+id/profile_location"/>
-                            </LinearLayout>
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content">
-                                <ImageView
-                                    android:layout_width="25sp"
-                                    android:layout_height="25sp"
-                                    android:layout_marginTop="4dp"
-                                    android:layout_marginLeft="5dp"
-                                    android:src="@drawable/ic_language_black_24dp"/>
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="3dp"
-                                    android:textSize="20sp"
-                                    android:text="English"
-                                    android:id="@+id/profile_language"/>
-                            </LinearLayout>
-
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:textSize="15sp"
+                                android:text="Seoul"
+                                android:id="@+id/profile_location"/>
                         </LinearLayout>
 
                     </LinearLayout>
 
                 </LinearLayout>
 
+
             </FrameLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
+                android:layout_marginBottom="5dp">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginLeft="5dp"
+                    android:src="@drawable/ic_language_black_24dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:textSize="15sp"
+                    android:text="English"
+                    android:id="@+id/profile_language"/>
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="interested Keyword"
-                android:textSize="16sp"
-                android:textAlignment="center"
-                android:gravity="center_horizontal"
+                android:textSize="13sp"
+                android:textColor="@color/glow_color_red"
+               android:layout_marginLeft="10dp"
                 android:id="@+id/profile_keyword"/>
 
 
@@ -125,11 +122,10 @@
                 android:layout_height="wrap_content"
                 android:text="I am living in Seoul.
     If you come to Seoul, I would like to introduce restaurants and art."
-                android:textAlignment="center"
                 android:textSize="18sp"
                 android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
                 android:padding="4dp"
-                android:gravity="center_horizontal"
                 android:id="@+id/profile_introduce"/>
 
 
