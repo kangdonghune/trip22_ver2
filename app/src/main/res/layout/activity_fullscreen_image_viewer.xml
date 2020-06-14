@@ -25,8 +25,7 @@
             android:layout_gravity="bottom|center_horizontal"
             android:background="@color/black_overlay"
             android:orientation="horizontal"
-            tools:ignore="UselessParent">
-        </LinearLayout>
+            tools:ignore="UselessParent"></LinearLayout>
 
         <com.github.chrisbanes.photoview.PhotoView
             android:id="@+id/fullscreen_image"

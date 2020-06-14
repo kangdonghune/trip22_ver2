@@ -43,6 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
+            android:textColor="@color/white"
             android:text="Evaluation"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -73,6 +74,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
+            android:textColor="@color/white"
             android:text="My Profile"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -103,6 +105,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
+            android:textColor="@color/white"
             android:text="요청 목록"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -134,6 +137,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
+            android:textColor="@color/white"
             android:text="Log out"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
