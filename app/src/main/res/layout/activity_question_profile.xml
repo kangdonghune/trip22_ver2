@@ -68,23 +68,8 @@
                             android:textColor="@color/white"
                             android:textSize="25sp"
                             android:gravity="left"
-                            android:id="@+id/profile_name" />
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-                            <ImageView
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:layout_marginTop="4dp"
-                                android:src="@drawable/ic_location_on_black_24dp"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="3dp"
-                                android:textSize="15sp"
-                                android:text="Seoul"
-                                android:id="@+id/profile_location"/>
-                        </LinearLayout>
+                            android:id="@+id/profile_name"
+                            android:layout_marginBottom="13dp"/>
 
                     </LinearLayout>
 

@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".respon_profile"></activity>
+        <activity android:name=".Setting.SettingQuestionActivity"></activity>
+        <activity android:name=".Profile.respon_profile" />
         <activity
             android:name=".Feed.FeedWriteActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -22,13 +23,13 @@
             android:name=".Feed.OtherProfileActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Profile.ProfileActivity"
+            android:name=".Profile.question_profile"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Feed.FeedDetailActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Travler.SettingActivity"
+            android:name=".Setting.SettingResponActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Main.QMainActivity"

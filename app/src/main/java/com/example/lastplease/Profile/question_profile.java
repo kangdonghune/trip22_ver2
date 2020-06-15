@@ -1,4 +1,4 @@
-package com.example.lastplease;
+package com.example.lastplease.Profile;
 
 import android.Manifest;
 import android.content.Intent;
@@ -23,7 +23,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lastplease.Feed.FeedDetailActivity;
 import com.example.lastplease.R;
-import com.example.lastplease.Travler.SettingActivity;
+import com.example.lastplease.Setting.SettingQuestionActivity;
+import com.example.lastplease.Setting.SettingResponActivity;
 import com.example.lastplease.utils.Feed;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -43,23 +44,20 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import xyz.hasnat.sweettoast.SweetToast;
 
-public class respon_profile extends AppCompatActivity {
+public class question_profile extends AppCompatActivity {
 
     int REQUEST_IMAGE_CODE=1001;
     int REQUEST_EXTERNAL_STORAGE_PERMISSION=1002;
-    String profileback_download_url, feed_uri;
+    String profileback_download_url;
     private StorageReference mStorageRef;
+
+    Button update;
 
     RecyclerView profile_feed;
 
@@ -69,7 +67,6 @@ public class respon_profile extends AppCompatActivity {
     private CircleImageView ivUser;
     private ImageView ivBack;
     String profile_language="";
-    Button update;
 
 
 
@@ -78,11 +75,8 @@ public class respon_profile extends AppCompatActivity {
     //TextView 부분
     TextView name;
     TextView keyword;
-    TextView location;
     TextView language;
     TextView introduce;
-    TextView startday;
-    TextView endday;
 
     Intent intent;
 
@@ -90,41 +84,36 @@ public class respon_profile extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_respon_profile);
+        setContentView(R.layout.activity_question_profile);
 
-        name=findViewById(R.id.rprofile_name);
-        keyword=findViewById(R.id.rprofile_keyword);
-        location=findViewById(R.id.rprofile_location);
-        language=findViewById(R.id.rprofile_language);
-        introduce=findViewById(R.id.rprofile_introduce);
-        update=findViewById(R.id.rupdate);
+        name=findViewById(R.id.profile_name);
+        keyword=findViewById(R.id.profile_keyword);
+        language=findViewById(R.id.profile_language);
+        introduce=findViewById(R.id.profile_introduce);
         db = FirebaseFirestore.getInstance();
+        update=findViewById(R.id.update);
 
         mAuth = FirebaseAuth.getInstance();
         mStorageRef = FirebaseStorage.getInstance().getReference();
 
         currentUserID=mAuth.getCurrentUser().getUid();
 
-        if(ContextCompat.checkSelfPermission(respon_profile.this,
+        if(ContextCompat.checkSelfPermission(question_profile.this,
                 Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED){
-            if(ActivityCompat.shouldShowRequestPermissionRationale(respon_profile.this,
+            if(ActivityCompat.shouldShowRequestPermissionRationale(question_profile.this,
                     Manifest.permission.READ_EXTERNAL_STORAGE)){
 
             }else{
-                ActivityCompat.requestPermissions(respon_profile.this,
+                ActivityCompat.requestPermissions(question_profile.this,
                         new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                         REQUEST_EXTERNAL_STORAGE_PERMISSION);
             }
         }else{
 
         }
-
-
-
-
-        ivUser=findViewById(R.id.rprofile_ivUser);
-        ivBack=findViewById(R.id.rprofile_ivUserBackground);
+        ivUser=findViewById(R.id.profile_ivUser);
+        ivBack=findViewById(R.id.profile_ivUserBackground);
 
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,6 +122,14 @@ public class respon_profile extends AppCompatActivity {
                 startActivityForResult(in, REQUEST_IMAGE_CODE);
             }
         });
+        update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(question_profile.this, SettingQuestionActivity.class);
+                startActivity(intent);
+            }
+        });
+
         db.collection("Users").document(currentUserID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -191,18 +188,10 @@ public class respon_profile extends AppCompatActivity {
             }
         });
 
-        update.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                intent = new Intent(respon_profile.this, SettingActivity.class);
-                startActivity(intent);
-            }
-        });
-
         RetrieveUserInfo();
 
-        profile_feed=(RecyclerView)findViewById(R.id.rfeed_list);
-        GridLayoutManager proFeedGridManger=new GridLayoutManager(respon_profile.this,3);
+        profile_feed=(RecyclerView)findViewById(R.id.feed_list);
+        GridLayoutManager proFeedGridManger=new GridLayoutManager(question_profile.this,3);
         profile_feed.setLayoutManager(proFeedGridManger);
 
     }
@@ -220,29 +209,20 @@ public class respon_profile extends AppCompatActivity {
                             String profile_name = profile_map.get("name").toString();
                             name.setText(profile_name);
                         }
-                        if(profile_map.containsKey("location")){
-                            HashMap<String,Boolean> locationpart=(HashMap)profile_map.get("location");
-                            String profile_location="";
-                            for(String userlocation : locationpart.keySet())
-                            {
-                                profile_location=profile_location+userlocation;
-                            }
-                            location.setText(profile_location);
-                        }
                         if(profile_map.containsKey("status")){
                             String profile_status = profile_map.get("status").toString();
                             introduce.setText(profile_status);
                         }
                         if(profile_map.containsKey("newL")){
-                            String L=(String)profile_map.get("newL");
-                            if(L.equals("English"))
-                                profile_language= "Main : "+L+ "  Sub : ";
-                            if(L.equals("Korean"))
-                                profile_language= "Main : "+L+ "  Sub : ";
-                            if(L.equals("Chinese"))
-                                profile_language= "Main : "+L + "  Sub : ";
+                        String L=(String)profile_map.get("newL");
+                        if(L.equals("English"))
+                            profile_language= "Main : "+L+ "  Sub : ";
+                        if(L.equals("Korean"))
+                            profile_language= "Main : "+L+ "  Sub : ";
+                        if(L.equals("Chinese"))
+                            profile_language= "Main : "+L + "  Sub : ";
 
-                        }
+                    }
                         if(profile_map.containsKey("language")){
                             HashMap<String,Boolean> langlist=(HashMap)profile_map.get("language");
                             String aa="";
@@ -272,7 +252,7 @@ public class respon_profile extends AppCompatActivity {
     }
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==REQUEST_IMAGE_CODE && resultCode == respon_profile.this.RESULT_OK){
+        if(requestCode==REQUEST_IMAGE_CODE && resultCode == question_profile.this.RESULT_OK){
             final Uri image=data.getData();
             Picasso.get().load(image)
                     .placeholder(R.drawable.profile_ivuserbackgroundimage)
@@ -286,7 +266,7 @@ public class respon_profile extends AppCompatActivity {
                 @Override
                 public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
                     if(!task.isSuccessful()){
-                        SweetToast.error(respon_profile.this, "Profile Photo Error: " + task.getException().getMessage());
+                        SweetToast.error(question_profile.this, "Profile Photo Error: " + task.getException().getMessage());
                     }
                     profileback_download_url=storeRef.getDownloadUrl().toString();
                     return storeRef.getDownloadUrl();
@@ -317,56 +297,55 @@ public class respon_profile extends AppCompatActivity {
     public void onStart(){
         super.onStart();
         FirestoreRecyclerOptions<Feed> options =new FirestoreRecyclerOptions.Builder<Feed>()
-                .setQuery(db.collection("Feeds").whereEqualTo("uid",currentUserID),Feed.class).build();
+                .setQuery(db.collection("Users").document(currentUserID).collection("LikeFeed"),Feed.class).build();
 
-        FirestoreRecyclerAdapter<Feed, FeedViewHolder> feedAdapter=
+        final FirestoreRecyclerAdapter<Feed, FeedViewHolder> feedAdapter=
                 new FirestoreRecyclerAdapter<Feed, FeedViewHolder>(options) {
                     @Override
-                    protected void onBindViewHolder(@NonNull final FeedViewHolder holder, final int position, @NonNull Feed model) {
-                        db.collection("Feeds").whereEqualTo("uid",currentUserID).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    protected void onBindViewHolder(@NonNull final FeedViewHolder holder, final int position, @NonNull final Feed model) {
+                        db.collection("Users").document(currentUserID).collection("LikeFeed").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
-                            public void onComplete(@NonNull final Task<QuerySnapshot> task) {
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                 if(task.isSuccessful()){
-                                    if(task.getResult().getDocuments().get(position).contains("feed_uri")){
-                                        feed_uri=task.getResult().getDocuments().get(position).get("feed_uri").toString();
-                                        Picasso.get().load(feed_uri)
-                                                .placeholder(R.drawable.load)
-                                                .error(R.drawable.load)
-                                                .resize(0,200)
-                                                .into(holder.feed);
-
-//                                        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-//                                            @Override
-//                                            public boolean onLongClick(View v) {
-//                                                Intent intent = new Intent(ProfileActivity.this, DeleteFeedActivity.class);
-//                                                intent.putExtra("id", task.getResult().getDocuments().get(position).getId());
-//                                                intent.putExtra("feedUri",feed_uri);
-//                                                startActivity(intent);
-//                                                return true;
-//                                            }
-//                                        });
-                                    }
+                                    String feed_uri=task.getResult().getDocuments().get(position).get("feed_uri").toString();
+                                    Picasso.get().load(feed_uri)
+                                            .placeholder(R.drawable.load)
+                                            .error(R.drawable.load)
+                                            .resize(0,200)
+                                            .into(holder.feed);
                                 }
+
                             }
                         });
                         holder.itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                String userId = getSnapshots().getSnapshot(position).get("uid").toString();
-                                String feedId= getSnapshots().getSnapshot(position).getId();
-                                Intent profileIntent = new Intent(respon_profile.this, FeedDetailActivity.class);
-                                profileIntent.putExtra("userId", userId);
-                                profileIntent.putExtra("feedId", feedId);
-                                startActivity(profileIntent);
+                                final String feedId = getSnapshots().getSnapshot(position).get("doc_id").toString();
+
+                                db.collection("Feeds").document(feedId)
+                                        .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        if (task.isSuccessful()){
+                                            String userId=task.getResult().get("uid").toString();
+                                            Intent profileIntent = new Intent(question_profile.this, FeedDetailActivity.class);
+                                            profileIntent.putExtra("userId", userId);
+                                            profileIntent.putExtra("feedId", feedId);
+                                            startActivity(profileIntent);
+
+                                        }
+                                    }
+                                });
                             }
                         });
+
 
                     }
 
                     @NonNull
                     @Override
                     public FeedViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.question_profile_feed, parent, false);
+                        View view=LayoutInflater.from(parent.getContext()).inflate(R.layout.question_profile_feed, parent, false);
                         return new FeedViewHolder(view);
                     }
                 };

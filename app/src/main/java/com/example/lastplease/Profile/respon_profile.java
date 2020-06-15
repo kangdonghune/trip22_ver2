@@ -9,6 +9,7 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lastplease.Feed.FeedDetailActivity;
 import com.example.lastplease.R;
+import com.example.lastplease.Setting.SettingResponActivity;
 import com.example.lastplease.utils.Feed;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -41,18 +43,13 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import xyz.hasnat.sweettoast.SweetToast;
 
-public class ProfileActivity extends AppCompatActivity {
+public class respon_profile extends AppCompatActivity {
 
     int REQUEST_IMAGE_CODE=1001;
     int REQUEST_EXTERNAL_STORAGE_PERMISSION=1002;
@@ -67,6 +64,7 @@ public class ProfileActivity extends AppCompatActivity {
     private CircleImageView ivUser;
     private ImageView ivBack;
     String profile_language="";
+    Button update;
 
 
 
@@ -81,16 +79,20 @@ public class ProfileActivity extends AppCompatActivity {
     TextView startday;
     TextView endday;
 
+    Intent intent;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_other_profile);
+        setContentView(R.layout.activity_respon_profile);
 
         name=findViewById(R.id.profile_name);
         keyword=findViewById(R.id.profile_keyword);
         location=findViewById(R.id.profile_location);
         language=findViewById(R.id.profile_language);
         introduce=findViewById(R.id.profile_introduce);
+        update=findViewById(R.id.update);
         db = FirebaseFirestore.getInstance();
 
         mAuth = FirebaseAuth.getInstance();
@@ -98,20 +100,24 @@ public class ProfileActivity extends AppCompatActivity {
 
         currentUserID=mAuth.getCurrentUser().getUid();
 
-        if(ContextCompat.checkSelfPermission(ProfileActivity.this,
+        if(ContextCompat.checkSelfPermission(respon_profile.this,
                 Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED){
-            if(ActivityCompat.shouldShowRequestPermissionRationale(ProfileActivity.this,
+            if(ActivityCompat.shouldShowRequestPermissionRationale(respon_profile.this,
                     Manifest.permission.READ_EXTERNAL_STORAGE)){
 
             }else{
-                ActivityCompat.requestPermissions(ProfileActivity.this,
+                ActivityCompat.requestPermissions(respon_profile.this,
                         new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                         REQUEST_EXTERNAL_STORAGE_PERMISSION);
             }
         }else{
 
         }
+
+
+
+
         ivUser=findViewById(R.id.profile_ivUser);
         ivBack=findViewById(R.id.profile_ivUserBackground);
 
@@ -180,10 +186,18 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+        update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(respon_profile.this, SettingResponActivity.class);
+                startActivity(intent);
+            }
+        });
+
         RetrieveUserInfo();
 
         profile_feed=(RecyclerView)findViewById(R.id.feed_list);
-        GridLayoutManager proFeedGridManger=new GridLayoutManager(ProfileActivity.this,3);
+        GridLayoutManager proFeedGridManger=new GridLayoutManager(respon_profile.this,3);
         profile_feed.setLayoutManager(proFeedGridManger);
 
     }
@@ -215,15 +229,15 @@ public class ProfileActivity extends AppCompatActivity {
                             introduce.setText(profile_status);
                         }
                         if(profile_map.containsKey("newL")){
-                        String L=(String)profile_map.get("newL");
-                        if(L.equals("English"))
-                            profile_language= "Main : "+L+ "  Sub : ";
-                        if(L.equals("Korean"))
-                            profile_language= "Main : "+L+ "  Sub : ";
-                        if(L.equals("Chinese"))
-                            profile_language= "Main : "+L + "  Sub : ";
+                            String L=(String)profile_map.get("newL");
+                            if(L.equals("English"))
+                                profile_language= "Main : "+L+ "  Sub : ";
+                            if(L.equals("Korean"))
+                                profile_language= "Main : "+L+ "  Sub : ";
+                            if(L.equals("Chinese"))
+                                profile_language= "Main : "+L + "  Sub : ";
 
-                    }
+                        }
                         if(profile_map.containsKey("language")){
                             HashMap<String,Boolean> langlist=(HashMap)profile_map.get("language");
                             String aa="";
@@ -253,7 +267,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==REQUEST_IMAGE_CODE && resultCode == ProfileActivity.this.RESULT_OK){
+        if(requestCode==REQUEST_IMAGE_CODE && resultCode == respon_profile.this.RESULT_OK){
             final Uri image=data.getData();
             Picasso.get().load(image)
                     .placeholder(R.drawable.profile_ivuserbackgroundimage)
@@ -267,7 +281,7 @@ public class ProfileActivity extends AppCompatActivity {
                 @Override
                 public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
                     if(!task.isSuccessful()){
-                        SweetToast.error(ProfileActivity.this, "Profile Photo Error: " + task.getException().getMessage());
+                        SweetToast.error(respon_profile.this, "Profile Photo Error: " + task.getException().getMessage());
                     }
                     profileback_download_url=storeRef.getDownloadUrl().toString();
                     return storeRef.getDownloadUrl();
@@ -335,7 +349,7 @@ public class ProfileActivity extends AppCompatActivity {
                             public void onClick(View v) {
                                 String userId = getSnapshots().getSnapshot(position).get("uid").toString();
                                 String feedId= getSnapshots().getSnapshot(position).getId();
-                                Intent profileIntent = new Intent(ProfileActivity.this, FeedDetailActivity.class);
+                                Intent profileIntent = new Intent(respon_profile.this, FeedDetailActivity.class);
                                 profileIntent.putExtra("userId", userId);
                                 profileIntent.putExtra("feedId", feedId);
                                 startActivity(profileIntent);

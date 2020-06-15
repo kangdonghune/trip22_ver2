@@ -15,7 +15,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import com.example.lastplease.LoginRegiser.LoginActivity;
-import com.example.lastplease.Profile.ProfileActivity;
+import com.example.lastplease.Profile.question_profile;
 import com.example.lastplease.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -69,7 +69,7 @@ public class QMainActivity extends AppCompatActivity {
         fab2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent profile=new Intent(QMainActivity.this, ProfileActivity.class);
+                Intent profile=new Intent(QMainActivity.this, question_profile.class);
                 startActivity(profile);
             }
         });

@@ -1,4 +1,4 @@
-package com.example.lastplease.Travler;
+package com.example.lastplease.Setting;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,7 +31,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
@@ -53,7 +52,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.OkHttpClient;
 import xyz.hasnat.sweettoast.SweetToast;
 
-public class SettingActivity extends AppCompatActivity {
+public class SettingResponActivity extends AppCompatActivity {
 
     private TextView userName;
     private EditText userStatus;
@@ -84,20 +83,20 @@ public class SettingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setting);
+        setContentView(R.layout.activity_setting_respon);
 
         mAuth = FirebaseAuth.getInstance();
         currentUserID = mAuth.getCurrentUser().getUid();
         db = FirebaseFirestore.getInstance();
 
-        if(ContextCompat.checkSelfPermission(SettingActivity.this,
+        if(ContextCompat.checkSelfPermission(SettingResponActivity.this,
                 Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED){
-            if(ActivityCompat.shouldShowRequestPermissionRationale(SettingActivity.this,
+            if(ActivityCompat.shouldShowRequestPermissionRationale(SettingResponActivity.this,
                     Manifest.permission.READ_EXTERNAL_STORAGE)){
 
             }else{
-                ActivityCompat.requestPermissions(SettingActivity.this,
+                ActivityCompat.requestPermissions(SettingResponActivity.this,
                         new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                         REQUEST_EXTERNAL_STORAGE_PERMISSION);
             }
@@ -135,6 +134,7 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 UpdateSettings();
+                finish();
 
             }
         });
@@ -282,7 +282,7 @@ public class SettingActivity extends AppCompatActivity {
                     }
                 }
                 else {
-                    Toast.makeText(SettingActivity.this, "Please set & update profile...", Toast.LENGTH_LONG).show();
+                    Toast.makeText(SettingResponActivity.this, "Please set & update profile...", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -304,7 +304,7 @@ public class SettingActivity extends AppCompatActivity {
                 @Override
                 public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
                     if(!task.isSuccessful()){
-                        SweetToast.error(SettingActivity.this, "Profile Photo Error: " + task.getException().getMessage());
+                        SweetToast.error(SettingResponActivity.this, "Profile Photo Error: " + task.getException().getMessage());
                     }
                     profile_download_url=riversRef.getDownloadUrl().toString();
                     return riversRef.getDownloadUrl();
@@ -432,14 +432,14 @@ public class SettingActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {
-                        Intent selectIntent = new Intent(SettingActivity.this, MainActivity.class);
+                        Intent selectIntent = new Intent(SettingResponActivity.this, MainActivity.class);
                         selectIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(selectIntent);
                         finish();
                         // Toast.makeText(SettingsActivity.this, "Profile Update Successfully...", Toast.LENGTH_SHORT).show();
                     } else {
                         String message = task.getException().toString();
-                        Toast.makeText(SettingActivity.this, "Error : " + message, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SettingResponActivity.this, "Error : " + message, Toast.LENGTH_SHORT).show();
                     }
                 }
             });

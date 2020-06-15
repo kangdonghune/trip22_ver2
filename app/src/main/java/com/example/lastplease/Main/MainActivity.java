@@ -17,10 +17,9 @@ import android.widget.LinearLayout;
 
 import com.example.lastplease.Feed.FeedWriteActivity;
 import com.example.lastplease.LoginRegiser.LoginActivity;
-import com.example.lastplease.Profile.ProfileActivity;
 import com.example.lastplease.R;
-import com.example.lastplease.Travler.SettingActivity;
-import com.example.lastplease.respon_profile;
+import com.example.lastplease.Setting.SettingResponActivity;
+import com.example.lastplease.Profile.respon_profile;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -160,11 +159,11 @@ public class MainActivity extends AppCompatActivity {
                     if(document.exists()){
                         Map<String, Object> map = document.getData();
                         if(!map.containsKey("location")){
-                            Intent settingsIntent = new Intent(MainActivity.this, SettingActivity.class);
+                            Intent settingsIntent = new Intent(MainActivity.this, SettingResponActivity.class);
                             startActivity(settingsIntent);
                         }
                         if(!map.containsKey("status")){
-                            Intent settingsIntent = new Intent(MainActivity.this, SettingActivity.class);
+                            Intent settingsIntent = new Intent(MainActivity.this, SettingResponActivity.class);
                             startActivity(settingsIntent);
                         }
                     }
