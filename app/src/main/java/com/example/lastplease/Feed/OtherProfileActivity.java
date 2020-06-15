@@ -47,6 +47,8 @@ public class OtherProfileActivity extends AppCompatActivity {
     TextView location;
     TextView language;
     TextView introduce;
+    String profile_language="";
+
 
     Intent intent;
 
@@ -159,14 +161,24 @@ public class OtherProfileActivity extends AppCompatActivity {
                             String profile_status = profile_map.get("status").toString();
                             introduce.setText(profile_status);
                         }
+                        if(profile_map.containsKey("newL")){
+                            String L=(String)profile_map.get("newL");
+                            if(L.equals("English"))
+                                profile_language= "Main : "+L+ "  Sub : ";
+                            if(L.equals("Korean"))
+                                profile_language= "Main : "+L+ "  Sub : ";
+                            if(L.equals("Chinese"))
+                                profile_language= "Main : "+L + "  Sub : ";
+
+                        }
                         if(profile_map.containsKey("language")){
                             HashMap<String,Boolean> langlist=(HashMap)profile_map.get("language");
-                            String profile_language="";
+                            String aa="";
                             for(String userlang:langlist.keySet()) {
 
-                                profile_language=profile_language+userlang+",  ";
+                                aa=aa+userlang+",  ";
                             }
-                            language.setText(profile_language);
+                            language.setText(profile_language+aa);
                         }
 
                         if(profile_map.containsKey("user_keyword")){
