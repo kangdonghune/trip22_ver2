@@ -2,7 +2,9 @@ package com.example.lastplease.Main;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import android.animation.Animator;
@@ -12,11 +14,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.example.lastplease.LoginRegiser.LoginActivity;
 import com.example.lastplease.Profile.ProfileActivity;
 import com.example.lastplease.R;
+import com.example.lastplease.findbuddy;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -31,10 +35,13 @@ public class QMainActivity extends AppCompatActivity {
     View fabBGLayout;
     boolean isFABOpen = false;
 
+    ImageView findbuddyimg;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_q_main);
+
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
@@ -43,6 +50,7 @@ public class QMainActivity extends AppCompatActivity {
         fragmentPagerAdapter = new q_ViewPagerAdapter(getSupportFragmentManager());
 
         viewPager.setAdapter(fragmentPagerAdapter);
+
 
         //플롯 버튼 제어
         fabLayout1 = (LinearLayout) findViewById(R.id.fabLayout1);
@@ -151,6 +159,14 @@ public class QMainActivity extends AppCompatActivity {
             @Override
             public void onAnimationRepeat(Animator animator) { }
         });
+    }
+
+    public void findbuddy(View v){
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        findbuddy findbuddy = new findbuddy();
+        transaction.replace(R.id.question_content_main, findbuddy);
+        transaction.commit();
+
     }
 
     @Override
