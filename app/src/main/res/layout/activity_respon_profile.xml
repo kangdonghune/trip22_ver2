@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="235dp">
+
+                <ImageView
+                    android:id="@+id/rprofile_ivUserBackground"
+                    android:layout_width="match_parent"
+                    android:layout_height="200sp"
+                    android:src="@drawable/profile_ivuserbackgroundimage"
+                    android:scaleType="fitXY">
+
+                </ImageView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="150sp"
+                    android:layout_marginLeft="20sp">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/rprofile_ivUser"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/default_profile_image"
+                        />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginTop="5dp"
+                        android:orientation="vertical"
+                        >
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Name"
+                            android:textColor="@color/white"
+                            android:textSize="25sp"
+                            android:gravity="left"
+                            android:id="@+id/rprofile_name" />
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginTop="4dp"
+                                android:src="@drawable/ic_location_on_black_24dp"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:textSize="15sp"
+                                android:text="Seoul"
+                                android:id="@+id/rprofile_location"/>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+            </FrameLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
+                android:layout_marginBottom="5dp">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginLeft="5dp"
+                    android:src="@drawable/ic_language_black_24dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:textSize="15sp"
+                    android:text="English"
+                    android:id="@+id/rprofile_language"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="interested Keyword"
+                android:textSize="13sp"
+                android:textColor="@color/glow_color_red"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/rprofile_keyword"/>
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="I am living in Seoul.
+    If you come to Seoul, I would like to introduce restaurants and art."
+                android:textSize="18sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:padding="4dp"
+                android:id="@+id/rprofile_introduce"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="update"
+                android:id="@+id/rupdate"></Button>
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="feed List"
+                android:textStyle="bold"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="9dp"
+                android:textColor="@color/colorBlack"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rfeed_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="18dp"
+                android:layout_marginBottom="10dp"></androidx.recyclerview.widget.RecyclerView>
+
+        </LinearLayout>
+    </RelativeLayout>
+</ScrollView>

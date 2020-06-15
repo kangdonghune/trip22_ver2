@@ -20,6 +20,7 @@ import com.example.lastplease.LoginRegiser.LoginActivity;
 import com.example.lastplease.Profile.ProfileActivity;
 import com.example.lastplease.R;
 import com.example.lastplease.Travler.SettingActivity;
+import com.example.lastplease.respon_profile;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -95,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         fab2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent profile=new Intent(MainActivity.this, ProfileActivity.class);
+                Intent profile=new Intent(MainActivity.this, respon_profile.class);
                 startActivity(profile);
             }
         });
