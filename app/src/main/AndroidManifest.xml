@@ -46,7 +46,8 @@
             android:theme="@style/FullscreenTheme" />
         <activity
             android:name=".SecondActivity"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme">
+        </activity>
         <activity
             android:name=".utils.SplashActivity"
             android:noHistory="true"
