@@ -22,13 +22,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="235dp">
                 <Button
-                    android:layout_width="wrap_content"
+                    android:layout_width="60dp"
                     android:layout_height="wrap_content"
-                    android:text="update"
+                    android:text="Set"
                     android:textColor="@color/white"
                     android:layout_gravity="right"
                     android:backgroundTint="@color/pink_1"
                     android:background="@color/pink_1"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="5dp"
                     android:id="@+id/update"></Button>
                 <ImageView
                     android:id="@+id/profile_ivUserBackground"
