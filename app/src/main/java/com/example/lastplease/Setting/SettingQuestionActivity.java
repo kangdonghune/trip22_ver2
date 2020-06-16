@@ -61,6 +61,12 @@ public class SettingQuestionActivity extends AppCompatActivity {
     private RadioGroup rg;
     private RadioButton r1,r2,r3;
 
+    private Spinner sp1;
+    String NLocation = "";
+    String newL="";
+
+
+
     private String currentUserID, name;
     private FirebaseAuth mAuth;
     // cloudfirestore로 변환중
@@ -111,6 +117,8 @@ public class SettingQuestionActivity extends AppCompatActivity {
         english=(CheckBox)findViewById(R.id.english);
         korean=(CheckBox)findViewById(R.id.korean);
         chinese=(CheckBox)findViewById(R.id.chinese);
+
+        sp1=(Spinner)findViewById(R.id.spinner_city);
 
         restaurant=(CheckBox)findViewById(R.id.restaurant);
         culture =(CheckBox)findViewById(R.id.culture);
@@ -180,6 +188,20 @@ public class SettingQuestionActivity extends AppCompatActivity {
                                 r2.setChecked(true);
                             if(map.get("newL").toString().equals("Chinese"))
                                 r3.setChecked(true);
+                        }
+
+                        if(map.containsKey("location")){
+                            HashMap<String,Boolean> locations=(HashMap)map.get("location");
+                            String[] cityarray = getResources().getStringArray(R.array.city);
+                            if(locations.containsValue(true)){
+                                for(String locationpart : locations.keySet()){
+                                    for(int i=0; i<cityarray.length; i++){
+                                        if(locationpart.equals(cityarray[i])){
+                                            sp1.setSelection(i);
+                                        }
+                                    }
+                                }
+                            }
                         }
                         if(map.containsKey("status")){
                             String retrieveUserStatus = map.get("status").toString();
@@ -318,7 +340,6 @@ public class SettingQuestionActivity extends AppCompatActivity {
         String setStatus = userStatus.getText().toString();
 
         HashMap<String, Boolean> Language=new HashMap<>();
-        String newL="";
 
         final HashMap<String,Boolean> user_keyword= new HashMap<>();
 
@@ -332,6 +353,9 @@ public class SettingQuestionActivity extends AppCompatActivity {
 
             }
         });
+
+        NLocation=sp1.getSelectedItem().toString();
+
         if(r1.isChecked())
             newL="English";
         if(r2.isChecked())
@@ -396,6 +420,7 @@ public class SettingQuestionActivity extends AppCompatActivity {
             profileMap.put("uid", currentUserID);
             profileMap.put("status", setStatus);
             profileMap.put("newL",newL);
+            profileMap.put("NLocation",NLocation);
             profileMap.put("newI",new_interests);
             profileMap.put("language",Language);
             profileMap.put("user_keyword",user_keyword);
@@ -406,6 +431,8 @@ public class SettingQuestionActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {
                         Intent selectIntent = new Intent(SettingQuestionActivity.this, MainActivity.class);
+                        selectIntent.putExtra("NLocation",NLocation);
+                        selectIntent.putExtra("NewL",newL);
                         selectIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(selectIntent);
                         finish();

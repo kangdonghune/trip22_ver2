@@ -35,6 +35,9 @@ public class QMainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_q_main);
+        Intent intent=getIntent();
+        String Newl=intent.getStringExtra("NLocation");
+        String NewLang = intent.getStringExtra("NewL");
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();

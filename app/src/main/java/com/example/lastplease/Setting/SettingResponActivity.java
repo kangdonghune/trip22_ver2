@@ -80,6 +80,9 @@ public class SettingResponActivity extends AppCompatActivity {
     private StorageReference mStorageRef;
     int REQUEST_EXTERNAL_STORAGE_PERMISSION=1002;
 
+    String NLocation = "";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -357,6 +360,10 @@ public class SettingResponActivity extends AppCompatActivity {
 
             }
         });
+
+        NLocation=location.getSelectedItem().toString();
+
+
         if(r1.isChecked())
             newL="English";
         if(r2.isChecked())
@@ -423,6 +430,8 @@ public class SettingResponActivity extends AppCompatActivity {
             profileMap.put("status", setStatus);
             profileMap.put("location",locations);
             profileMap.put("newL",newL);
+            profileMap.put("NLocation",NLocation);
+
             profileMap.put("newI",new_interests);
             profileMap.put("language",Language);
             profileMap.put("user_keyword",user_keyword);
