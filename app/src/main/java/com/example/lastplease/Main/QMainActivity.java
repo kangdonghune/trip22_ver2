@@ -147,7 +147,6 @@ public class QMainActivity extends AppCompatActivity {
         fabLayout2.animate().translationY(0);
         fabLayout3.animate().translationY(0);
         fabLayout4.animate().translationY(0);
-        fabLayout4.animate().translationY(0);
         fabLayout5.animate().translationY(0).setListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animator) { }
