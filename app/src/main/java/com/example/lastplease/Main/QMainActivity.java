@@ -1,5 +1,6 @@
 package com.example.lastplease.Main;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -17,9 +18,17 @@ import android.widget.LinearLayout;
 import com.example.lastplease.LoginRegiser.LoginActivity;
 import com.example.lastplease.Profile.question_profile;
 import com.example.lastplease.R;
+import com.example.lastplease.Setting.SettingQuestionActivity;
+import com.example.lastplease.Setting.SettingResponActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.Map;
 
 public class QMainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -112,6 +121,46 @@ public class QMainActivity extends AppCompatActivity {
 
 
     }
+    protected void onStart(){
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        if(currentUser == null){
+            Intent loginIntent = new Intent(QMainActivity.this, LoginActivity.class);
+            loginIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(loginIntent);
+            finish();
+        }
+        else{
+            VerifyUserExistance();
+
+        }
+    }
+    private void VerifyUserExistance() {
+        String currentUserID = mAuth.getCurrentUser().getUid();
+
+        db.collection("Users").document(currentUserID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()){
+                    DocumentSnapshot document=task.getResult();
+                    if(document.exists()){
+                        Map<String, Object> map = document.getData();
+                        if(!map.containsKey("location")){
+                            Intent settingsIntent = new Intent(QMainActivity.this, SettingQuestionActivity.class);
+                            startActivity(settingsIntent);
+                        }
+                        if(!map.containsKey("status")){
+                            Intent settingsIntent = new Intent(QMainActivity.this, SettingQuestionActivity.class);
+                            startActivity(settingsIntent);
+                        }
+                    }
+                }
+            }
+        });
+
+    }
+
     private void showFABMenu() {
         isFABOpen = true;
         fabLayout1.setVisibility(View.VISIBLE);
