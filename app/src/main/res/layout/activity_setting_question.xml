@@ -67,11 +67,70 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:layout_marginTop="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/location"
+                    android:id="@+id/location_text"
 
+                    android:textStyle="bold"
+                    android:textSize="20sp"></TextView>
+                <Spinner
+                    android:id="@+id/spinner_city"
+                    android:layout_width="115dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="20dp"
+                    android:entries="@array/city">
+                </Spinner>
             </LinearLayout>
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/language"
+            android:textColorHint="@color/colorPrimaryLight"
+            android:text="@string/languagechoice"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:textSize="19sp"
+            android:layout_marginBottom="8dp"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/language_radio">
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/English"
+                    android:textSize="14sp"
+                    android:id="@+id/language_english">
 
+                </RadioButton>
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Korean"
+                    android:textSize="14sp"
+                    android:id="@+id/language_korean">
 
-                </LinearLayout>
+                </RadioButton>
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Chinese"
+                    android:textSize="14sp"
+                    android:id="@+id/language_Chinese">
+
+                </RadioButton>
+            </RadioGroup>
+        </LinearLayout>
 
 
 

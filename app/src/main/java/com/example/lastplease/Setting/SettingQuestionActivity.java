@@ -60,12 +60,10 @@ public class SettingQuestionActivity extends AppCompatActivity {
     private CheckBox english, korean, chinese, restaurant, culture, show, art, sights, shopping, walk;
     private Button updateAccountSettings;
     String profile_download_url;
-   // private RadioGroup rg;
-   // private RadioButton r1,r2,r3;
+    private RadioButton r1,r2,r3;
+    private RadioGroup rg;
+    private Spinner sp1;
 
-    //private Spinner sp1;
-   // String NLocation = "";
-    //String newL="";
 
 
 
@@ -79,6 +77,9 @@ public class SettingQuestionActivity extends AppCompatActivity {
     private ImageView editPhotoIcon;
     private StorageReference mStorageRef;
     int REQUEST_EXTERNAL_STORAGE_PERMISSION=1002;
+
+    String NLocation = "";
+    String newL="";
 
 
     @Override
@@ -106,10 +107,10 @@ public class SettingQuestionActivity extends AppCompatActivity {
         }
         mStorageRef = FirebaseStorage.getInstance().getReference();
 
-        /*rg=(RadioGroup)findViewById(R.id.language_radio);
+        rg=(RadioGroup)findViewById(R.id.language_radio);
         r1=(RadioButton)findViewById(R.id.language_english);
         r2=(RadioButton)findViewById(R.id.language_korean);
-        r3=(RadioButton)findViewById(R.id.language_Chinese);*/
+        r3=(RadioButton)findViewById(R.id.language_Chinese);
 
         updateAccountSettings = (Button) findViewById(R.id.update_settings_button);
         userName = (TextView) findViewById(R.id.userName);
@@ -117,11 +118,9 @@ public class SettingQuestionActivity extends AppCompatActivity {
         ivUser = (CircleImageView) findViewById(R.id.ivUser);
         editPhotoIcon = findViewById(R.id.editPhotoIcon);
 
-        /*english=(CheckBox)findViewById(R.id.english);
-        korean=(CheckBox)findViewById(R.id.korean);
-        chinese=(CheckBox)findViewById(R.id.chinese);*/
 
-        //sp1=(Spinner)findViewById(R.id.spinner_city);
+
+        sp1=(Spinner)findViewById(R.id.spinner_city);
 
         restaurant=(CheckBox)findViewById(R.id.restaurant);
         culture =(CheckBox)findViewById(R.id.culture);
@@ -183,7 +182,7 @@ public class SettingQuestionActivity extends AppCompatActivity {
                                         }
                                     });
                         }
-                        /*if(map.containsKey("newQL"))
+                        if(map.containsKey("newQL"))
                         {
                             if(map.get("newQL").toString().equals("English"))
                                 r1.setChecked(true);
@@ -191,9 +190,9 @@ public class SettingQuestionActivity extends AppCompatActivity {
                                 r2.setChecked(true);
                             if(map.get("newQL").toString().equals("Chinese"))
                                 r3.setChecked(true);
-                        }*/
+                        }
 
-                        /*if(map.containsKey("location")){
+                        if(map.containsKey("location")){
                             HashMap<String,Boolean> locations=(HashMap)map.get("location");
                             String[] cityarray = getResources().getStringArray(R.array.city);
                             if(locations.containsValue(true)){
@@ -205,34 +204,13 @@ public class SettingQuestionActivity extends AppCompatActivity {
                                     }
                                 }
                             }
-                        }*/
+                        }
+
                         if(map.containsKey("status")){
                             String retrieveUserStatus = map.get("status").toString();
                             userStatus.setText(retrieveUserStatus);
                         }
-                        /*if(map.containsKey("language")){
 
-                            HashMap<String,Boolean> langlist=(HashMap)map.get("language");
-                            List<String> Language=new ArrayList<>();
-
-                            if(english.isChecked())
-                                Language.add(english.getText().toString());
-                            if(korean.isChecked())
-                                Language.add(korean.getText().toString());
-
-                            for(String userlang:langlist.keySet()){
-                                if(userlang.equals("English")) {
-                                    english.setChecked(true);
-                                }
-                                if(userlang.equals("Korean")){
-                                    korean.setChecked(true);
-                                }
-                                if(userlang.equals("Chinese")){
-                                    chinese.setChecked(true);
-                                }
-                            }
-
-                        }*/
                         if(map.containsKey("newI")){
                             List<String> check_key=(ArrayList<String>)map.get("newI");
                             for(int i=0;i<check_key.size();i++){
@@ -251,36 +229,6 @@ public class SettingQuestionActivity extends AppCompatActivity {
                                 if(check_key.get(i).toString().equals("Walk"))
                                     walk.setChecked(true);
                             }
-                        }
-                        if(map.containsKey("user_keyword")){
-
-
-                            HashMap<String,Boolean> user_keywords=(HashMap)map.get("user_keyword");
-                            for(String userinterest:user_keywords.keySet()){
-                                if(userinterest.equals("Restaurant")) {
-                                    restaurant.setChecked(true);
-                                }
-                                if(userinterest.equals("Culture")){
-                                    culture.setChecked(true);
-                                }
-                                if(userinterest.equals("Show")){
-                                    show.setChecked(true);
-                                }
-                                if(userinterest.equals("Art")){
-                                    art.setChecked(true);
-                                }
-                                if(userinterest.equals("Sights")){
-                                    sights.setChecked(true);
-                                }
-                                if(userinterest.equals("Shopping")){
-                                    shopping.setChecked(true);
-                                }
-                                if(userinterest.equals("Walk")){
-                                    walk.setChecked(true);
-                                }
-
-                            }
-
                         }
                     }
                 }
@@ -357,23 +305,16 @@ public class SettingQuestionActivity extends AppCompatActivity {
             }
         });
 
-        /*NLocation=sp1.getSelectedItem().toString();
+        NLocation=sp1.getSelectedItem().toString();
 
         if(r1.isChecked())
             newL="English";
         if(r2.isChecked())
             newL="Korean";
         if(r3.isChecked())
-            newL="Chinese";*/
+            newL="Chinese";
 
-        /*if(english.isChecked())
-            Language.put(english.getText().toString(),true);
 
-        if(korean.isChecked())
-            Language.put(korean.getText().toString(),true);
-
-        if(chinese.isChecked())
-            Language.put(chinese.getText().toString(),true);*/
 
         List<String> new_interests=new ArrayList<>();
 
@@ -393,22 +334,6 @@ public class SettingQuestionActivity extends AppCompatActivity {
             new_interests.add("Walk");
 
 
-        /*if(restaurant.isChecked())
-            user_keyword.put(restaurant.getText().toString(),true);
-        if(culture.isChecked())
-            user_keyword.put(culture.getText().toString(),true);
-        if(show.isChecked())
-            user_keyword.put(show.getText().toString(),true);
-        if(art.isChecked())
-            user_keyword.put(art.getText().toString(),true);
-        if(sights.isChecked())
-            user_keyword.put(sights.getText().toString(),true);
-        if(shopping.isChecked())
-            user_keyword.put(shopping.getText().toString(),true);
-        if(walk.isChecked())
-            user_keyword.put(walk.getText().toString(),true);*/
-
-
 
         if (TextUtils.isEmpty(setUserName)) {
             Toast.makeText(this, "Please write your user name first...", Toast.LENGTH_SHORT).show();
@@ -422,8 +347,8 @@ public class SettingQuestionActivity extends AppCompatActivity {
             profileMap.put("name", setUserName);
             profileMap.put("uid", currentUserID);
             profileMap.put("status", setStatus);
-            /*profileMap.put("newQL",newL);
-            profileMap.put("NQLocation",NLocation);*/
+            profileMap.put("newQL",newL);
+            profileMap.put("NQLocation",NLocation);
             profileMap.put("newI",new_interests);
             //profileMap.put("language",Language);
             //profileMap.put("user_keyword",user_keyword);
@@ -437,7 +362,6 @@ public class SettingQuestionActivity extends AppCompatActivity {
                         selectIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(selectIntent);
                         finish();
-                        // Toast.makeText(SettingsActivity.this, "Profile Update Successfully...", Toast.LENGTH_SHORT).show();
                     } else {
                         String message = task.getException().toString();
                         Toast.makeText(SettingQuestionActivity.this, "Error : " + message, Toast.LENGTH_SHORT).show();
