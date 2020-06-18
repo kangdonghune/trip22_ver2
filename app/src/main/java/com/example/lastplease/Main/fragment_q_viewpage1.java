@@ -62,12 +62,12 @@ public class fragment_q_viewpage1 extends Fragment {
                         Map<String, Object> map = document.getData();
 
                         if(map.containsKey("NLocation")){
-                            nl=map.get("NLocation").toString();
+                            nl=map.get("NQLocation").toString();
                             checkLo.setText(nl);
                         }
                         if(map.containsKey("newL"))
                         {
-                            nlang=map.get("newL").toString();
+                            nlang=map.get("newQL").toString();
                             checkLang.setText(nlang);
                         }
 
