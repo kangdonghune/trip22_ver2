@@ -25,7 +25,7 @@
     <string name="sights" translatable="false">Sights</string>
     <string name="walk" translatable="false">Walk</string>
 
-    <string name="location" translatable="false">Location </string>
+    <string name="location" translatable="false">Location: </string>
     <string name="display_name" translatable="false">Display User Name</string>
     <string name="username" translatable="false">Display name</string>
     <string name="default_status" translatable="false">Introduce</string>
