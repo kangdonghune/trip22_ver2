@@ -60,6 +60,7 @@ public class FeedWriteActivity extends AppCompatActivity {
 
     String feed_uri;
     String feed_desc;
+    String feed_location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -180,6 +181,15 @@ public class FeedWriteActivity extends AppCompatActivity {
             feed_keyword.put(walk.getText().toString(),true);
 
         final Map<String, Object> feed = new HashMap<>();
+        db.collection("Users").document(currentUserID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()){
+                    feed_location=task.getResult().get("NLocation").toString();
+                    feed.put("location",feed_location);
+                }
+            }
+        });
         feed.put("feed_desc",feed_desc);
         feed.put("feed_time", FieldValue.serverTimestamp());
         feed.put("uid", currentUserID);
