@@ -44,7 +44,9 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -213,32 +215,14 @@ public class question_profile extends AppCompatActivity {
                             String profile_status = profile_map.get("status").toString();
                             introduce.setText(profile_status);
                         }
-                        if(profile_map.containsKey("newL")){
-                        String L=(String)profile_map.get("newL");
-                        if(L.equals("English"))
-                            profile_language= "Main : "+L+ "  Sub : ";
-                        if(L.equals("Korean"))
-                            profile_language= "Main : "+L+ "  Sub : ";
-                        if(L.equals("Chinese"))
-                            profile_language= "Main : "+L + "  Sub : ";
 
-                    }
-                        if(profile_map.containsKey("language")){
-                            HashMap<String,Boolean> langlist=(HashMap)profile_map.get("language");
-                            String aa="";
-                            for(String userlang:langlist.keySet()) {
 
-                                aa=aa+userlang+",  ";
-                            }
-                            language.setText(profile_language+aa);
-                        }
 
-                        if(profile_map.containsKey("user_keyword")){
-
-                            HashMap<String,Boolean> user_keywords=(HashMap)profile_map.get("user_keyword");
+                        if(profile_map.containsKey("newI")){
+                            List<String> check_key=(ArrayList<String>)profile_map.get("newI");;
                             String profile_userkeyword="";
 
-                            for(String userinterest:user_keywords.keySet()){
+                            for(String userinterest:check_key){
 
                                 profile_userkeyword=profile_userkeyword+"#"+userinterest+" ";
                             }

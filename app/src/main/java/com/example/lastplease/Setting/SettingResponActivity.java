@@ -221,7 +221,7 @@ public class SettingResponActivity extends AppCompatActivity {
 
                         }
 
-                        if(map.containsKey("location")){
+                        /*if(map.containsKey("location")){
                             HashMap<String,Boolean> locations=(HashMap)map.get("location");
                             String[] cityarray = getResources().getStringArray(R.array.city);
                             if(locations.containsValue(true)){
@@ -233,7 +233,7 @@ public class SettingResponActivity extends AppCompatActivity {
                                     }
                                 }
                             }
-                        }
+                        }*/
                         if(map.containsKey("newI")){
                             List<String> check_key=(ArrayList<String>)map.get("newI");
                             for(int i=0;i<check_key.size();i++){
@@ -253,7 +253,7 @@ public class SettingResponActivity extends AppCompatActivity {
                                     walk.setChecked(true);
                             }
                         }
-                        if(map.containsKey("user_keyword")){
+                        /*if(map.containsKey("user_keyword")){
 
 
                             HashMap<String,Boolean> user_keywords=(HashMap)map.get("user_keyword");
@@ -282,7 +282,7 @@ public class SettingResponActivity extends AppCompatActivity {
 
                             }
 
-                        }
+                        }*/
                     }
                 }
                 else {
@@ -344,13 +344,13 @@ public class SettingResponActivity extends AppCompatActivity {
         String setUserName = userName.getText().toString();
         String setStatus = userStatus.getText().toString();
 
-        HashMap<String,Boolean> locations=new HashMap<>();
+        //HashMap<String,Boolean> locations=new HashMap<>();
         HashMap<String, Boolean> Language=new HashMap<>();
         String newL="";
 
-        final HashMap<String,Boolean> user_keyword= new HashMap<>();
+        //final HashMap<String,Boolean> user_keyword= new HashMap<>();
 
-        DocumentReference delete =db.collection("Users").document(currentUserID);
+        /*DocumentReference delete =db.collection("Users").document(currentUserID);
         Map<String,Object> updates = new HashMap<>();
         updates.put("language", FieldValue.delete());
         updates.put("user_keyword",FieldValue.delete());
@@ -360,7 +360,7 @@ public class SettingResponActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<Void> task) {
 
             }
-        });
+        });*/
 
         NLocation=location.getSelectedItem().toString();
 
@@ -399,7 +399,7 @@ public class SettingResponActivity extends AppCompatActivity {
             new_interests.add("Walk");
 
 
-        if(restaurant.isChecked())
+        /*if(restaurant.isChecked())
             user_keyword.put(restaurant.getText().toString(),true);
         if(culture.isChecked())
             user_keyword.put(culture.getText().toString(),true);
@@ -412,9 +412,9 @@ public class SettingResponActivity extends AppCompatActivity {
         if(shopping.isChecked())
             user_keyword.put(shopping.getText().toString(),true);
         if(walk.isChecked())
-            user_keyword.put(walk.getText().toString(),true);
+            user_keyword.put(walk.getText().toString(),true);*/
 
-        locations.put(location.getSelectedItem().toString(),true);
+       /* locations.put(location.getSelectedItem().toString(),true);*/
 
 
         if (TextUtils.isEmpty(setUserName)) {
@@ -429,13 +429,13 @@ public class SettingResponActivity extends AppCompatActivity {
             profileMap.put("name", setUserName);
             profileMap.put("uid", currentUserID);
             profileMap.put("status", setStatus);
-            profileMap.put("location",locations);
+            //profileMap.put("location",locations);
             profileMap.put("newL",newL);
             profileMap.put("NLocation",NLocation);
 
             profileMap.put("newI",new_interests);
-            profileMap.put("language",Language);
-            profileMap.put("user_keyword",user_keyword);
+           // profileMap.put("language",Language);
+           // profileMap.put("user_keyword",user_keyword);
             //profileMap.put("user_keyword", setKeyword);
 
             db.collection("Users").document(currentUserID).set(profileMap, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {

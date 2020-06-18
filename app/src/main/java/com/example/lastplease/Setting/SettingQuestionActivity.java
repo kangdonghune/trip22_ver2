@@ -60,12 +60,12 @@ public class SettingQuestionActivity extends AppCompatActivity {
     private CheckBox english, korean, chinese, restaurant, culture, show, art, sights, shopping, walk;
     private Button updateAccountSettings;
     String profile_download_url;
-    private RadioGroup rg;
-    private RadioButton r1,r2,r3;
+   // private RadioGroup rg;
+   // private RadioButton r1,r2,r3;
 
-    private Spinner sp1;
-    String NLocation = "";
-    String newL="";
+    //private Spinner sp1;
+   // String NLocation = "";
+    //String newL="";
 
 
 
@@ -106,10 +106,10 @@ public class SettingQuestionActivity extends AppCompatActivity {
         }
         mStorageRef = FirebaseStorage.getInstance().getReference();
 
-        rg=(RadioGroup)findViewById(R.id.language_radio);
+        /*rg=(RadioGroup)findViewById(R.id.language_radio);
         r1=(RadioButton)findViewById(R.id.language_english);
         r2=(RadioButton)findViewById(R.id.language_korean);
-        r3=(RadioButton)findViewById(R.id.language_Chinese);
+        r3=(RadioButton)findViewById(R.id.language_Chinese);*/
 
         updateAccountSettings = (Button) findViewById(R.id.update_settings_button);
         userName = (TextView) findViewById(R.id.userName);
@@ -117,11 +117,11 @@ public class SettingQuestionActivity extends AppCompatActivity {
         ivUser = (CircleImageView) findViewById(R.id.ivUser);
         editPhotoIcon = findViewById(R.id.editPhotoIcon);
 
-        english=(CheckBox)findViewById(R.id.english);
+        /*english=(CheckBox)findViewById(R.id.english);
         korean=(CheckBox)findViewById(R.id.korean);
-        chinese=(CheckBox)findViewById(R.id.chinese);
+        chinese=(CheckBox)findViewById(R.id.chinese);*/
 
-        sp1=(Spinner)findViewById(R.id.spinner_city);
+        //sp1=(Spinner)findViewById(R.id.spinner_city);
 
         restaurant=(CheckBox)findViewById(R.id.restaurant);
         culture =(CheckBox)findViewById(R.id.culture);
@@ -183,7 +183,7 @@ public class SettingQuestionActivity extends AppCompatActivity {
                                         }
                                     });
                         }
-                        if(map.containsKey("newQL"))
+                        /*if(map.containsKey("newQL"))
                         {
                             if(map.get("newQL").toString().equals("English"))
                                 r1.setChecked(true);
@@ -191,9 +191,9 @@ public class SettingQuestionActivity extends AppCompatActivity {
                                 r2.setChecked(true);
                             if(map.get("newQL").toString().equals("Chinese"))
                                 r3.setChecked(true);
-                        }
+                        }*/
 
-                        if(map.containsKey("location")){
+                        /*if(map.containsKey("location")){
                             HashMap<String,Boolean> locations=(HashMap)map.get("location");
                             String[] cityarray = getResources().getStringArray(R.array.city);
                             if(locations.containsValue(true)){
@@ -205,12 +205,12 @@ public class SettingQuestionActivity extends AppCompatActivity {
                                     }
                                 }
                             }
-                        }
+                        }*/
                         if(map.containsKey("status")){
                             String retrieveUserStatus = map.get("status").toString();
                             userStatus.setText(retrieveUserStatus);
                         }
-                        if(map.containsKey("language")){
+                        /*if(map.containsKey("language")){
 
                             HashMap<String,Boolean> langlist=(HashMap)map.get("language");
                             List<String> Language=new ArrayList<>();
@@ -232,7 +232,7 @@ public class SettingQuestionActivity extends AppCompatActivity {
                                 }
                             }
 
-                        }
+                        }*/
                         if(map.containsKey("newI")){
                             List<String> check_key=(ArrayList<String>)map.get("newI");
                             for(int i=0;i<check_key.size();i++){
@@ -357,23 +357,23 @@ public class SettingQuestionActivity extends AppCompatActivity {
             }
         });
 
-        NLocation=sp1.getSelectedItem().toString();
+        /*NLocation=sp1.getSelectedItem().toString();
 
         if(r1.isChecked())
             newL="English";
         if(r2.isChecked())
             newL="Korean";
         if(r3.isChecked())
-            newL="Chinese";
+            newL="Chinese";*/
 
-        if(english.isChecked())
+        /*if(english.isChecked())
             Language.put(english.getText().toString(),true);
 
         if(korean.isChecked())
             Language.put(korean.getText().toString(),true);
 
         if(chinese.isChecked())
-            Language.put(chinese.getText().toString(),true);
+            Language.put(chinese.getText().toString(),true);*/
 
         List<String> new_interests=new ArrayList<>();
 
@@ -393,7 +393,7 @@ public class SettingQuestionActivity extends AppCompatActivity {
             new_interests.add("Walk");
 
 
-        if(restaurant.isChecked())
+        /*if(restaurant.isChecked())
             user_keyword.put(restaurant.getText().toString(),true);
         if(culture.isChecked())
             user_keyword.put(culture.getText().toString(),true);
@@ -406,7 +406,7 @@ public class SettingQuestionActivity extends AppCompatActivity {
         if(shopping.isChecked())
             user_keyword.put(shopping.getText().toString(),true);
         if(walk.isChecked())
-            user_keyword.put(walk.getText().toString(),true);
+            user_keyword.put(walk.getText().toString(),true);*/
 
 
 
@@ -422,11 +422,11 @@ public class SettingQuestionActivity extends AppCompatActivity {
             profileMap.put("name", setUserName);
             profileMap.put("uid", currentUserID);
             profileMap.put("status", setStatus);
-            profileMap.put("newQL",newL);
-            profileMap.put("NQLocation",NLocation);
+            /*profileMap.put("newQL",newL);
+            profileMap.put("NQLocation",NLocation);*/
             profileMap.put("newI",new_interests);
-            profileMap.put("language",Language);
-            profileMap.put("user_keyword",user_keyword);
+            //profileMap.put("language",Language);
+            //profileMap.put("user_keyword",user_keyword);
             //profileMap.put("user_keyword", setKeyword);
 
             db.collection("Users").document(currentUserID).set(profileMap, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {

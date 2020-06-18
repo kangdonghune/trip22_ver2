@@ -86,19 +86,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="7dp"
                 android:layout_marginBottom="5dp">
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginLeft="5dp"
-                    android:src="@drawable/ic_language_black_24dp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp"
-                    android:textSize="15sp"
-                    android:text="English"
-                    android:id="@+id/profile_language"/>
+
             </LinearLayout>
 
             <TextView
