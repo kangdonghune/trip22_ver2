@@ -8,6 +8,8 @@
     tools:context=".Main.MainActivity">
 
     //해당 영역에 스와이프 되는 화면이 들어감.
+
+
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
@@ -16,13 +18,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
     </androidx.viewpager.widget.ViewPager>
 
-
-
-
-
-
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/dot_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabBackground="@drawable/tab_selector"
+        app:tabGravity="center"
+        app:tabIndicatorHeight="0dp" />
 
     <View
         android:id="@+id/fabBGLayout"
