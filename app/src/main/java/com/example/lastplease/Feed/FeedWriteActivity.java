@@ -12,6 +12,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -41,7 +42,7 @@ import java.util.Map;
 import xyz.hasnat.sweettoast.SweetToast;
 
 public class FeedWriteActivity extends AppCompatActivity {
-
+    private static final String TAG = "FeedWriteActivity";
     private ImageView imageview;
     Button btn_ok;
     EditText text;

@@ -19,7 +19,7 @@ public class q_ViewPagerAdapter extends FragmentPagerAdapter {
                 return fragment_q_viewpage1.newinstance();
 
             case 1:
-                return fragment_viewpage2.newinstance();
+                return fragment_q_viewpage2.newinstance();
         }
 
         return null;
