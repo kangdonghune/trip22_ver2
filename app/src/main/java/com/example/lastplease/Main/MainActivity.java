@@ -22,7 +22,10 @@ import com.example.lastplease.Setting.SettingResponActivity;
 import com.example.lastplease.Profile.respon_profile;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomappbar.BottomAppBar;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -54,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
         fragmentPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         viewPager.setAdapter(fragmentPagerAdapter);
+        TabLayout tabLayout = findViewById(R.id.dot_layout);
+        tabLayout.setupWithViewPager(viewPager, true);
 
         //플롯 버튼 제어
         fabLayout1 = (LinearLayout) findViewById(R.id.fabLayout1);
