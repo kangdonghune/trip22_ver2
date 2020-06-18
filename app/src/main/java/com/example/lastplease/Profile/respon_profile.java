@@ -21,6 +21,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.lastplease.Feed.DeleteFeedActivity;
 import com.example.lastplease.Feed.FeedDetailActivity;
 import com.example.lastplease.R;
 import com.example.lastplease.Setting.SettingResponActivity;
@@ -34,6 +35,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
@@ -318,44 +320,46 @@ public class respon_profile extends AppCompatActivity {
                 new FirestoreRecyclerAdapter<Feed, FeedViewHolder>(options) {
                     @Override
                     protected void onBindViewHolder(@NonNull final FeedViewHolder holder, final int position, @NonNull Feed model) {
-                        db.collection("Feeds").whereEqualTo("uid",currentUserID).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull final Task<QuerySnapshot> task) {
-                                if(task.isSuccessful()){
-                                    if(task.getResult().getDocuments().get(position).contains("feed_uri")){
-                                        feed_uri=task.getResult().getDocuments().get(position).get("feed_uri").toString();
-                                        Picasso.get().load(feed_uri)
-                                                .placeholder(R.drawable.load)
-                                                .error(R.drawable.load)
-                                                .resize(0,200)
-                                                .into(holder.feed);
+                        if(getSnapshots().getSnapshot(position).contains("feed_time")){
+                            db.collection("Feeds").whereEqualTo("uid",currentUserID).get()
+                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull final Task<QuerySnapshot> task) {
+                                            if(task.isSuccessful()){
+                                                if(task.getResult().getDocuments().get(position).contains("feed_uri")){
+                                                    feed_uri=task.getResult().getDocuments().get(position).get("feed_uri").toString();
+                                                    Picasso.get().load(feed_uri)
+                                                            .placeholder(R.drawable.load)
+                                                            .error(R.drawable.load)
+                                                            .resize(0,200)
+                                                            .into(holder.feed);
 
-//                                        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-//                                            @Override
-//                                            public boolean onLongClick(View v) {
-//                                                Intent intent = new Intent(ProfileActivity.this, DeleteFeedActivity.class);
-//                                                intent.putExtra("id", task.getResult().getDocuments().get(position).getId());
-//                                                intent.putExtra("feedUri",feed_uri);
-//                                                startActivity(intent);
-//                                                return true;
-//                                            }
-//                                        });
-                                    }
+                                                    holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                                                        @Override
+                                                        public boolean onLongClick(View v) {
+                                                            Intent intent = new Intent(respon_profile.this, DeleteFeedActivity.class);
+                                                            intent.putExtra("id", task.getResult().getDocuments().get(position).getId());
+                                                            intent.putExtra("feedUri",feed_uri);
+                                                            startActivity(intent);
+                                                            return true;
+                                                        }
+                                                    });
+                                                }
+                                            }
+                                        }
+                                    });
+                            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    String userId = getSnapshots().getSnapshot(position).get("uid").toString();
+                                    String feedId= getSnapshots().getSnapshot(position).getId();
+                                    Intent profileIntent = new Intent(respon_profile.this, FeedDetailActivity.class);
+                                    profileIntent.putExtra("userId", userId);
+                                    profileIntent.putExtra("feedId", feedId);
+                                    startActivity(profileIntent);
                                 }
-                            }
-                        });
-                        holder.itemView.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                String userId = getSnapshots().getSnapshot(position).get("uid").toString();
-                                String feedId= getSnapshots().getSnapshot(position).getId();
-                                Intent profileIntent = new Intent(respon_profile.this, FeedDetailActivity.class);
-                                profileIntent.putExtra("userId", userId);
-                                profileIntent.putExtra("feedId", feedId);
-                                startActivity(profileIntent);
-                            }
-                        });
-
+                            });
+                        }
                     }
 
                     @NonNull
