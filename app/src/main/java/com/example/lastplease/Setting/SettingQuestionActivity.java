@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lastplease.Main.MainActivity;
+import com.example.lastplease.Main.QMainActivity;
 import com.example.lastplease.R;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -61,6 +62,12 @@ public class SettingQuestionActivity extends AppCompatActivity {
     private RadioGroup rg;
     private RadioButton r1,r2,r3;
 
+    private Spinner sp1;
+    String NLocation = "";
+    String newL="";
+
+
+
     private String currentUserID, name;
     private FirebaseAuth mAuth;
     // cloudfirestore로 변환중
@@ -71,6 +78,7 @@ public class SettingQuestionActivity extends AppCompatActivity {
     private ImageView editPhotoIcon;
     private StorageReference mStorageRef;
     int REQUEST_EXTERNAL_STORAGE_PERMISSION=1002;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +119,8 @@ public class SettingQuestionActivity extends AppCompatActivity {
         english=(CheckBox)findViewById(R.id.english);
         korean=(CheckBox)findViewById(R.id.korean);
         chinese=(CheckBox)findViewById(R.id.chinese);
+
+        sp1=(Spinner)findViewById(R.id.spinner_city);
 
         restaurant=(CheckBox)findViewById(R.id.restaurant);
         culture =(CheckBox)findViewById(R.id.culture);
@@ -172,14 +182,28 @@ public class SettingQuestionActivity extends AppCompatActivity {
                                         }
                                     });
                         }
-                        if(map.containsKey("newL"))
+                        if(map.containsKey("newQL"))
                         {
-                            if(map.get("newL").toString().equals("English"))
+                            if(map.get("newQL").toString().equals("English"))
                                 r1.setChecked(true);
-                            if(map.get("newL").toString().equals("Korean"))
+                            if(map.get("newQL").toString().equals("Korean"))
                                 r2.setChecked(true);
-                            if(map.get("newL").toString().equals("Chinese"))
+                            if(map.get("newQL").toString().equals("Chinese"))
                                 r3.setChecked(true);
+                        }
+
+                        if(map.containsKey("location")){
+                            HashMap<String,Boolean> locations=(HashMap)map.get("location");
+                            String[] cityarray = getResources().getStringArray(R.array.city);
+                            if(locations.containsValue(true)){
+                                for(String locationpart : locations.keySet()){
+                                    for(int i=0; i<cityarray.length; i++){
+                                        if(locationpart.equals(cityarray[i])){
+                                            sp1.setSelection(i);
+                                        }
+                                    }
+                                }
+                            }
                         }
                         if(map.containsKey("status")){
                             String retrieveUserStatus = map.get("status").toString();
@@ -318,7 +342,6 @@ public class SettingQuestionActivity extends AppCompatActivity {
         String setStatus = userStatus.getText().toString();
 
         HashMap<String, Boolean> Language=new HashMap<>();
-        String newL="";
 
         final HashMap<String,Boolean> user_keyword= new HashMap<>();
 
@@ -332,6 +355,9 @@ public class SettingQuestionActivity extends AppCompatActivity {
 
             }
         });
+
+        NLocation=sp1.getSelectedItem().toString();
+
         if(r1.isChecked())
             newL="English";
         if(r2.isChecked())
@@ -395,7 +421,8 @@ public class SettingQuestionActivity extends AppCompatActivity {
             profileMap.put("name", setUserName);
             profileMap.put("uid", currentUserID);
             profileMap.put("status", setStatus);
-            profileMap.put("newL",newL);
+            profileMap.put("newQL",newL);
+            profileMap.put("NQLocation",NLocation);
             profileMap.put("newI",new_interests);
             profileMap.put("language",Language);
             profileMap.put("user_keyword",user_keyword);
@@ -405,7 +432,7 @@ public class SettingQuestionActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {
-                        Intent selectIntent = new Intent(SettingQuestionActivity.this, MainActivity.class);
+                        Intent selectIntent = new Intent(SettingQuestionActivity.this, QMainActivity.class);
                         selectIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(selectIntent);
                         finish();
