@@ -78,6 +78,7 @@ public class SettingQuestionActivity extends AppCompatActivity {
     private StorageReference mStorageRef;
     int REQUEST_EXTERNAL_STORAGE_PERMISSION=1002;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -431,8 +432,6 @@ public class SettingQuestionActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {
                         Intent selectIntent = new Intent(SettingQuestionActivity.this, MainActivity.class);
-                        selectIntent.putExtra("NLocation",NLocation);
-                        selectIntent.putExtra("NewL",newL);
                         selectIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(selectIntent);
                         finish();

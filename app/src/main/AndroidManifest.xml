@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Setting.SettingQuestionActivity"></activity>
+        <activity android:name=".SecondActivity"></activity>
+        <activity android:name=".Setting.SettingQuestionActivity" />
         <activity android:name=".Profile.respon_profile" />
         <activity
             android:name=".Feed.FeedWriteActivity"

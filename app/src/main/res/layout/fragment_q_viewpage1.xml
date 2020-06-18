@@ -7,8 +7,32 @@
     android:layout_height="match_parent">
 
 
+   <TextView
+       android:id="@+id/checkLang"
+       android:layout_width="wrap_content"
+       android:layout_height="100sp"
+       android:text="Langauage :"
+       android:textSize="10sp"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintBottom_toTopOf="@id/Ask">
+
+   </TextView>
+   <TextView
+       android:layout_width="wrap_content"
+       android:layout_height="50sp"
+      android:id="@+id/checkLo"
+      android:text="location"
+      android:textSize="10sp"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintBottom_toTopOf="@id/checkLang"
+      ></TextView>
+
    <ImageView
-       android:id="@+id/imageView2"
+       android:id="@+id/Ask"
        android:layout_width="200sp"
        android:layout_height="200sp"
        android:src="@drawable/btn_q_ask"
@@ -20,7 +44,7 @@
        app:layout_constraintVertical_bias="0.411" />
 
    <ImageView
-       android:id="@+id/imageView"
+       android:id="@+id/Find_Buddy"
        android:layout_width="120sp"
        android:layout_height="60sp"
        android:layout_marginTop="52dp"
@@ -30,5 +54,5 @@
        app:layout_constraintEnd_toEndOf="parent"
        app:layout_constraintHorizontal_bias="0.497"
        app:layout_constraintStart_toStartOf="parent"
-       app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+       app:layout_constraintTop_toBottomOf="@+id/Ask" />
 </androidx.constraintlayout.widget.ConstraintLayout>
