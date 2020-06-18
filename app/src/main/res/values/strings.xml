@@ -5,7 +5,7 @@
     <string name="give_correct_information">Please your give correct information. Because, your email needs to be verification.</string>
     <string name="register_success_popup" translatable="false">Registered successfully.\nVerification email has been sent.\nPlease verify email.</string>
     <string name="already_have_account" translatable="false">Already have an account?</string>
-    <string name="wait" translatable="false">Please wait a moment....</string>
+    <string name="wait" translatable="false">Please wait a moment</string>
     <string name="accounting" translatable="false">Creating new account</string>
 
     <string name="traveler" translatable="false">Traveler</string>

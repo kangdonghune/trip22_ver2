@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
                     DocumentSnapshot document=task.getResult();
                     if(document.exists()){
                         Map<String, Object> map = document.getData();
-                        if(!map.containsKey("location")){
+                        if(!map.containsKey("NLocation")){
                             Intent settingsIntent = new Intent(MainActivity.this, SettingResponActivity.class);
                             startActivity(settingsIntent);
                         }

@@ -24,6 +24,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.lastplease.LoginRegiser.SelectActivity;
 import com.example.lastplease.Main.MainActivity;
 import com.example.lastplease.Main.QMainActivity;
 import com.example.lastplease.R;
