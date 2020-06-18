@@ -30,6 +30,20 @@
        app:layout_constraintBottom_toTopOf="@id/checkLang">
    </Spinner>
 
+   <TextView
+       android:id="@+id/checkLang"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="Langauage :"
+       android:layout_marginTop="20sp"
+       android:textSize="10sp"
+       app:layout_constraintBottom_toBottomOf="@id/Rgroup"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintBottom_toTopOf="@id/Rgroup">
+
+   </TextView>
+
    <RadioGroup
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
@@ -60,20 +74,6 @@
           android:textSize="15sp"
          android:id="@+id/condition_Chinese"></RadioButton>
    </RadioGroup>
-
-   <TextView
-       android:id="@+id/checkLang"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:text="Langauage :"
-       android:layout_marginTop="20sp"
-       android:textSize="10sp"
-       app:layout_constraintBottom_toBottomOf="@id/Rgroup"
-       app:layout_constraintEnd_toEndOf="parent"
-       app:layout_constraintStart_toStartOf="parent"
-       app:layout_constraintBottom_toTopOf="@id/Rgroup">
-
-   </TextView>
 
 
    <ImageView

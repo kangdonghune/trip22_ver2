@@ -151,38 +151,6 @@
             app:fabSize="mini"/>
     </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/fabLayout5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="23dp"
-            android:padding="12dp"
-            android:clipToPadding="false"
-            app:layout_behavior="com.example.lastplease.utils.MoveUpwardBehavior"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="23dp"
-            android:layout_gravity="bottom|end"
-            android:visibility="gone">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:text="Change_Setting"/>
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                app:srcCompat="@drawable/ic_baseline_create_24"
-                android:backgroundTint="@color/red"
-                app:borderWidth="0dp"
-                app:fabSize="mini"/>
-        </LinearLayout>
-
-
-
 
     <LinearLayout
         android:layout_width="wrap_content"
