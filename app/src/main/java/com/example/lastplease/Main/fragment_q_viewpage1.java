@@ -51,7 +51,10 @@ public class fragment_q_viewpage1 extends Fragment {
         currentUserID = mAuth.getCurrentUser().getUid();
         db = FirebaseFirestore.getInstance();
 
-        db.collection("Users").document(currentUserID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+
+
+
+        /*db.collection("Users").document(currentUserID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
@@ -75,7 +78,7 @@ public class fragment_q_viewpage1 extends Fragment {
                 }
             }
 
-        });
+        });*/
         return view;
     }
 }

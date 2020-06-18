@@ -45,7 +45,9 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -217,7 +219,7 @@ public class respon_profile extends AppCompatActivity {
                             String profile_name = profile_map.get("name").toString();
                             name.setText(profile_name);
                         }
-                        if(profile_map.containsKey("location")){
+                        /*if(profile_map.containsKey("location")){
                             HashMap<String,Boolean> locationpart=(HashMap)profile_map.get("location");
                             String profile_location="";
                             for(String userlocation : locationpart.keySet())
@@ -225,6 +227,11 @@ public class respon_profile extends AppCompatActivity {
                                 profile_location=profile_location+userlocation;
                             }
                             location.setText(profile_location);
+                        }*/
+                        if(profile_map.containsKey("NLocation")){
+                            String profile_NLocation=profile_map.get("NLocation").toString();
+                            location.setText(profile_NLocation);
+
                         }
                         if(profile_map.containsKey("status")){
                             String profile_status = profile_map.get("status").toString();
@@ -240,7 +247,20 @@ public class respon_profile extends AppCompatActivity {
                                 profile_language= "Main : "+L + "  Sub : ";
 
                         }
-                        if(profile_map.containsKey("language")){
+                        if(profile_map.containsKey("newI")){
+                            List<String> check_key=(ArrayList<String>)profile_map.get("newI");;
+                            String profile_userkeyword="";
+
+                            for(String userinterest:check_key){
+
+                                profile_userkeyword=profile_userkeyword+"#"+userinterest+" ";
+                            }
+                            keyword.setText(profile_userkeyword);
+
+                        }
+
+
+                        /*if(profile_map.containsKey("language")){
                             HashMap<String,Boolean> langlist=(HashMap)profile_map.get("language");
                             String aa="";
                             for(String userlang:langlist.keySet()) {
@@ -248,9 +268,9 @@ public class respon_profile extends AppCompatActivity {
                                 aa=aa+userlang+",  ";
                             }
                             language.setText(profile_language+aa);
-                        }
+                        }*/
 
-                        if(profile_map.containsKey("user_keyword")){
+                        /*if(profile_map.containsKey("user_keyword")){
 
                             HashMap<String,Boolean> user_keywords=(HashMap)profile_map.get("user_keyword");
                             String profile_userkeyword="";
@@ -261,7 +281,7 @@ public class respon_profile extends AppCompatActivity {
                             }
                             keyword.setText(profile_userkeyword);
 
-                        }
+                        }*/
                     }
                 }
             }

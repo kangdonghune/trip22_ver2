@@ -6,30 +6,75 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+   <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="20sp"
+    android:id="@+id/checkLo"
+    android:text="location"
+    android:textSize="10sp"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintBottom_toTopOf="@id/condition_city"
+
+    ></TextView>
+   <Spinner
+       android:id="@+id/condition_city"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+
+       android:entries="@array/city"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintBottom_toTopOf="@id/checkLang">
+   </Spinner>
+
+   <RadioGroup
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginBottom="20sp"
+      android:id="@+id/Rgroup"
+       android:orientation="horizontal"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintBottom_toTopOf="@id/Ask"
+      >
+      <RadioButton
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+         android:text="English"
+          android:textSize="15sp"
+          android:id="@+id/condition_English"></RadioButton>
+      <RadioButton
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+         android:id="@+id/condition_Korean"
+          android:textSize="15sp"
+          android:text="Korean"></RadioButton>
+      <RadioButton
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+         android:text="Chinese"
+          android:textSize="15sp"
+         android:id="@+id/condition_Chinese"></RadioButton>
+   </RadioGroup>
 
    <TextView
        android:id="@+id/checkLang"
        android:layout_width="wrap_content"
-       android:layout_height="100sp"
+       android:layout_height="wrap_content"
        android:text="Langauage :"
+       android:layout_marginTop="20sp"
        android:textSize="10sp"
-       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintBottom_toBottomOf="@id/Rgroup"
        app:layout_constraintEnd_toEndOf="parent"
        app:layout_constraintStart_toStartOf="parent"
-       app:layout_constraintBottom_toTopOf="@id/Ask">
+       app:layout_constraintBottom_toTopOf="@id/Rgroup">
 
    </TextView>
-   <TextView
-       android:layout_width="wrap_content"
-       android:layout_height="50sp"
-      android:id="@+id/checkLo"
-      android:text="location"
-      android:textSize="10sp"
-       app:layout_constraintBottom_toBottomOf="parent"
-       app:layout_constraintEnd_toEndOf="parent"
-       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintBottom_toTopOf="@id/checkLang"
-      ></TextView>
+
 
    <ImageView
        android:id="@+id/Ask"
