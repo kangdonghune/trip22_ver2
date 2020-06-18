@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lastplease.Main.MainActivity;
+import com.example.lastplease.Main.QMainActivity;
 import com.example.lastplease.R;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -431,7 +432,7 @@ public class SettingQuestionActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {
-                        Intent selectIntent = new Intent(SettingQuestionActivity.this, MainActivity.class);
+                        Intent selectIntent = new Intent(SettingQuestionActivity.this, QMainActivity.class);
                         selectIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(selectIntent);
                         finish();
