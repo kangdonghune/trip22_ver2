@@ -4,31 +4,11 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     >
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2sp"
-        android:orientation="horizontal"
-        android:id="@+id/radioGroup">
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:id="@+id/rbtArea"
-            android:text="Area Order"/>
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/rbtLike"
-            android:text="@string/likeOrder"/>
-    </RadioGroup>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/feed_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/radioGroup">
+        android:layout_alignParentStart="true">
 
     </androidx.recyclerview.widget.RecyclerView>
 

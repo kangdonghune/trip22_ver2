@@ -160,7 +160,7 @@ public class QMainActivity extends AppCompatActivity {
                     DocumentSnapshot document=task.getResult();
                     if(document.exists()){
                         Map<String, Object> map = document.getData();
-                        if(!map.containsKey("NQLocation")){
+                        if(!map.containsKey("name")){
                             Intent settingsIntent = new Intent(QMainActivity.this, SettingQuestionActivity.class);
                             startActivity(settingsIntent);
                         }
