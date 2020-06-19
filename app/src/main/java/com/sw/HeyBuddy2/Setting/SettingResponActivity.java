@@ -194,26 +194,19 @@ public class SettingResponActivity extends AppCompatActivity {
                             String retrieveUserStatus = map.get("status").toString();
                             userStatus.setText(retrieveUserStatus);
                         }
-                        if(map.containsKey("language")){
+                        if(map.containsKey("newSubL")){
 
-                            HashMap<String,Boolean> langlist=(HashMap)map.get("language");
                             List<String> Language=new ArrayList<>();
+                            List<String> check_key=(ArrayList<String>)map.get("newSubL");
 
-                            if(english.isChecked())
-                                Language.add(english.getText().toString());
-                            if(korean.isChecked())
-                                Language.add(korean.getText().toString());
-
-                            for(String userlang:langlist.keySet()){
-                                if(userlang.equals("English")) {
-                                    english.setChecked(true);
-                                }
-                                if(userlang.equals("Korean")){
+                            for(int i=0; i<check_key.size();i++)
+                            {
+                                if(check_key.get(i).toString().equals("Korean"))
                                     korean.setChecked(true);
-                                }
-                                if(userlang.equals("Chinese")){
+                                if(check_key.get(i).toString().equals("English"))
+                                    english.setChecked(true);
+                                if(check_key.get(i).toString().equals("Chinese"))
                                     chinese.setChecked(true);
-                                }
                             }
 
                         }

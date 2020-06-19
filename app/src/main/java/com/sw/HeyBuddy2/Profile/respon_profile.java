@@ -258,9 +258,9 @@ public class respon_profile extends AppCompatActivity {
 
                             }
 
-                            profile_subLanguage+=profile_language;
+                            profile_language+=profile_subLanguage;
 
-                            language.setText(profile_subLanguage);
+                            language.setText(profile_language);
 
 
                         }
