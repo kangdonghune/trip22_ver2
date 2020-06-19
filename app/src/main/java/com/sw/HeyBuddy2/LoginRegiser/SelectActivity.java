@@ -3,7 +3,9 @@ package com.sw.HeyBuddy2.LoginRegiser;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+import com.sw.HeyBuddy2.Tutorial;
 
 import java.util.HashMap;
 
@@ -41,6 +44,22 @@ public class SelectActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         currentUserId = mAuth.getCurrentUser().getUid();
         db = FirebaseFirestore.getInstance();
+
+
+        SharedPreferences pref = getSharedPreferences("checkFirst", Activity.MODE_PRIVATE);
+        boolean checkFirst = pref.getBoolean("checkFirst", false);
+        if(checkFirst==false){
+            //앱 최초실행시
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putBoolean("checkFirst", true);
+            editor.commit();
+
+            Intent intent = new Intent(SelectActivity.this, Tutorial.class);
+            startActivity(intent);
+        }
+        else{
+
+        }
 
 
         questioner.setOnClickListener(new View.OnClickListener() {

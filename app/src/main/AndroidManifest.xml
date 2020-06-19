@@ -14,47 +14,48 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.sw.HeyBuddy2.FindBuddy.SecondActivity"></activity>
+        <activity android:name=".Tutorial"></activity>
+        <activity android:name=".FindBuddy.SecondActivity" />
         <activity
-            android:name="com.sw.HeyBuddy2.Feed.DeleteFeedActivity"
+            android:name=".Feed.DeleteFeedActivity"
             android:theme="@android:style/Theme.Dialog" />
         <activity
-            android:name="com.sw.HeyBuddy2.Setting.SettingQuestionActivity"
+            android:name=".Setting.SettingQuestionActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.sw.HeyBuddy2.Profile.respon_profile"
+            android:name=".Profile.respon_profile"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.sw.HeyBuddy2.Feed.FeedWriteActivity"
+            android:name=".Feed.FeedWriteActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.sw.HeyBuddy2.Feed.OtherProfileActivity"
+            android:name=".Feed.OtherProfileActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.sw.HeyBuddy2.Profile.question_profile"
+            android:name=".Profile.question_profile"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.sw.HeyBuddy2.Feed.FeedDetailActivity"
+            android:name=".Feed.FeedDetailActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.sw.HeyBuddy2.Setting.SettingResponActivity"
+            android:name=".Setting.SettingResponActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.sw.HeyBuddy2.Main.QMainActivity"
+            android:name=".Main.QMainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.sw.HeyBuddy2.LoginRegiser.SelectActivity"
+            android:name=".LoginRegiser.SelectActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.sw.HeyBuddy2.LoginRegiser.RegisterActivity"
+            android:name=".LoginRegiser.RegisterActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.sw.HeyBuddy2.Feed.fullScreenImageViewer"
+            android:name=".Feed.fullScreenImageViewer"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_chat_image_viewer"
             android:theme="@style/FullscreenTheme" />
         <activity
-            android:name="com.sw.HeyBuddy2.utils.SplashActivity"
+            android:name=".utils.SplashActivity"
             android:noHistory="true"
             android:screenOrientation="sensor"
             android:theme="@style/SplashTheme">
@@ -65,11 +66,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.sw.HeyBuddy2.LoginRegiser.LoginActivity"
+            android:name=".LoginRegiser.LoginActivity"
             android:configChanges="orientation|screenSize"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.sw.HeyBuddy2.Main.MainActivity"
+            android:name=".Main.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
