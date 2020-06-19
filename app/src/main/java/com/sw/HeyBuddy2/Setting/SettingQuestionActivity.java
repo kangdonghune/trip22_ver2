@@ -190,7 +190,7 @@ public class SettingQuestionActivity extends AppCompatActivity {
                                 r3.setChecked(true);
                         }
                         if(map.containsKey("NQLocation")) {
-                            String locations = (String) map.get("NLocation");
+                            String locations = (String) map.get("NQLocation");
                             String[] cityarray = getResources().getStringArray(R.array.city);
 
                             for (int i = 0; i < cityarray.length; i++) {
