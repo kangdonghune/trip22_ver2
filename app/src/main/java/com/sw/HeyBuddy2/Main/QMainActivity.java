@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+import com.sw.HeyBuddy2.EvaluationActivity;
 import com.sw.HeyBuddy2.LoginRegiser.LoginActivity;
 import com.sw.HeyBuddy2.Profile.question_profile;
 import com.sw.HeyBuddy2.R;
@@ -81,6 +82,13 @@ public class QMainActivity extends AppCompatActivity {
                 } else {
                     closeFABMenu();
                 }
+            }
+        });
+        fab1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent evaluation=new Intent(QMainActivity.this, EvaluationActivity.class);
+                startActivity(evaluation);
             }
         });
         fab2.setOnClickListener(new View.OnClickListener() {
