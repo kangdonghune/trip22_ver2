@@ -211,17 +211,19 @@ public class SettingResponActivity extends AppCompatActivity {
 
                         }
 
+                        if(map.containsKey("NLocation")) {
+                            String locations = (String) map.get("NLocation");
+                            String[] cityarray = getResources().getStringArray(R.array.city);
+
+                            for (int i = 0; i < cityarray.length; i++) {
+                                if (locations.equals(cityarray[i]))
+                                    location.setSelection(i);
+                            }
+                        }
+
                         /*if(map.containsKey("location")){
                             HashMap<String,Boolean> locations=(HashMap)map.get("location");
-                            String[] cityarray = getResources().getStringArray(R.array.city);
-                            if(locations.containsValue(true)){
-                                for(String locationpart : locations.keySet()){
-                                    for(int i=0; i<cityarray.length; i++){
-                                        if(locationpart.equals(cityarray[i])){
-                                            location.setSelection(i);
-                                        }
-                                    }
-                                }
+
                             }
                         }*/
                         if(map.containsKey("newI")){
