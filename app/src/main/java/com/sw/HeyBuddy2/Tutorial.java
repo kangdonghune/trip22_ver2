@@ -45,10 +45,10 @@ public class Tutorial extends AppCompatActivity {
         btnNext = findViewById(R.id.next);
 
         layouts = new int[]{
-                R.layout.Tuto_page1,
-                R.layout.Tuto_page2,
-                R.layout.Tuto_page3,
-                R.layout.Tuto_page4
+                R.layout.tuto_page1,
+                R.layout.tuto_page2,
+                R.layout.tuto_page3,
+                R.layout.tuto_page4
         };
 
         addBottomDots(0);
