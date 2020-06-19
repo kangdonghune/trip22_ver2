@@ -189,8 +189,17 @@ public class SettingQuestionActivity extends AppCompatActivity {
                             if(map.get("newQL").toString().equals("Chinese"))
                                 r3.setChecked(true);
                         }
+                        if(map.containsKey("NQLocation")) {
+                            String locations = (String) map.get("NLocation");
+                            String[] cityarray = getResources().getStringArray(R.array.city);
 
-                        if(map.containsKey("location")){
+                            for (int i = 0; i < cityarray.length; i++) {
+                                if (locations.equals(cityarray[i]))
+                                    sp1.setSelection(i);
+                            }
+                        }
+
+                        /*if(map.containsKey("location")){
                             HashMap<String,Boolean> locations=(HashMap)map.get("location");
                             String[] cityarray = getResources().getStringArray(R.array.city);
                             if(locations.containsValue(true)){
@@ -202,7 +211,7 @@ public class SettingQuestionActivity extends AppCompatActivity {
                                     }
                                 }
                             }
-                        }
+                        }*/
 
                         if(map.containsKey("status")){
                             String retrieveUserStatus = map.get("status").toString();
