@@ -129,6 +129,8 @@ public class question_profile extends AppCompatActivity {
             public void onClick(View v) {
                 intent = new Intent(question_profile.this, SettingQuestionActivity.class);
                 startActivity(intent);
+                finish();
+
             }
         });
 

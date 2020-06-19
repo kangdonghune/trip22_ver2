@@ -442,9 +442,9 @@ public class SettingResponActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {
-                        Intent selectIntent = new Intent(SettingResponActivity.this, MainActivity.class);
+                       /*Intent selectIntent = new Intent(SettingResponActivity.this, MainActivity.class);
                         selectIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(selectIntent);
+                        startActivity(selectIntent);*/
                         finish();
                         // Toast.makeText(SettingsActivity.this, "Profile Update Successfully...", Toast.LENGTH_SHORT).show();
                     } else {

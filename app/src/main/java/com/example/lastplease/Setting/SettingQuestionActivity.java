@@ -358,9 +358,9 @@ public class SettingQuestionActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {
-                        Intent selectIntent = new Intent(SettingQuestionActivity.this, QMainActivity.class);
-                        selectIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(selectIntent);
+                       /* Intent selectIntent = new Intent(SettingQuestionActivity.this, QMainActivity.class);
+                        //selectIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(selectIntent);*/
                         finish();
                     } else {
                         String message = task.getException().toString();
