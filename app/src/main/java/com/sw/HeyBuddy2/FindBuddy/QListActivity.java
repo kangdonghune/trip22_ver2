@@ -165,11 +165,11 @@ public class QListActivity extends AppCompatActivity {
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()){
             case R.id.listmenu_report:
-                SweetToast.info(this, "신고하기\n"+getvUid());
+                SweetToast.info(getApplicationContext(), "신고하기\n"+getvUid());
                 return true;
             case R.id.listmenu_endmatch:
-                SweetToast.info(this, "매칭종료 및 평가");
-                Intent evalIntent = new Intent(this, UserEvaluationActivity.class);
+                SweetToast.info(getApplicationContext(), "매칭종료 및 평가");
+                Intent evalIntent = new Intent(QListActivity.this, UserEvaluationActivity.class);
                 evalIntent.putExtra("rateeUid", getvUid());
                 evalIntent.putExtra("raterUid", currentUserId);
                 startActivity(evalIntent);
