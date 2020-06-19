@@ -26,6 +26,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 import com.sw.HeyBuddy2.Feed.OtherProfileActivity;
+import com.sw.HeyBuddy2.LoginRegiser.SelectActivity;
 import com.sw.HeyBuddy2.R;
 import com.sw.HeyBuddy2.utils.Contacts;
 
@@ -41,7 +42,6 @@ public class SecondActivity extends AppCompatActivity {
     FirestoreRecyclerAdapter fsAdapter;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();;
     private String currentUserId  = mAuth.getCurrentUser().getUid();
-    private ArrayList myWishList = new ArrayList();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
@@ -53,6 +53,13 @@ public class SecondActivity extends AppCompatActivity {
         usersRef = db.collection("Users");
         findUserRecyclerList = (RecyclerView)findViewById(R.id.findUser_recycler_list);
         findUserRecyclerList.setLayoutManager(new LinearLayoutManager(this));
+        btn_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent wishList=new Intent(SecondActivity.this,WishListActivity.class);
+                startActivity(wishList);
+            }
+        });
     }
     public void onStart() {
         super.onStart();
