@@ -103,6 +103,28 @@ public class OtherProfileActivity extends AppCompatActivity {
             }
         });
 
+        db.collection("Users").document(senderUserId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()){
+                    DocumentSnapshot document=task.getResult();
+                    Map<String,Object> gones=document.getData();
+                    if(gones.containsKey("question")){
+                        Boolean che = (Boolean)gones.get("question");
+
+                        if(che){
+
+                        }
+                        else
+                        {
+                            sendMessageRequestButton.setVisibility(View.GONE);
+                            addToWishlistButton.setVisibility(View.GONE);
+                        }
+                    }
+                }
+            }
+        });
+
         db.collection("Users").document(receiverUserId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -133,6 +155,7 @@ public class OtherProfileActivity extends AppCompatActivity {
                                         }
                                     });
                         }
+
                         if(imgMap.containsKey("user_back_image")){
                             final String backUri = imgMap.get("user_back_image").toString();
                             Picasso.get().load(backUri)

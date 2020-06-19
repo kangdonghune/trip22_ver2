@@ -16,6 +16,20 @@
         android:theme="@style/AppTheme">
         <activity android:name=".EvaluationActivity"></activity>
         <activity
+        android:name=".FindBuddy.ListActivity"
+        android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".FindBuddy.QListActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".Chat.ChatActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name=".ChatActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".FindBuddy.RequestActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -69,7 +83,6 @@
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -80,6 +93,11 @@
         <activity
             android:name=".Main.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <service android:name=".FCM.FirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
