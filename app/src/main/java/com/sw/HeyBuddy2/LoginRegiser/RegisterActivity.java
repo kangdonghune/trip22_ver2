@@ -185,7 +185,7 @@ public class RegisterActivity extends AppCompatActivity {
                     });
             //config progressbar
             progressDialog.setTitle(R.string.accounting);
-            progressDialog.setMessage(R.string.wait+"");
+            progressDialog.setMessage(getText(R.string.wait));
             progressDialog.show();
             progressDialog.setCanceledOnTouchOutside(false);
 
