@@ -49,7 +49,7 @@
             android:name="com.sw.HeyBuddy2.LoginRegiser.RegisterActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.sw.HeyBuddy2.Feed.fullScreenImageViewer"
+            android:name="com.sw.HeyBuddy2.utils.fullScreenImageViewer"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_chat_image_viewer"
             android:theme="@style/FullscreenTheme" />

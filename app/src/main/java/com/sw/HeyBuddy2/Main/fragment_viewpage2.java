@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sw.HeyBuddy2.Feed.FeedDetailActivity;
-import com.sw.HeyBuddy2.Feed.fullScreenImageViewer;
+import com.sw.HeyBuddy2.utils.fullScreenImageViewer;
 import com.sw.HeyBuddy2.R;
 
 import com.sw.HeyBuddy2.utils.Feed;
