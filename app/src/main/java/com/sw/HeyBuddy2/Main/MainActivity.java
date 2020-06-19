@@ -185,10 +185,10 @@ public class MainActivity extends AppCompatActivity {
                             Intent settingsIntent = new Intent(MainActivity.this, SettingResponActivity.class);
                             startActivity(settingsIntent);
                         }
-                        if(!map.containsKey("status")){
+                        /*if(!map.containsKey("status")){
                             Intent settingsIntent = new Intent(MainActivity.this, SettingResponActivity.class);
                             startActivity(settingsIntent);
-                        }
+                        }*/
                     }
                 }
             }
