@@ -221,9 +221,6 @@ public class FeedWriteActivity extends AppCompatActivity {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         Toast.makeText(FeedWriteActivity.this, "피드 등록이 완료되었습니다.",Toast.LENGTH_LONG).show();
-                                        /*Intent selectIntent = new Intent(FeedWriteActivity.this, MainActivity.class);
-                                        selectIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                        startActivity(selectIntent);*/
                                         finish();
                                     }
                                 });

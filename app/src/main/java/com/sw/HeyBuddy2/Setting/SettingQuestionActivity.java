@@ -55,7 +55,7 @@ public class SettingQuestionActivity extends AppCompatActivity {
 
     private TextView userName;
     private EditText userStatus;
-    private CheckBox english, korean, chinese, restaurant, culture, show, art, sights, shopping, walk;
+    private CheckBox restaurant, culture, show, art, sights, shopping, walk;
     private Button updateAccountSettings;
     String profile_download_url;
     private RadioButton r1,r2,r3;
