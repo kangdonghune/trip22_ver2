@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.sw.HeyBuddy2.FindBuddy.QListActivity;
 import com.sw.HeyBuddy2.FindBuddy.SecondActivity;
 import com.sw.HeyBuddy2.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -45,6 +46,13 @@ public class fragment_q_viewpage1 extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent =new Intent(getContext(), SecondActivity.class);
+                startActivity(intent);
+            }
+        });
+        ask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(getContext(), QListActivity.class);
                 startActivity(intent);
             }
         });
