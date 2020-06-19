@@ -16,7 +16,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.sw.HeyBuddy2.Feed.FeedDetailActivity;
-import com.sw.HeyBuddy2.Feed.fullScreenImageViewer;
+import com.sw.HeyBuddy2.utils.fullScreenImageViewer;
 import com.sw.HeyBuddy2.R;
 import com.sw.HeyBuddy2.utils.Feed;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;

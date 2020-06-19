@@ -1,4 +1,4 @@
-package com.sw.HeyBuddy2.Feed;
+package com.sw.HeyBuddy2.utils;
 
 import android.annotation.SuppressLint;
 import android.net.Uri;
