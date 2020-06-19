@@ -36,7 +36,9 @@ import org.json.JSONObject;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -205,18 +207,51 @@ public class OtherProfileActivity extends AppCompatActivity {
                             language.setText(profile_language+aa);
                         }
 
-                        if(profile_map.containsKey("user_keyword")){
+                        if(profile_map.containsKey("NLocation")){
+                            String profile_NLocation=profile_map.get("NLocation").toString();
+                            location.setText(profile_NLocation);
 
-                            HashMap<String,Boolean> user_keywords=(HashMap)profile_map.get("user_keyword");
+                        }
+
+                        if(profile_map.containsKey("newL")){
+                            String L=(String)profile_map.get("newL");
+                            if(L.equals("English"))
+                                profile_language= "Main : "+L+ "  Sub : ";
+                            if(L.equals("Korean"))
+                                profile_language= "Main : "+L+ "  Sub : ";
+                            if(L.equals("Chinese"))
+                                profile_language= "Main : "+L + "  Sub : ";
+
+                            language.setText(profile_language);
+
+                        }
+                        if(profile_map.containsKey("newSubL")){
+                            List<String> l=(ArrayList<String>)profile_map.get("newSubL");
+                            String profile_subLanguage="";
+                            for(String subL : l){
+                                profile_subLanguage=profile_subLanguage+" "+subL+" ";
+
+                            }
+
+                            profile_language+=profile_subLanguage;
+
+                            language.setText(profile_language);
+
+
+                        }
+
+                        if(profile_map.containsKey("newI")){
+                            List<String> check_key=(ArrayList<String>)profile_map.get("newI");;
                             String profile_userkeyword="";
 
-                            for(String userinterest:user_keywords.keySet()){
+                            for(String userinterest:check_key){
 
-                                profile_userkeyword=profile_userkeyword+userinterest+",  ";
+                                profile_userkeyword=profile_userkeyword+"#"+userinterest+" ";
                             }
                             keyword.setText(profile_userkeyword);
 
                         }
+
                     }
                 }
             }
