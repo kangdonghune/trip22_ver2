@@ -29,6 +29,11 @@ import com.squareup.picasso.Picasso;
 import com.sw.HeyBuddy2.R;
 import com.sw.HeyBuddy2.utils.Contacts;
 
+import org.json.JSONObject;
+
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -133,7 +138,7 @@ public class RequestActivity extends AppCompatActivity {
                                                                 db.collection("Users").document(currentUserId).collection("Matching").document(listUserId).update(removereceived).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                                     @Override
                                                                     public void onComplete(@NonNull Task<Void> task) {
-//                                                                        sendFCM(listUserId, currentUserId, true);
+                                                                        sendFCM(listUserId, currentUserId, true);
                                                                         Toast.makeText(getApplication(), "매칭이 수락되었습니다",Toast.LENGTH_SHORT).show();
                                                                     }
                                                                 });
@@ -161,7 +166,7 @@ public class RequestActivity extends AppCompatActivity {
                                                 db.collection("Users").document(currentUserId).collection("Matching").document(listUserId).update(removereceived).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
-//                                                        sendFCM(listUserId, currentUserId, false);
+                                                        sendFCM(listUserId, currentUserId, false);
                                                         Toast.makeText(getApplication(), "매칭이 거절되었습니다",Toast.LENGTH_SHORT).show();
                                                     }
                                                 });
@@ -184,6 +189,62 @@ public class RequestActivity extends AppCompatActivity {
         mRequestsList.setAdapter(fsAdapter);
         fsAdapter.startListening();
     }
+
+    private void sendFCM(final String receiverId, String senderId, final boolean result){
+        final String FCM_MESSAGE_URL = "https://fcm.googleapis.com/fcm/send";
+        final String SERVER_KEY = "AAAAst3LJCQ:APA91bFXxaAjnupdToP6oUYp8qXK8akknY5EKOo-8_ZXURJ64zraxbV27OnKrMhIaQm9hKx4JcPqtQRvl1_O6xbob-xv66WEvXFrV7wzLAXHsJA_tt1RTXXLP7v-9fXq6BXQsliEPFT4";
+        db.collection("Users").document(senderId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                final String senderName = task.getResult().get("name").toString();
+                db.collection("Users").document(receiverId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull final Task<DocumentSnapshot> task) {
+                        final String receiverFCMId = task.getResult().get("FCMToken").toString();
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    //JSON 메시지 생성
+                                    JSONObject pushRoot = new JSONObject();
+                                    JSONObject pushMsg = new JSONObject();
+                                    JSONObject pushData = new JSONObject();
+                                    if(result){
+                                        pushMsg.put("body", senderName+"님과 매칭되었습니다.");
+                                    } else{
+                                        pushMsg.put("body", senderName+"님께 보낸 매칭 요청이 거절되었습니다.");
+                                    }
+                                    pushMsg.put("title", "매칭 결과");
+                                    pushMsg.put("click_action", ".questioner_main");
+                                    pushData.put("pushType", "isaccept");
+                                    pushRoot.put("notification", pushMsg);
+                                    pushRoot.put("to", receiverFCMId);
+                                    pushRoot.put("data", pushData);
+                                    //POST 방식으로 FCM 서버에 전송
+                                    URL Url = new URL(FCM_MESSAGE_URL);
+                                    HttpURLConnection conn = (HttpURLConnection) Url.openConnection();
+                                    conn.setRequestMethod("POST");
+                                    conn.setDoOutput(true);
+                                    conn.setDoInput(true);
+                                    conn.addRequestProperty("Authorization", "key=" + SERVER_KEY);
+                                    conn.setRequestProperty("Accept", "application/json");
+                                    conn.setRequestProperty("Content-type", "application/json");
+                                    OutputStream os = conn.getOutputStream();
+                                    os.write(pushRoot.toString().getBytes("utf-8"));
+                                    os.flush();
+                                    conn.getResponseCode();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }).start();
+                    }
+                });
+            }
+        });
+
+    }
+
     public static class RequestsViewHolder extends  RecyclerView.ViewHolder{
         TextView userName, userStatus;
         CircleImageView profileImage;
