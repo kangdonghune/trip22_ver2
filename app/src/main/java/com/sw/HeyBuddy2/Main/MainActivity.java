@@ -39,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
     private FragmentPagerAdapter fragmentPagerAdapter;
 
     //플롯 버튼
-    FloatingActionButton fab, fab1, fab2, fab3, fab4;
-    LinearLayout fabLayout1, fabLayout2, fabLayout3, fabLayout4;
+    FloatingActionButton fab, fab1, fab2, fab3, fab4, fab5;
+    LinearLayout fabLayout1, fabLayout2, fabLayout3, fabLayout4, fabLayout5;
     View fabBGLayout;
     boolean isFABOpen = false;
 
@@ -64,11 +64,15 @@ public class MainActivity extends AppCompatActivity {
         fabLayout2 = (LinearLayout) findViewById(R.id.fabLayout2);
         fabLayout3 = (LinearLayout) findViewById(R.id.fabLayout3);
         fabLayout4 = (LinearLayout) findViewById(R.id.fabLayout4);
+        fabLayout5 = (LinearLayout) findViewById(R.id.fabLayout5);
+
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab1 = (FloatingActionButton) findViewById(R.id.fab1);
         fab2 = (FloatingActionButton) findViewById(R.id.fab2);
         fab3 = (FloatingActionButton) findViewById(R.id.fab3);
         fab4 = (FloatingActionButton) findViewById(R.id.fab4);
+        fab5 = (FloatingActionButton) findViewById(R.id.fab5);
+
         fabBGLayout = findViewById(R.id.fabBGLayout);
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -190,12 +194,15 @@ public class MainActivity extends AppCompatActivity {
         fabLayout2.setVisibility(View.VISIBLE);
         fabLayout3.setVisibility(View.VISIBLE);
         fabLayout4.setVisibility(View.VISIBLE);
+        fabLayout5.setVisibility(View.VISIBLE);
         fabBGLayout.setVisibility(View.VISIBLE);
         fab.animate().rotationBy(180);
         fabLayout1.animate().translationY(-getResources().getDimension(R.dimen.standard_55));
         fabLayout2.animate().translationY(-getResources().getDimension(R.dimen.standard_100));
         fabLayout3.animate().translationY(-getResources().getDimension(R.dimen.standard_145));
         fabLayout4.animate().translationY(-getResources().getDimension(R.dimen.standard_190));
+        fabLayout5.animate().translationY(-getResources().getDimension(R.dimen.standard_235));
+
     }
 
     private void closeFABMenu() {
@@ -206,7 +213,8 @@ public class MainActivity extends AppCompatActivity {
         fabLayout2.animate().translationY(0);
         fabLayout3.animate().translationY(0);
         fabLayout4.animate().translationY(0);
-        fabLayout4.animate().translationY(0).setListener(new Animator.AnimatorListener() {
+        fabLayout4.animate().translationY(0);
+        fabLayout5.animate().translationY(0).setListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animator) { }
             @Override
@@ -216,6 +224,7 @@ public class MainActivity extends AppCompatActivity {
                     fabLayout2.setVisibility(View.GONE);
                     fabLayout3.setVisibility(View.GONE);
                     fabLayout4.setVisibility(View.GONE);
+                    fabLayout5.setVisibility(View.GONE);
                 }
             }
             @Override
