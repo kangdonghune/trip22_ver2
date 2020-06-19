@@ -36,8 +36,8 @@
                     android:id="@+id/profile_ivUserBackground"
                     android:layout_width="match_parent"
                     android:layout_height="200sp"
-                    android:src="@drawable/profile_ivuserbackgroundimage"
-                    android:scaleType="fitXY">
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/profile_ivuserbackgroundimage">
 
                 </ImageView>
 
