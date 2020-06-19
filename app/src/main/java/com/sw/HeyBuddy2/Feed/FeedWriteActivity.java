@@ -119,45 +119,49 @@ public class FeedWriteActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==REQUEST_IMAGE_CODE){
-            final Uri image=data.getData();
-            Picasso.get().load(image)
-                    .placeholder(R.drawable.default_profile_image)
-                    .error(R.drawable.default_profile_image)
-                    .resize(0,400)
-                    .into(imageview);
+        try {
+            if(requestCode==REQUEST_IMAGE_CODE){
+                final Uri image=data.getData();
+                Picasso.get().load(image)
+                        .placeholder(R.drawable.default_profile_image)
+                        .error(R.drawable.default_profile_image)
+                        .resize(0,400)
+                        .into(imageview);
 
-            final StorageReference riversRef = storageRef.child("Feeds").child(currentUserID).child(documentId).child("feed.jpg");
-            UploadTask uploadTask=riversRef.putFile(image);
-            Task<Uri> uriTask=uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                @Override
-                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                    if(!task.isSuccessful()){
-                        SweetToast.error(FeedWriteActivity.this, "Feed Photo Error: " + task.getException().getMessage());
+                final StorageReference riversRef = storageRef.child("Feeds").child(currentUserID).child(documentId).child("feed.jpg");
+                UploadTask uploadTask=riversRef.putFile(image);
+                Task<Uri> uriTask=uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                    @Override
+                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                        if(!task.isSuccessful()){
+                            SweetToast.error(FeedWriteActivity.this, "Feed Photo Error: " + task.getException().getMessage());
+                        }
+                        feed_uri=riversRef.getDownloadUrl().toString();
+                        return riversRef.getDownloadUrl();
                     }
-                    feed_uri=riversRef.getDownloadUrl().toString();
-                    return riversRef.getDownloadUrl();
-                }
-            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    if(task.isSuccessful()){
-                        feed_uri=task.getResult().toString();
+                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Uri> task) {
+                        if(task.isSuccessful()){
+                            feed_uri=task.getResult().toString();
 
-                        HashMap<String, Object> update_feed_data=new HashMap<>();
-                        update_feed_data.put("feed_uri",feed_uri);
+                            HashMap<String, Object> update_feed_data=new HashMap<>();
+                            update_feed_data.put("feed_uri",feed_uri);
 
-                        db.collection("Feeds").document(documentId).set(update_feed_data, SetOptions.merge())
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                    }
-                                });
+                            db.collection("Feeds").document(documentId).set(update_feed_data, SetOptions.merge())
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                        }
+                                    });
+                        }
                     }
-                }
-            });
+                });
 
+            }
+        }catch (Exception e){
         }
+
     }
     private void writefeed() {
         feed_desc=text.getText().toString();
