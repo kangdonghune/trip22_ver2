@@ -17,7 +17,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class fragment_q_viewpage1 extends Fragment {
+
     private View view;
+
     ImageView ask;
     ImageView findbuddy;
     private FirebaseFirestore db;

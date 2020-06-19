@@ -52,11 +52,12 @@ public class fragment_viewpage2 extends Fragment {
     private FirebaseFirestore db;
     private String currentUserID;
     private FirebaseAuth mAuth;
+    private String mylocation;
 
     private String username,user_uri,feed_uri, feed_desc,feed_uid;
     private Timestamp timestamp;
 
-    RadioButton rbtRecent, rbtLike;
+    RadioButton rbtRecent, rbtLike, rbtArea;
     Query query;
     public fragment_viewpage2(){}
 
@@ -82,10 +83,10 @@ public class fragment_viewpage2 extends Fragment {
 
         rbtRecent=view.findViewById(R.id.rbtRecent);
         rbtLike=view.findViewById(R.id.rbtLike);
+        rbtArea=view.findViewById(R.id.rbtArea);
 
         return view;
     }
-
 
     public void onStart() {
         super.onStart();
@@ -158,6 +159,8 @@ public class fragment_viewpage2 extends Fragment {
                                                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                                         if(task.isSuccessful()){
                                                             username = task.getResult().get("name").toString();
+                                                            //보수공사
+                                                            mylocation = task.getResult().get("NLocation").toString();
                                                             if(task.getResult().contains("user_image")){
                                                                 user_uri=task.getResult().get("user_image").toString();
                                                                 Picasso.get().load(user_uri)
@@ -295,6 +298,16 @@ public class fragment_viewpage2 extends Fragment {
             @Override
             public void onClick(View v) {
                 query=db.collection("Feeds").orderBy("feed_time", Query.Direction.ASCENDING);
+                feedList.removeAllViews();
+                feedAdapter.notifyDataSetChanged();
+                feedAdapter.startListening();
+
+            }
+        });
+        rbtArea.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                query=db.collection("Feeds").whereEqualTo("location",mylocation);
                 feedList.removeAllViews();
                 feedAdapter.notifyDataSetChanged();
                 feedAdapter.startListening();

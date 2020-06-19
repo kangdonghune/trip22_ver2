@@ -33,6 +33,8 @@
 
     <string name="recent" translatable="false">Recent Order</string>
     <string name="likeOrder" translatable="false">Like Order</string>
+    <string name="area" translatable="false">Area Order</string>
+
     <string name="title_activity_chat_image_viewer" translatable="false">ImageViewer</string>
 
     <string name="NEXT">NEXT</string>

@@ -22,6 +22,11 @@
             android:layout_height="wrap_content"
             android:id="@+id/rbtLike"
             android:text="@string/likeOrder"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rbtArea"
+            android:text="@string/area"/>
     </RadioGroup>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/feed_list"
