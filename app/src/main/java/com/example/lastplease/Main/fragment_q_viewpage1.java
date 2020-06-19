@@ -42,8 +42,8 @@ public class fragment_q_viewpage1 extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_q_viewpage1, container, false);
 
-        checkLang=view.findViewById(R.id.checkLang);
-        checkLo=view.findViewById(R.id.checkLo);
+        //checkLang=view.findViewById(R.id.checkLang);
+        //checkLo=view.findViewById(R.id.checkLo);
         ask=view.findViewById(R.id.Ask);
         findbuddy=view.findViewById(R.id.Find_Buddy);
 
