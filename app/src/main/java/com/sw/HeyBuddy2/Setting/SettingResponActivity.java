@@ -342,8 +342,9 @@ public class SettingResponActivity extends AppCompatActivity {
         String setStatus = userStatus.getText().toString();
 
         //HashMap<String,Boolean> locations=new HashMap<>();
-        HashMap<String, Boolean> Language=new HashMap<>();
+        List<String> Language=new ArrayList<>();
         String newL="";
+        String newSubL="";
 
         //final HashMap<String,Boolean> user_keyword= new HashMap<>();
 
@@ -370,13 +371,13 @@ public class SettingResponActivity extends AppCompatActivity {
             newL="Chinese";
 
         if(english.isChecked())
-            Language.put(english.getText().toString(),true);
+           Language.add("English");
 
         if(korean.isChecked())
-            Language.put(korean.getText().toString(),true);
+            Language.add("Korean");
 
         if(chinese.isChecked())
-            Language.put(chinese.getText().toString(),true);
+            Language.add("Chinese");
 
         List<String> new_interests=new ArrayList<>();
 
@@ -428,6 +429,7 @@ public class SettingResponActivity extends AppCompatActivity {
             profileMap.put("status", setStatus);
             //profileMap.put("location",locations);
             profileMap.put("newL",newL);
+            profileMap.put("newSubL",Language);
             profileMap.put("NLocation",NLocation);
 
             profileMap.put("newI",new_interests);

@@ -247,6 +247,22 @@ public class respon_profile extends AppCompatActivity {
                             if(L.equals("Chinese"))
                                 profile_language= "Main : "+L + "  Sub : ";
 
+                            language.setText(profile_language);
+
+                        }
+                        if(profile_map.containsKey("newSubL")){
+                            List<String> l=(ArrayList<String>)profile_map.get("newSubL");
+                            String profile_subLanguage="";
+                            for(String subL : l){
+                                profile_subLanguage=profile_subLanguage+" "+subL+" ";
+
+                            }
+
+                            profile_subLanguage+=profile_language;
+
+                            language.setText(profile_subLanguage);
+
+
                         }
                         if(profile_map.containsKey("newI")){
                             List<String> check_key=(ArrayList<String>)profile_map.get("newI");;
