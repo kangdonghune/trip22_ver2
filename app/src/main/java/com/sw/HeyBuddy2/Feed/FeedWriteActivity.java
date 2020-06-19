@@ -12,11 +12,13 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.sw.HeyBuddy2.Main.MainActivity;
@@ -46,6 +48,8 @@ public class FeedWriteActivity extends AppCompatActivity {
     Button btn_ok;
     EditText text;
     private CheckBox restaurant, culture, show, art, sights, shopping, walk;
+    private Spinner sp1;
+
 
     FirebaseFirestore db;
     private String currentUserID;
@@ -65,6 +69,8 @@ public class FeedWriteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed_write);
+
+        sp1=(Spinner)findViewById(R.id.spinner_city);
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
@@ -162,17 +168,6 @@ public class FeedWriteActivity extends AppCompatActivity {
     private void writefeed() {
         feed_desc=text.getText().toString();
 
-        final Map<String, Object> feed = new HashMap<>();
-        db.collection("Users").document(currentUserID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if(task.isSuccessful()){
-                    feed_location=task.getResult().get("NLocation").toString();
-                    feed.put("location",feed_location);
-                }
-            }
-        });
-
         final HashMap<String,Boolean> feed_keyword= new HashMap<>();
 
         if(restaurant.isChecked())
@@ -190,12 +185,22 @@ public class FeedWriteActivity extends AppCompatActivity {
         if(walk.isChecked())
             feed_keyword.put(walk.getText().toString(),true);
 
-
+        final Map<String, Object> feed = new HashMap<>();
+        db.collection("Users").document(currentUserID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()){
+                    feed_location=task.getResult().get("NLocation").toString();
+                    feed.put("location",feed_location);
+                }
+            }
+        });
         feed.put("feed_desc",feed_desc);
         feed.put("feed_time", FieldValue.serverTimestamp());
         feed.put("uid", currentUserID);
         feed.put("feed_area",feed_keyword);
         feed.put("like_number",0);
+        Log.e("버그발생", feed.get("uid").toString());
 
         db.collection("Feeds").document(documentId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
