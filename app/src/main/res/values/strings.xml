@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">LastPlease</string>
+    <string name="app_name">HeyBuddy2</string>
     <string name="rememberlogin" translatable="false">Remember your login information</string>
 
     <string name="give_correct_information">Please your give correct information. Because, your email needs to be verification.</string>
