@@ -302,7 +302,7 @@ public class ChatActivity extends AppCompatActivity {
                 });
             }
         });
-
+        Log.d(TAG, "sendFCM: 메시지 보냈다");
     }
 
     private void InitializeControllers() {
