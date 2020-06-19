@@ -1,4 +1,5 @@
 package com.sw.HeyBuddy2.FCM;
 
-public class SendFCM {
+public abstract class SendFCM {
+    abstract void sendFCM();
 }

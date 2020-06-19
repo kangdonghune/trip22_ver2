@@ -39,4 +39,7 @@
     <string name="wherevisit">wherevisit</string>
     <string name="skip">skip</string>
     <string name="start">start</string>
+
+<!--    채팅관련-->
+    <string name="message" translatable="false">Message...</string>
 </resources>
