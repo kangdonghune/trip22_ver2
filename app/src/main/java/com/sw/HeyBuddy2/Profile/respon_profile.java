@@ -194,6 +194,8 @@ public class respon_profile extends AppCompatActivity {
             public void onClick(View v) {
                 intent = new Intent(respon_profile.this, SettingResponActivity.class);
                 startActivity(intent);
+                finish();
+
             }
         });
 
