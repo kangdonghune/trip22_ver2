@@ -43,6 +43,7 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+import com.sw.HeyBuddy2.utils.fullScreenImageViewer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -220,15 +221,6 @@ public class respon_profile extends AppCompatActivity {
                             String profile_name = profile_map.get("name").toString();
                             name.setText(profile_name);
                         }
-                        /*if(profile_map.containsKey("location")){
-                            HashMap<String,Boolean> locationpart=(HashMap)profile_map.get("location");
-                            String profile_location="";
-                            for(String userlocation : locationpart.keySet())
-                            {
-                                profile_location=profile_location+userlocation;
-                            }
-                            location.setText(profile_location);
-                        }*/
                         if(profile_map.containsKey("NLocation")){
                             String profile_NLocation=profile_map.get("NLocation").toString();
                             location.setText(profile_NLocation);
@@ -275,30 +267,6 @@ public class respon_profile extends AppCompatActivity {
                             keyword.setText(profile_userkeyword);
 
                         }
-
-
-                        /*if(profile_map.containsKey("language")){
-                            HashMap<String,Boolean> langlist=(HashMap)profile_map.get("language");
-                            String aa="";
-                            for(String userlang:langlist.keySet()) {
-
-                                aa=aa+userlang+",  ";
-                            }
-                            language.setText(profile_language+aa);
-                        }*/
-
-                        /*if(profile_map.containsKey("user_keyword")){
-
-                            HashMap<String,Boolean> user_keywords=(HashMap)profile_map.get("user_keyword");
-                            String profile_userkeyword="";
-
-                            for(String userinterest:user_keywords.keySet()){
-
-                                profile_userkeyword=profile_userkeyword+"#"+userinterest+" ";
-                            }
-                            keyword.setText(profile_userkeyword);
-
-                        }*/
                     }
                 }
             }
@@ -381,21 +349,22 @@ public class respon_profile extends AppCompatActivity {
                                                             return true;
                                                         }
                                                     });
+                                                    holder.itemView.setOnClickListener(new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View v) {
+                                                            if(task.getResult().getDocuments().get(position).contains("feed_uri")) {
+                                                                feed_uri = task.getResult().getDocuments().get(position).get("feed_uri").toString();
+                                                                Intent intent = new Intent(getApplication(), fullScreenImageViewer.class);
+                                                                intent.putExtra("uri",feed_uri );
+                                                                startActivity(intent);
+                                                            }
+                                                        }
+                                                    });
                                                 }
                                             }
                                         }
                                     });
-                            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    String userId = getSnapshots().getSnapshot(position).get("uid").toString();
-                                    String feedId= getSnapshots().getSnapshot(position).getId();
-                                    Intent profileIntent = new Intent(respon_profile.this, FeedDetailActivity.class);
-                                    profileIntent.putExtra("userId", userId);
-                                    profileIntent.putExtra("feedId", feedId);
-                                    startActivity(profileIntent);
-                                }
-                            });
+
                         }
                     }
 

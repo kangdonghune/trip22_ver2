@@ -221,11 +221,7 @@ public class SettingResponActivity extends AppCompatActivity {
                             }
                         }
 
-                        /*if(map.containsKey("location")){
-                            HashMap<String,Boolean> locations=(HashMap)map.get("location");
 
-                            }
-                        }*/
                         if(map.containsKey("newI")){
                             List<String> check_key=(ArrayList<String>)map.get("newI");
                             for(int i=0;i<check_key.size();i++){
@@ -245,36 +241,6 @@ public class SettingResponActivity extends AppCompatActivity {
                                     walk.setChecked(true);
                             }
                         }
-                        /*if(map.containsKey("user_keyword")){
-
-
-                            HashMap<String,Boolean> user_keywords=(HashMap)map.get("user_keyword");
-                            for(String userinterest:user_keywords.keySet()){
-                                if(userinterest.equals("Restaurant")) {
-                                    restaurant.setChecked(true);
-                                }
-                                if(userinterest.equals("Culture")){
-                                    culture.setChecked(true);
-                                }
-                                if(userinterest.equals("Show")){
-                                    show.setChecked(true);
-                                }
-                                if(userinterest.equals("Art")){
-                                    art.setChecked(true);
-                                }
-                                if(userinterest.equals("Sights")){
-                                    sights.setChecked(true);
-                                }
-                                if(userinterest.equals("Shopping")){
-                                    shopping.setChecked(true);
-                                }
-                                if(userinterest.equals("Walk")){
-                                    walk.setChecked(true);
-                                }
-
-                            }
-
-                        }*/
                     }
                 }
                 else {
@@ -336,24 +302,10 @@ public class SettingResponActivity extends AppCompatActivity {
         String setUserName = userName.getText().toString();
         String setStatus = userStatus.getText().toString();
 
-        //HashMap<String,Boolean> locations=new HashMap<>();
         List<String> Language=new ArrayList<>();
         String newL="";
         String newSubL="";
 
-        //final HashMap<String,Boolean> user_keyword= new HashMap<>();
-
-        /*DocumentReference delete =db.collection("Users").document(currentUserID);
-        Map<String,Object> updates = new HashMap<>();
-        updates.put("language", FieldValue.delete());
-        updates.put("user_keyword",FieldValue.delete());
-        updates.put("location",FieldValue.delete());
-        delete.update(updates).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-
-            }
-        });*/
 
         NLocation=location.getSelectedItem().toString();
 
@@ -392,24 +344,6 @@ public class SettingResponActivity extends AppCompatActivity {
             new_interests.add("Walk");
 
 
-        /*if(restaurant.isChecked())
-            user_keyword.put(restaurant.getText().toString(),true);
-        if(culture.isChecked())
-            user_keyword.put(culture.getText().toString(),true);
-        if(show.isChecked())
-            user_keyword.put(show.getText().toString(),true);
-        if(art.isChecked())
-            user_keyword.put(art.getText().toString(),true);
-        if(sights.isChecked())
-            user_keyword.put(sights.getText().toString(),true);
-        if(shopping.isChecked())
-            user_keyword.put(shopping.getText().toString(),true);
-        if(walk.isChecked())
-            user_keyword.put(walk.getText().toString(),true);*/
-
-       /* locations.put(location.getSelectedItem().toString(),true);*/
-
-
         if (TextUtils.isEmpty(setUserName)) {
             Toast.makeText(this, "Please write your user name first...", Toast.LENGTH_SHORT).show();
         }else if (TextUtils.isEmpty(setStatus)) {
@@ -422,15 +356,10 @@ public class SettingResponActivity extends AppCompatActivity {
             profileMap.put("name", setUserName);
             profileMap.put("uid", currentUserID);
             profileMap.put("status", setStatus);
-            //profileMap.put("location",locations);
             profileMap.put("newL",newL);
             profileMap.put("newSubL",Language);
             profileMap.put("NLocation",NLocation);
-
             profileMap.put("newI",new_interests);
-           // profileMap.put("language",Language);
-           // profileMap.put("user_keyword",user_keyword);
-            //profileMap.put("user_keyword", setKeyword);
 
             db.collection("Users").document(currentUserID).set(profileMap, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
