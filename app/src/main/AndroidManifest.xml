@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Main.fragment_q_viewpage2"></activity>
+        <activity android:name=".FindBuddy.SecondActivity"></activity>
         <activity
             android:name=".Feed.DeleteFeedActivity"
             android:theme="@android:style/Theme.Dialog" />
