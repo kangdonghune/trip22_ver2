@@ -160,7 +160,7 @@ public class QMainActivity extends AppCompatActivity {
                             Intent settingsIntent = new Intent(QMainActivity.this, SettingQuestionActivity.class);
                             startActivity(settingsIntent);
                         }
-                        if(!map.containsKey("status")){
+                        if(!map.containsKey("NQLocation")){
                             Intent settingsIntent = new Intent(QMainActivity.this, SettingQuestionActivity.class);
                             startActivity(settingsIntent);
                         }
