@@ -37,4 +37,6 @@
 
     <string name="NEXT">NEXT</string>
     <string name="wherevisit">wherevisit</string>
+    <string name="skip">skip</string>
+    <string name="start">start</string>
 </resources>
