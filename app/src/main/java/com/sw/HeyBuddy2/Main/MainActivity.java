@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import com.sw.HeyBuddy2.Feed.FeedWriteActivity;
+import com.sw.HeyBuddy2.FindBuddy.RequestActivity;
 import com.sw.HeyBuddy2.LoginRegiser.LoginActivity;
 import com.sw.HeyBuddy2.R;
 import com.sw.HeyBuddy2.Setting.SettingResponActivity;
@@ -100,6 +101,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent profile=new Intent(MainActivity.this, respon_profile.class);
                 startActivity(profile);
+            }
+        });
+        fab3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent request=new Intent(MainActivity.this, RequestActivity.class);
+                startActivity(request);
             }
         });
 

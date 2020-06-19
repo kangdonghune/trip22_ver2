@@ -45,6 +45,6 @@
     <string name="add_friend" translatable="false">Add friend</string>
     <string name="cancel_invite" translatable="false">Cancel invite</string>
 
-<!--    채팅관련-->
+    <!--    채팅관련-->
     <string name="message" translatable="false">Message...</string>
 </resources>

@@ -7,12 +7,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.SetOptions;
 import com.sw.HeyBuddy2.R;
 import com.sw.HeyBuddy2.utils.Feed;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -26,6 +31,11 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONObject;
+
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,7 +43,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class OtherProfileActivity extends AppCompatActivity {
     private static final String TAG = "OtherProfileActivity";
-    String feed_uri, userID;
+    String feed_uri;
+    private String receiverUserId, senderUserId;
 
     RecyclerView profile_feed;
     private CircleImageView ivUser;
@@ -48,8 +59,9 @@ public class OtherProfileActivity extends AppCompatActivity {
     TextView language;
     TextView introduce;
     String profile_language="";
+    private FirebaseAuth mAuth;
 
-
+    private Button sendMessageRequestButton, addToWishlistButton;
     Intent intent;
 
     @Override
@@ -64,14 +76,26 @@ public class OtherProfileActivity extends AppCompatActivity {
         introduce=findViewById(R.id.profile_introduce);
 
         db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
         intent=getIntent();
 
-        userID=intent.getExtras().get("userId").toString();
+        senderUserId = mAuth.getCurrentUser().getUid();
+        receiverUserId=intent.getExtras().get("userId").toString();
 
         ivUser=findViewById(R.id.profile_ivUser);
         ivBack=findViewById(R.id.profile_ivUserBackground);
 
-        db.collection("Users").document(userID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        sendMessageRequestButton = (Button) findViewById(R.id.send_message_request_button);
+        addToWishlistButton = findViewById(R.id.add_to_wishlist_button);
+
+        sendMessageRequestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SendChatRequest();
+            }
+        });
+
+        db.collection("Users").document(receiverUserId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if(task.isSuccessful()){
@@ -136,7 +160,7 @@ public class OtherProfileActivity extends AppCompatActivity {
         profile_feed.setLayoutManager(proFeedGridManger);
     }
     private void RetrieveUserInfo(){
-        db.collection("Users").document(userID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        db.collection("Users").document(receiverUserId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if(task.isSuccessful()){
@@ -201,13 +225,13 @@ public class OtherProfileActivity extends AppCompatActivity {
     public void onStart(){
         super.onStart();
         FirestoreRecyclerOptions<Feed> options =new FirestoreRecyclerOptions.Builder<Feed>()
-                .setQuery(db.collection("Feeds").whereEqualTo("uid",userID),Feed.class).build();
+                .setQuery(db.collection("Feeds").whereEqualTo("uid",receiverUserId),Feed.class).build();
 
         FirestoreRecyclerAdapter<Feed, FeedViewHolder> feedAdapter=
                 new FirestoreRecyclerAdapter<Feed, FeedViewHolder>(options) {
                     @Override
                     protected void onBindViewHolder(@NonNull final FeedViewHolder holder, final int position, @NonNull Feed model) {
-                        db.collection("Feeds").whereEqualTo("uid",userID).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        db.collection("Feeds").whereEqualTo("uid",receiverUserId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
                             public void onComplete(@NonNull final Task<QuerySnapshot> task) {
                                 if(task.isSuccessful()){
@@ -260,6 +284,49 @@ public class OtherProfileActivity extends AppCompatActivity {
         public FeedViewHolder(@NonNull View itemView) {
             super(itemView);
             feed=itemView.findViewById(R.id.profile_feed);
+        }
+    }
+    private void SendChatRequest() {
+
+        if(sendMessageRequestButton.getText().equals(getString(R.string.cancel_invite))){
+            Map<String,Object> removesent = new HashMap<>();
+            removesent.put("sent", FieldValue.delete());
+            //removesent.put("ismatched", false);
+            db.collection("Users").document(senderUserId).collection("Matching")
+                    .document(receiverUserId).update(removesent).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if(task.isSuccessful()){
+                        Map<String,Object> removereceived = new HashMap<>();
+                        removereceived.put("received", FieldValue.delete());
+                        //removereceived.put("ismatched", false);
+                        db.collection("Users").document(receiverUserId)
+                                .collection("Matching").document(senderUserId).update(removereceived);
+                    }
+                }
+            });
+            sendMessageRequestButton.setText(R.string.add_friend);
+        } else{
+            Map<String, Object> requestInfo_send = new HashMap<>();
+            requestInfo_send.put("sent", true);
+            requestInfo_send.put("ismatched", false);
+            db.collection("Users").document(senderUserId).collection("Matching").document(receiverUserId).set(requestInfo_send, SetOptions.merge()).addOnCompleteListener(
+                    new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                Map<String, Object> requestInfo_receive = new HashMap<>();
+                                requestInfo_receive.put("received", true);
+                                requestInfo_receive.put("ismatched", false);
+                                db.collection("Users").document(receiverUserId)
+                                        .collection("Matching").document(senderUserId)
+                                        .set(requestInfo_receive, SetOptions.merge());
+//                                sendFCM(receiverUserId);
+                                sendMessageRequestButton.setText(R.string.cancel_invite);
+                            }
+                        }
+                    }
+            );
         }
     }
 }
