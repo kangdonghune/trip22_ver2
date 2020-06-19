@@ -2,10 +2,13 @@ package com.sw.HeyBuddy2.FindBuddy;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -32,6 +35,7 @@ import com.sw.HeyBuddy2.R;
 import com.sw.HeyBuddy2.utils.Contacts;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import xyz.hasnat.sweettoast.SweetToast;
 
 public class QListActivity extends AppCompatActivity {
     private RecyclerView chatsList;
@@ -113,7 +117,14 @@ public class QListActivity extends AppCompatActivity {
                                                     startActivity(chatIntent);
                                                 }
                                             });
-
+                                            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                                                @Override
+                                                public boolean onLongClick(View v) {
+                                                    setvUid(user_uid);
+                                                    Log.d("롱클릭", "onLongClick: ");
+                                                    return false;
+                                                }
+                                            });
                                         }
                                     }
                                 });
@@ -128,17 +139,49 @@ public class QListActivity extends AppCompatActivity {
                     @Override
                     public ChatsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
                         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.user_display_layout, viewGroup, false);
+                        registerForContextMenu(view);
                         return new ChatsViewHolder(view);
                     }
                 };
         chatsList.setAdapter(fsAdapter);
         fsAdapter.startListening();
     }
+    private String vUid;
+    public String getvUid(){
+        return vUid;
+    }
+    public void setvUid(String vUid){
+        this.vUid = vUid;
+    }
+
+    @Override
+    public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater mInflater = getMenuInflater();
+        mInflater.inflate(R.menu.list_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.listmenu_report:
+                SweetToast.info(this, "신고하기\n"+getvUid());
+                return true;
+            case R.id.listmenu_endmatch:
+                SweetToast.info(this, "매칭종료 및 평가");
+                Intent evalIntent = new Intent(this, UserEvaluationActivity.class);
+                evalIntent.putExtra("rateeUid", getvUid());
+                evalIntent.putExtra("raterUid", currentUserId);
+                startActivity(evalIntent);
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
 
     public static class ChatsViewHolder extends RecyclerView.ViewHolder{
         CircleImageView profileImage;
         TextView userName,userStatus;
-        ImageView userOnlineStatus;
 
         public ChatsViewHolder(@NonNull View itemView) {
             super(itemView);
