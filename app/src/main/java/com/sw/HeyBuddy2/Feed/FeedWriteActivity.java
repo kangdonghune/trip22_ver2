@@ -12,11 +12,13 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.sw.HeyBuddy2.Main.MainActivity;
@@ -46,6 +48,8 @@ public class FeedWriteActivity extends AppCompatActivity {
     Button btn_ok;
     EditText text;
     private CheckBox restaurant, culture, show, art, sights, shopping, walk;
+    private Spinner sp1;
+
 
     FirebaseFirestore db;
     private String currentUserID;
@@ -66,12 +70,14 @@ public class FeedWriteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed_write);
 
+        sp1=(Spinner)findViewById(R.id.spinner_city);
+
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         currentUserID = mAuth.getCurrentUser().getUid();
 
         storageRef = FirebaseStorage.getInstance().getReference();
-        documentId=db.collection("feeds").document().getId();
+        documentId=db.collection("Feeds").document().getId();
 
         restaurant=(CheckBox)findViewById(R.id.restaurant);
         culture =(CheckBox)findViewById(R.id.culture);
@@ -119,50 +125,68 @@ public class FeedWriteActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==REQUEST_IMAGE_CODE && resultCode==RESULT_OK){
-            final Uri image=data.getData();
-            Picasso.get().load(image)
-                    .placeholder(R.drawable.default_profile_image)
-                    .error(R.drawable.default_profile_image)
-                    .resize(0,400)
-                    .into(imageview);
+        try {
+            if(requestCode==REQUEST_IMAGE_CODE){
+                final Uri image=data.getData();
+                Picasso.get().load(image)
+                        .placeholder(R.drawable.default_profile_image)
+                        .error(R.drawable.default_profile_image)
+                        .resize(0,400)
+                        .into(imageview);
 
-            final StorageReference riversRef = storageRef.child("Feeds").child(currentUserID).child(documentId).child("feed.jpg");
-            UploadTask uploadTask=riversRef.putFile(image);
-            Task<Uri> uriTask=uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                @Override
-                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                    if(!task.isSuccessful()){
-                        SweetToast.error(FeedWriteActivity.this, "Feed Photo Error: " + task.getException().getMessage());
+                final StorageReference riversRef = storageRef.child("Feeds").child(currentUserID).child(documentId).child("feed.jpg");
+                UploadTask uploadTask=riversRef.putFile(image);
+                Task<Uri> uriTask=uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                    @Override
+                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                        if(!task.isSuccessful()){
+                            SweetToast.error(FeedWriteActivity.this, "Feed Photo Error: " + task.getException().getMessage());
+                        }
+                        feed_uri=riversRef.getDownloadUrl().toString();
+                        return riversRef.getDownloadUrl();
                     }
-                    feed_uri=riversRef.getDownloadUrl().toString();
-                    return riversRef.getDownloadUrl();
-                }
-            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    if(task.isSuccessful()){
-                        feed_uri=task.getResult().toString();
+                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Uri> task) {
+                        if(task.isSuccessful()){
+                            feed_uri=task.getResult().toString();
 
-                        HashMap<String, Object> update_feed_data=new HashMap<>();
-                        update_feed_data.put("feed_uri",feed_uri);
+                            HashMap<String, Object> update_feed_data=new HashMap<>();
+                            update_feed_data.put("feed_uri",feed_uri);
 
-                        db.collection("Feeds").document(documentId).set(update_feed_data, SetOptions.merge())
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                    }
-                                });
+                            db.collection("Feeds").document(documentId).set(update_feed_data, SetOptions.merge())
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                        }
+                                    });
+                        }
                     }
-                }
-            });
+                });
 
+            }
+        }catch (Exception e){
         }
+
     }
     private void writefeed() {
-        feed_desc=text.getText().toString();
 
-        final HashMap<String,Boolean> feed_keyword= new HashMap<>();
+
+        Map<String, Object> feed = new HashMap<>();
+        db.collection("Users").document(currentUserID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
+                feed_location=task.getResult().get("NLocation").toString();
+
+                feed.put("location",feed_location);
+
+            }
+        });
+
+        HashMap<String,Boolean> feed_keyword= new HashMap<>();
+
+        feed_desc=text.getText().toString();
 
         if(restaurant.isChecked())
             feed_keyword.put(restaurant.getText().toString(),true);
@@ -179,21 +203,13 @@ public class FeedWriteActivity extends AppCompatActivity {
         if(walk.isChecked())
             feed_keyword.put(walk.getText().toString(),true);
 
-        final Map<String, Object> feed = new HashMap<>();
-        db.collection("Users").document(currentUserID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if(task.isSuccessful()){
-                    feed_location=task.getResult().get("NLocation").toString();
-                    feed.put("location",feed_location);
-                }
-            }
-        });
+
         feed.put("feed_desc",feed_desc);
         feed.put("feed_time", FieldValue.serverTimestamp());
         feed.put("uid", currentUserID);
         feed.put("feed_area",feed_keyword);
         feed.put("like_number",0);
+        Log.e("버그발생", feed.get("uid").toString());
 
         db.collection("Feeds").document(documentId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
