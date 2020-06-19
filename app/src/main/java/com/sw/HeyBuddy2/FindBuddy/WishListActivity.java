@@ -73,8 +73,8 @@ public class WishListActivity extends AppCompatActivity {
         fsAdapter = new FirestoreRecyclerAdapter<Contacts, WishlistViewHolder>(fsOptions) {
             @Override
             protected void onBindViewHolder(@NonNull final WishlistViewHolder holder, int position, @NonNull Contacts model) {
-                final String listUserId = getSnapshots().getSnapshot(position).getId();
-                DocumentReference docRef = getSnapshots().getSnapshot(position).getReference();
+                final String listUserId = getSnapshots().getSnapshot(holder.getAdapterPosition()).getId();
+                DocumentReference docRef = getSnapshots().getSnapshot(holder.getAdapterPosition()).getReference();
                 docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {

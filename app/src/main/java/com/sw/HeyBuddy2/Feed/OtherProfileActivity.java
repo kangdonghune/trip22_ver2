@@ -322,13 +322,13 @@ public class OtherProfileActivity extends AppCompatActivity {
         FirestoreRecyclerAdapter<Feed, FeedViewHolder> feedAdapter=
                 new FirestoreRecyclerAdapter<Feed, FeedViewHolder>(options) {
                     @Override
-                    protected void onBindViewHolder(@NonNull final FeedViewHolder holder, final int position, @NonNull Feed model) {
+                    protected void onBindViewHolder(@NonNull final FeedViewHolder holder, int position, @NonNull Feed model) {
                         db.collection("Feeds").whereEqualTo("uid",receiverUserId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
                             public void onComplete(@NonNull final Task<QuerySnapshot> task) {
                                 if(task.isSuccessful()){
-                                    if(task.getResult().getDocuments().get(position).contains("feed_uri")){
-                                        feed_uri=task.getResult().getDocuments().get(position).get("feed_uri").toString();
+                                    if(task.getResult().getDocuments().get(holder.getAdapterPosition()).contains("feed_uri")){
+                                        feed_uri=task.getResult().getDocuments().get(holder.getAdapterPosition()).get("feed_uri").toString();
                                         Picasso.get().load(feed_uri)
                                                 .placeholder(R.drawable.load)
                                                 .error(R.drawable.load)
@@ -342,8 +342,8 @@ public class OtherProfileActivity extends AppCompatActivity {
                         holder.itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                String userId = getSnapshots().getSnapshot(position).get("uid").toString();
-                                String feedId= getSnapshots().getSnapshot(position).getId();
+                                String userId = getSnapshots().getSnapshot(holder.getAdapterPosition()).get("uid").toString();
+                                String feedId= getSnapshots().getSnapshot(holder.getAdapterPosition()).getId();
                                 Intent profileIntent = new Intent(getApplication(), FeedDetailActivity.class);
                                 profileIntent.putExtra("userId", userId);
                                 profileIntent.putExtra("feedId", feedId);

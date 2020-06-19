@@ -328,15 +328,15 @@ public class respon_profile extends AppCompatActivity {
         FirestoreRecyclerAdapter<Feed, FeedViewHolder> feedAdapter=
                 new FirestoreRecyclerAdapter<Feed, FeedViewHolder>(options) {
                     @Override
-                    protected void onBindViewHolder(@NonNull final FeedViewHolder holder, final int position, @NonNull Feed model) {
-                        if(getSnapshots().getSnapshot(position).contains("feed_time")){
+                    protected void onBindViewHolder(@NonNull final FeedViewHolder holder, int position, @NonNull Feed model) {
+                        if(getSnapshots().getSnapshot(holder.getAdapterPosition()).contains("feed_time")){
                             db.collection("Feeds").whereEqualTo("uid",currentUserID).get()
                                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                         @Override
                                         public void onComplete(@NonNull final Task<QuerySnapshot> task) {
                                             if(task.isSuccessful()){
-                                                if(task.getResult().getDocuments().get(position).contains("feed_uri")){
-                                                    feed_uri=task.getResult().getDocuments().get(position).get("feed_uri").toString();
+                                                if(task.getResult().getDocuments().get(holder.getAdapterPosition()).contains("feed_uri")){
+                                                    feed_uri=task.getResult().getDocuments().get(holder.getAdapterPosition()).get("feed_uri").toString();
                                                     Picasso.get().load(feed_uri)
                                                             .placeholder(R.drawable.load)
                                                             .error(R.drawable.load)
@@ -347,7 +347,7 @@ public class respon_profile extends AppCompatActivity {
                                                         @Override
                                                         public boolean onLongClick(View v) {
                                                             Intent intent = new Intent(respon_profile.this, DeleteFeedActivity.class);
-                                                            intent.putExtra("id", task.getResult().getDocuments().get(position).getId());
+                                                            intent.putExtra("id", task.getResult().getDocuments().get(holder.getAdapterPosition()).getId());
                                                             intent.putExtra("feedUri",feed_uri);
                                                             startActivity(intent);
                                                             return true;
@@ -356,8 +356,8 @@ public class respon_profile extends AppCompatActivity {
                                                     holder.itemView.setOnClickListener(new View.OnClickListener() {
                                                         @Override
                                                         public void onClick(View v) {
-                                                            if(task.getResult().getDocuments().get(position).contains("feed_uri")) {
-                                                                feed_uri = task.getResult().getDocuments().get(position).get("feed_uri").toString();
+                                                            if(task.getResult().getDocuments().get(holder.getAdapterPosition()).contains("feed_uri")) {
+                                                                feed_uri = task.getResult().getDocuments().get(holder.getAdapterPosition()).get("feed_uri").toString();
                                                                 Intent intent = new Intent(getApplication(), fullScreenImageViewer.class);
                                                                 intent.putExtra("uri",feed_uri );
                                                                 startActivity(intent);

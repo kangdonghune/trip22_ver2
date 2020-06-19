@@ -79,13 +79,13 @@ public class RequestActivity extends AppCompatActivity {
             }
 
             @Override
-            protected void onBindViewHolder(@NonNull final RequestsViewHolder holder, final int position, @NonNull final Contacts model) {
+            protected void onBindViewHolder(@NonNull final RequestsViewHolder holder, int position, @NonNull final Contacts model) {
                 holder.itemView.findViewById(R.id.requests_accept_btn).setVisibility(View.VISIBLE);
                 holder.itemView.findViewById(R.id.requests_cancel_btn).setVisibility(View.VISIBLE);
 
                 // listuserid는 나의 매칭 항목에 있는 상대방의 uid 목록
-                final String listUserId = getSnapshots().getSnapshot(position).getId();
-                DocumentReference docRef = getSnapshots().getSnapshot(position).getReference();
+                final String listUserId = getSnapshots().getSnapshot(holder.getAdapterPosition()).getId();
+                DocumentReference docRef = getSnapshots().getSnapshot(holder.getAdapterPosition()).getReference();
                 docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
@@ -119,7 +119,7 @@ public class RequestActivity extends AppCompatActivity {
                                         final Map<String, Object> ismatched = new HashMap<>();
                                         ismatched.put("ismatched", true);
                                         //수락한 경우에 일단 내 매칭리스트에서 ismatched 값을 넣음
-                                        getSnapshots().getSnapshot(position).getReference().set(ismatched).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        getSnapshots().getSnapshot(holder.getAdapterPosition()).getReference().set(ismatched).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 //내 매칭리스트에 ismatched가 들어간 다음에는 상대의 매칭리스트에도 ismatched 값을 넣어줌
