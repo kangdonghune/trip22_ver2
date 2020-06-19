@@ -1,7 +1,6 @@
 package com.sw.HeyBuddy2;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
@@ -46,10 +45,10 @@ public class Tutorial extends AppCompatActivity {
         btnNext = findViewById(R.id.next);
 
         layouts = new int[]{
-                R.layout.page1,
-                R.layout.page2,
-                R.layout.page3,
-                R.layout.page4
+                R.layout.Tuto_page1,
+                R.layout.Tuto_page2,
+                R.layout.Tuto_page3,
+                R.layout.Tuto_page4
         };
 
         addBottomDots(0);
