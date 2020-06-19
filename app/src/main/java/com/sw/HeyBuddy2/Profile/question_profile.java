@@ -237,46 +237,49 @@ public class question_profile extends AppCompatActivity {
     }
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==REQUEST_IMAGE_CODE && resultCode == question_profile.this.RESULT_OK){
-            final Uri image=data.getData();
-            Picasso.get().load(image)
-                    .placeholder(R.drawable.profile_ivuserbackgroundimage)
-                    .error(R.drawable.profile_ivuserbackgroundimage)
-                    .resize(0,200)
-                    .into(ivBack);
+        try {
+            if(requestCode==REQUEST_IMAGE_CODE && resultCode == question_profile.this.RESULT_OK){
+                final Uri image=data.getData();
+                Picasso.get().load(image)
+                        .placeholder(R.drawable.profile_ivuserbackgroundimage)
+                        .error(R.drawable.profile_ivuserbackgroundimage)
+                        .resize(0,200)
+                        .into(ivBack);
 
-            final StorageReference storeRef = mStorageRef.child("Users").child(currentUserID).child("profile_back.jpg");
-            UploadTask uploadTask=storeRef.putFile(image);
-            Task<Uri> uriTask=uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                @Override
-                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                    if(!task.isSuccessful()){
-                        SweetToast.error(question_profile.this, "Profile Photo Error: " + task.getException().getMessage());
+                final StorageReference storeRef = mStorageRef.child("Users").child(currentUserID).child("profile_back.jpg");
+                UploadTask uploadTask=storeRef.putFile(image);
+                Task<Uri> uriTask=uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                    @Override
+                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                        if(!task.isSuccessful()){
+                            SweetToast.error(question_profile.this, "Profile Photo Error: " + task.getException().getMessage());
+                        }
+                        profileback_download_url=storeRef.getDownloadUrl().toString();
+                        return storeRef.getDownloadUrl();
                     }
-                    profileback_download_url=storeRef.getDownloadUrl().toString();
-                    return storeRef.getDownloadUrl();
-                }
-            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    if(task.isSuccessful()){
-                        profileback_download_url=task.getResult().toString();
+                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Uri> task) {
+                        if(task.isSuccessful()){
+                            profileback_download_url=task.getResult().toString();
 
-                        HashMap<String, Object> update_user_data=new HashMap<>();
-                        update_user_data.put("user_back_image",profileback_download_url);
+                            HashMap<String, Object> update_user_data=new HashMap<>();
+                            update_user_data.put("user_back_image",profileback_download_url);
 
-                        db.collection("Users").document(currentUserID).set(update_user_data, SetOptions.merge())
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
+                            db.collection("Users").document(currentUserID).set(update_user_data, SetOptions.merge())
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
 
-                                    }
-                                });
+                                        }
+                                    });
 
 
+                        }
                     }
-                }
-            });
+                });
+            }
+        }catch (Exception e){
         }
     }
     public void onStart(){

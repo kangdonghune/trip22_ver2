@@ -199,20 +199,6 @@ public class SettingQuestionActivity extends AppCompatActivity {
                             }
                         }
 
-                        /*if(map.containsKey("location")){
-                            HashMap<String,Boolean> locations=(HashMap)map.get("location");
-                            String[] cityarray = getResources().getStringArray(R.array.city);
-                            if(locations.containsValue(true)){
-                                for(String locationpart : locations.keySet()){
-                                    for(int i=0; i<cityarray.length; i++){
-                                        if(locationpart.equals(cityarray[i])){
-                                            sp1.setSelection(i);
-                                        }
-                                    }
-                                }
-                            }
-                        }*/
-
                         if(map.containsKey("status")){
                             String retrieveUserStatus = map.get("status").toString();
                             userStatus.setText(retrieveUserStatus);
@@ -247,47 +233,50 @@ public class SettingQuestionActivity extends AppCompatActivity {
     }
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==REQUEST_IMAGE_CODE){
-            final Uri image=data.getData();
-            Picasso.get().load(image)
-                    .placeholder(R.drawable.default_profile_image)
-                    .error(R.drawable.default_profile_image)
-                    .resize(0,170)
-                    .into(ivUser);
+        try {
+            if(requestCode==REQUEST_IMAGE_CODE){
+                final Uri image=data.getData();
+                Picasso.get().load(image)
+                        .placeholder(R.drawable.default_profile_image)
+                        .error(R.drawable.default_profile_image)
+                        .resize(0,170)
+                        .into(ivUser);
 
-            final StorageReference riversRef = mStorageRef.child("Users").child(currentUserID).child("profile.jpg");
-            UploadTask uploadTask=riversRef.putFile(image);
-            Task<Uri> uriTask=uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                @Override
-                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                    if(!task.isSuccessful()){
-                        SweetToast.error(SettingQuestionActivity.this, "Profile Photo Error: " + task.getException().getMessage());
+                final StorageReference riversRef = mStorageRef.child("Users").child(currentUserID).child("profile.jpg");
+                UploadTask uploadTask=riversRef.putFile(image);
+                Task<Uri> uriTask=uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                    @Override
+                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                        if(!task.isSuccessful()){
+                            SweetToast.error(SettingQuestionActivity.this, "Profile Photo Error: " + task.getException().getMessage());
+                        }
+                        profile_download_url=riversRef.getDownloadUrl().toString();
+                        return riversRef.getDownloadUrl();
                     }
-                    profile_download_url=riversRef.getDownloadUrl().toString();
-                    return riversRef.getDownloadUrl();
-                }
-            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    if(task.isSuccessful()){
-                        profile_download_url=task.getResult().toString();
+                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Uri> task) {
+                        if(task.isSuccessful()){
+                            profile_download_url=task.getResult().toString();
 
-                        HashMap<String, Object> update_user_data=new HashMap<>();
-                        update_user_data.put("user_image",profile_download_url);
+                            HashMap<String, Object> update_user_data=new HashMap<>();
+                            update_user_data.put("user_image",profile_download_url);
 
-                        db.collection("Users").document(currentUserID).set(update_user_data, SetOptions.merge())
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
+                            db.collection("Users").document(currentUserID).set(update_user_data, SetOptions.merge())
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
 
-                                    }
-                                });
+                                        }
+                                    });
 
 
+                        }
                     }
-                }
-            });
+                });
 
+            }
+        }catch (Exception e){
         }
     }
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
