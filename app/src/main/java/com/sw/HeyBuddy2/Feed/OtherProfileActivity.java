@@ -96,6 +96,12 @@ public class OtherProfileActivity extends AppCompatActivity {
                 SendChatRequest();
             }
         });
+        addToWishlistButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SendWishList();
+            }
+        });
 
         db.collection("Users").document(senderUserId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -279,6 +285,34 @@ public class OtherProfileActivity extends AppCompatActivity {
                 }
             }
         });
+        db.collection("Users").document(senderUserId).collection("Matching")
+                .document(receiverUserId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()){
+                    Map<String, Object> requestinfo;
+                    requestinfo = task.getResult().getData();
+//                    Log.i("debug", String.valueOf(requestinfo));
+                    if(requestinfo != null){
+                        if(requestinfo.containsKey("sent")){
+                            sendMessageRequestButton.setText(R.string.cancel_invite);
+                        }
+                    }
+                }
+
+            }
+
+        });
+        db.collection("Users").document(senderUserId).collection("Wishlist").document(receiverUserId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()){
+                    if(task.getResult().exists()){
+                        addToWishlistButton.setText(R.string.remove_wishlist);
+                    }
+                }
+            }
+        });
     }
     public void onStart(){
         super.onStart();
@@ -345,7 +379,6 @@ public class OtherProfileActivity extends AppCompatActivity {
         }
     }
     private void SendChatRequest() {
-
         if(sendMessageRequestButton.getText().equals(getString(R.string.cancel_invite))){
             Map<String,Object> removesent = new HashMap<>();
             removesent.put("sent", FieldValue.delete());
@@ -385,6 +418,17 @@ public class OtherProfileActivity extends AppCompatActivity {
                         }
                     }
             );
+        }
+    }
+    private void SendWishList(){
+        if(addToWishlistButton.getText().equals(getString(R.string.remove_wishlist))){
+            db.collection("Users").document(senderUserId).collection("Wishlist").document(receiverUserId).delete();
+            addToWishlistButton.setText(R.string.add_to_wishlist);
+        } else{
+            Map<String, Object> wishlist_info = new HashMap<>();
+            wishlist_info.put("time", FieldValue.serverTimestamp());
+            db.collection("Users").document(senderUserId).collection("Wishlist").document(receiverUserId).set(wishlist_info, SetOptions.merge());
+            addToWishlistButton.setText(R.string.remove_wishlist);
         }
     }
 }

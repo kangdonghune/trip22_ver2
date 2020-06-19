@@ -48,6 +48,8 @@ public class fragment_viewpage1 extends Fragment {
             }
         });
 
+
+
         return view;
     }
 }
