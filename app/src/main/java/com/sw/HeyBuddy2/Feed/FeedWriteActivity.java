@@ -71,7 +71,7 @@ public class FeedWriteActivity extends AppCompatActivity {
         currentUserID = mAuth.getCurrentUser().getUid();
 
         storageRef = FirebaseStorage.getInstance().getReference();
-        documentId=db.collection("feeds").document().getId();
+        documentId=db.collection("Feeds").document().getId();
 
         restaurant=(CheckBox)findViewById(R.id.restaurant);
         culture =(CheckBox)findViewById(R.id.culture);
@@ -162,6 +162,17 @@ public class FeedWriteActivity extends AppCompatActivity {
     private void writefeed() {
         feed_desc=text.getText().toString();
 
+        final Map<String, Object> feed = new HashMap<>();
+        db.collection("Users").document(currentUserID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()){
+                    feed_location=task.getResult().get("NLocation").toString();
+                    feed.put("location",feed_location);
+                }
+            }
+        });
+
         final HashMap<String,Boolean> feed_keyword= new HashMap<>();
 
         if(restaurant.isChecked())
@@ -179,16 +190,7 @@ public class FeedWriteActivity extends AppCompatActivity {
         if(walk.isChecked())
             feed_keyword.put(walk.getText().toString(),true);
 
-        final Map<String, Object> feed = new HashMap<>();
-        db.collection("Users").document(currentUserID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if(task.isSuccessful()){
-                    feed_location=task.getResult().get("NLocation").toString();
-                    feed.put("location",feed_location);
-                }
-            }
-        });
+
         feed.put("feed_desc",feed_desc);
         feed.put("feed_time", FieldValue.serverTimestamp());
         feed.put("uid", currentUserID);
