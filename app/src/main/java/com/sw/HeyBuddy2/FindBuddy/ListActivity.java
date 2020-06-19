@@ -24,6 +24,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firestore.v1.Cursor;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -133,6 +134,10 @@ public class ListActivity extends AppCompatActivity {
                 };
         chatsList.setAdapter(fsAdapter);
         fsAdapter.startListening();
+
+        if(fsAdapter.getItemCount()==0){
+
+        }
     }
 
     public static class ChatsViewHolder extends RecyclerView.ViewHolder{
