@@ -18,6 +18,9 @@
             android:name=".FindBuddy.WishListActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
+            android:name=".FindBuddy.QListActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".EvaluationActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
