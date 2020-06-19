@@ -101,14 +101,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(feedWrite);
             }
         });
-        fab2.setOnClickListener(new View.OnClickListener() {
+        fab3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent profile=new Intent(MainActivity.this, respon_profile.class);
                 startActivity(profile);
             }
         });
-        fab3.setOnClickListener(new View.OnClickListener() {
+        fab4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent request=new Intent(MainActivity.this, RequestActivity.class);
@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        fab4.setOnClickListener(new View.OnClickListener() {
+        fab5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
                 builder.show();
             }
         });
-        fab5.setOnClickListener(new View.OnClickListener() {
+        fab2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent evaluation=new Intent(MainActivity.this, EvaluationActivity.class);
