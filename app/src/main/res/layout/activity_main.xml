@@ -8,7 +8,6 @@
     tools:context=".Main.MainActivity">
 
     //해당 영역에 스와이프 되는 화면이 들어감.
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">

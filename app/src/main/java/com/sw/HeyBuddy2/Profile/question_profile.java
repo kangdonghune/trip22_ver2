@@ -290,12 +290,12 @@ public class question_profile extends AppCompatActivity {
         final FirestoreRecyclerAdapter<Feed, FeedViewHolder> feedAdapter=
                 new FirestoreRecyclerAdapter<Feed, FeedViewHolder>(options) {
                     @Override
-                    protected void onBindViewHolder(@NonNull final FeedViewHolder holder, final int position, @NonNull final Feed model) {
+                    protected void onBindViewHolder(@NonNull final FeedViewHolder holder, int position, @NonNull final Feed model) {
                         db.collection("Users").document(currentUserID).collection("LikeFeed").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                 if(task.isSuccessful()){
-                                    String feed_uri=task.getResult().getDocuments().get(position).get("feed_uri").toString();
+                                    String feed_uri=task.getResult().getDocuments().get(holder.getAdapterPosition()).get("feed_uri").toString();
                                     Picasso.get().load(feed_uri)
                                             .placeholder(R.drawable.load)
                                             .error(R.drawable.load)
@@ -308,7 +308,7 @@ public class question_profile extends AppCompatActivity {
                         holder.itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                final String feedId = getSnapshots().getSnapshot(position).get("doc_id").toString();
+                                final String feedId = getSnapshots().getSnapshot(holder.getAdapterPosition()).get("doc_id").toString();
 
                                 db.collection("Feeds").document(feedId)
                                         .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

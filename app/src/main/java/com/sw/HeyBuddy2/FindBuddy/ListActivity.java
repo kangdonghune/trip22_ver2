@@ -66,8 +66,8 @@ public class ListActivity extends AppCompatActivity {
                 new FirestoreRecyclerAdapter<Contacts, ChatsViewHolder>(options) {
                     @Override
                     protected void onBindViewHolder(@NonNull final ChatsViewHolder holder, int position, @NonNull Contacts model) {
-                        final String user_uid = getSnapshots().getSnapshot(position).getId();
-                        DocumentReference docRef = getSnapshots().getSnapshot(position).getReference();
+                        final String user_uid = getSnapshots().getSnapshot(holder.getAdapterPosition()).getId();
+                        DocumentReference docRef = getSnapshots().getSnapshot(holder.getAdapterPosition()).getReference();
                         docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
                             @Override
                             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {

@@ -322,13 +322,13 @@ public class OtherProfileActivity extends AppCompatActivity {
         FirestoreRecyclerAdapter<Feed, FeedViewHolder> feedAdapter=
                 new FirestoreRecyclerAdapter<Feed, FeedViewHolder>(options) {
                     @Override
-                    protected void onBindViewHolder(@NonNull final FeedViewHolder holder, final int position, @NonNull Feed model) {
+                    protected void onBindViewHolder(@NonNull final FeedViewHolder holder, int position, @NonNull Feed model) {
                         db.collection("Feeds").whereEqualTo("uid",receiverUserId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
                             public void onComplete(@NonNull final Task<QuerySnapshot> task) {
                                 if(task.isSuccessful()){
-                                    if(task.getResult().getDocuments().get(position).contains("feed_uri")){
-                                        feed_uri=task.getResult().getDocuments().get(position).get("feed_uri").toString();
+                                    if(task.getResult().getDocuments().get(holder.getAdapterPosition()).contains("feed_uri")){
+                                        feed_uri=task.getResult().getDocuments().get(holder.getAdapterPosition()).get("feed_uri").toString();
                                         Picasso.get().load(feed_uri)
                                                 .placeholder(R.drawable.load)
                                                 .error(R.drawable.load)
@@ -342,8 +342,8 @@ public class OtherProfileActivity extends AppCompatActivity {
                         holder.itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                String userId = getSnapshots().getSnapshot(position).get("uid").toString();
-                                String feedId= getSnapshots().getSnapshot(position).getId();
+                                String userId = getSnapshots().getSnapshot(holder.getAdapterPosition()).get("uid").toString();
+                                String feedId= getSnapshots().getSnapshot(holder.getAdapterPosition()).getId();
                                 Intent profileIntent = new Intent(getApplication(), FeedDetailActivity.class);
                                 profileIntent.putExtra("userId", userId);
                                 profileIntent.putExtra("feedId", feedId);
@@ -412,7 +412,7 @@ public class OtherProfileActivity extends AppCompatActivity {
                                 db.collection("Users").document(receiverUserId)
                                         .collection("Matching").document(senderUserId)
                                         .set(requestInfo_receive, SetOptions.merge());
-//                                sendFCM(receiverUserId);
+                                sendFCM(receiverUserId);
                                 sendMessageRequestButton.setText(R.string.cancel_invite);
                             }
                         }
@@ -420,6 +420,60 @@ public class OtherProfileActivity extends AppCompatActivity {
             );
         }
     }
+
+    private void sendFCM(final String receiverId){
+        //Log.d(TAG, senderName + "님이 " + task.getResult().get("name").toString() + "님께 매칭요청 전송");
+        final String FCM_MESSAGE_URL = "https://fcm.googleapis.com/fcm/send";
+        final String SERVER_KEY = "AAAAst3LJCQ:APA91bFXxaAjnupdToP6oUYp8qXK8akknY5EKOo-8_ZXURJ64zraxbV27OnKrMhIaQm9hKx4JcPqtQRvl1_O6xbob-xv66WEvXFrV7wzLAXHsJA_tt1RTXXLP7v-9fXq6BXQsliEPFT4";
+        db.collection("Users").document(senderUserId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                final String senderName = task.getResult().get("name").toString();
+                db.collection("Users").document(receiverId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull final Task<DocumentSnapshot> task) {
+                        final String receiverFCMId = task.getResult().get("FCMToken").toString();
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    //JSON 메시지 생성
+                                    JSONObject pushRoot = new JSONObject();
+                                    JSONObject pushMsg = new JSONObject();
+                                    JSONObject pushData = new JSONObject();
+                                    pushMsg.put("body", senderName+"님이 매칭을 요청하셨습니다.");
+                                    pushMsg.put("title", "새 매칭 요청");
+                                    pushData.put("pushType", "request");
+                                    pushData.put("requestUserId", senderUserId);
+                                    pushRoot.put("notification", pushMsg);
+                                    pushRoot.put("to", receiverFCMId);
+                                    pushRoot.put("data", pushData);
+                                    Log.d(TAG, "onComplete: "+pushRoot.toString());
+                                    //POST 방식으로 FCM 서버에 전송
+                                    URL Url = new URL(FCM_MESSAGE_URL);
+                                    HttpURLConnection conn = (HttpURLConnection) Url.openConnection();
+                                    conn.setRequestMethod("POST");
+                                    conn.setDoOutput(true);
+                                    conn.setDoInput(true);
+                                    conn.addRequestProperty("Authorization", "key=" + SERVER_KEY);
+                                    conn.setRequestProperty("Accept", "application/json");
+                                    conn.setRequestProperty("Content-type", "application/json");
+                                    OutputStream os = conn.getOutputStream();
+                                    os.write(pushRoot.toString().getBytes("utf-8"));
+                                    os.flush();
+                                    conn.getResponseCode();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }).start();
+                    }
+                });
+            }
+        });
+
+    }
+
     private void SendWishList(){
         if(addToWishlistButton.getText().equals(getString(R.string.remove_wishlist))){
             db.collection("Users").document(senderUserId).collection("Wishlist").document(receiverUserId).delete();

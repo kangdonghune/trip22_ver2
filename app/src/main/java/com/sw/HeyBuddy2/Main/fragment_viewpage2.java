@@ -98,36 +98,36 @@ public class fragment_viewpage2 extends Fragment {
         final FirestoreRecyclerAdapter<Feed, FeedViewHolder> feedAdapter=
                 new FirestoreRecyclerAdapter<Feed, FeedViewHolder>(options){
                     @Override
-                    protected void onBindViewHolder(@NonNull final FeedViewHolder holder, final int position, @NonNull Feed model) {
-                        if(getSnapshots().getSnapshot(position).contains("uid")){
-                            if(getSnapshots().getSnapshot(position).contains("feed_time")){
+                    protected void onBindViewHolder(@NonNull final FeedViewHolder holder, int position, @NonNull Feed model) {
+                        if(getSnapshots().getSnapshot(holder.getAdapterPosition()).contains("uid")){
+                            if(getSnapshots().getSnapshot(holder.getAdapterPosition()).contains("feed_time")){
                                 query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                     @Override
                                     public void onComplete(@NonNull final Task<QuerySnapshot> task) {
                                         if(task.isSuccessful()){
-                                            timestamp=task.getResult().getDocuments().get(position).getTimestamp("feed_time", DocumentSnapshot.ServerTimestampBehavior.ESTIMATE);
+                                            timestamp=task.getResult().getDocuments().get(holder.getAdapterPosition()).getTimestamp("feed_time", DocumentSnapshot.ServerTimestampBehavior.ESTIMATE);
                                             SimpleDateFormat sdf=new SimpleDateFormat("MMM dd EEE", Locale.ENGLISH);
                                             String time=sdf.format(timestamp.toDate());
                                             holder.userTime.setText(time);
 
-                                            if(task.getResult().getDocuments().get(position).contains("feed_desc")){
-                                                feed_desc=task.getResult().getDocuments().get(position).get("feed_desc").toString();
+                                            if(task.getResult().getDocuments().get(holder.getAdapterPosition()).contains("feed_desc")){
+                                                feed_desc=task.getResult().getDocuments().get(holder.getAdapterPosition()).get("feed_desc").toString();
                                                 holder.feedDesc.setText(feed_desc);
                                             }
 
-                                            if(task.getResult().getDocuments().get(position).contains("feed_uri")) {
-                                                feed_uri = task.getResult().getDocuments().get(position).get("feed_uri").toString();
+                                            if(task.getResult().getDocuments().get(holder.getAdapterPosition()).contains("feed_uri")) {
+                                                feed_uri = task.getResult().getDocuments().get(holder.getAdapterPosition()).get("feed_uri").toString();
                                                 Picasso.get().load(feed_uri)
                                                         .placeholder(R.drawable.load)
                                                         .error(R.drawable.load)
                                                         .resize(0,250)
                                                         .into(holder.feedImage);
-                                                if(task.getResult().getDocuments().get(position).contains("like_number")){
-                                                    String like=task.getResult().getDocuments().get(position).get("like_number").toString()+"";
+                                                if(task.getResult().getDocuments().get(holder.getAdapterPosition()).contains("like_number")){
+                                                    String like=task.getResult().getDocuments().get(holder.getAdapterPosition()).get("like_number").toString()+"";
                                                     holder.tvLikeNum.setText(like);
                                                 }
 
-                                                task.getResult().getDocuments().get(position).getReference().collection("LikeMember").document(currentUserID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                task.getResult().getDocuments().get(holder.getAdapterPosition()).getReference().collection("LikeMember").document(currentUserID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                                     @Override
                                                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                                         if(task.getResult().exists()){
@@ -140,8 +140,8 @@ public class fragment_viewpage2 extends Fragment {
                                                 });
                                             }
 
-                                            if(task.getResult().getDocuments().get(position).contains("feed_area")){
-                                                HashMap<String, Boolean> feedarea=(HashMap)task.getResult().getDocuments().get(position).getData().get("feed_area");
+                                            if(task.getResult().getDocuments().get(holder.getAdapterPosition()).contains("feed_area")){
+                                                HashMap<String, Boolean> feedarea=(HashMap)task.getResult().getDocuments().get(holder.getAdapterPosition()).getData().get("feed_area");
                                                 String feed_area_result="";
 
                                                 for (String feed_area_Elemet:feedarea.keySet()){
@@ -150,8 +150,8 @@ public class fragment_viewpage2 extends Fragment {
                                                 holder.feedArea.setText(feed_area_result);
                                             }
 
-                                            if (task.getResult().getDocuments().get(position).contains("uid")){
-                                                feed_uid=task.getResult().getDocuments().get(position).get("uid").toString();
+                                            if (task.getResult().getDocuments().get(holder.getAdapterPosition()).contains("uid")){
+                                                feed_uid=task.getResult().getDocuments().get(holder.getAdapterPosition()).get("uid").toString();
 
                                                 db.collection("Users").document(feed_uid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                                     @Override
@@ -175,8 +175,8 @@ public class fragment_viewpage2 extends Fragment {
                                             holder.feedImage.setOnClickListener(new View.OnClickListener() {
                                                 @Override
                                                 public void onClick(View v) {
-                                                    if(task.getResult().getDocuments().get(position).contains("feed_uri")) {
-                                                        feed_uri = task.getResult().getDocuments().get(position).get("feed_uri").toString();
+                                                    if(task.getResult().getDocuments().get(holder.getAdapterPosition()).contains("feed_uri")) {
+                                                        feed_uri = task.getResult().getDocuments().get(holder.getAdapterPosition()).get("feed_uri").toString();
                                                         Intent intent = new Intent(getContext(), fullScreenImageViewer.class);
                                                         intent.putExtra("uri",feed_uri );
                                                         startActivity(intent);
@@ -186,10 +186,10 @@ public class fragment_viewpage2 extends Fragment {
                                             holder.itemView.setOnClickListener(new View.OnClickListener() {
                                                 @Override
                                                 public void onClick(View v) {
-                                                    if(task.getResult().getDocuments().get(position).contains("uid")){
+                                                    if(task.getResult().getDocuments().get(holder.getAdapterPosition()).contains("uid")){
                                                         final Intent detail = new Intent(getContext(), FeedDetailActivity.class);
-                                                        detail.putExtra("userId", task.getResult().getDocuments().get(position).get("uid").toString());
-                                                        detail.putExtra("feedId",task.getResult().getDocuments().get(position).getId());
+                                                        detail.putExtra("userId", task.getResult().getDocuments().get(holder.getAdapterPosition()).get("uid").toString());
+                                                        detail.putExtra("feedId",task.getResult().getDocuments().get(holder.getAdapterPosition()).getId());
                                                         startActivity(detail);
                                                     }
                                                 }
@@ -199,21 +199,21 @@ public class fragment_viewpage2 extends Fragment {
                                                 public void liked(LikeButton likeButton) {
                                                     int intCurrentNum=Integer.parseInt(holder.tvLikeNum.getText().toString())+1;
 
-                                                    if(task.getResult().getDocuments().get(position).contains("like_number")){
+                                                    if(task.getResult().getDocuments().get(holder.getAdapterPosition()).contains("like_number")){
                                                         HashMap<String, Object> map=new HashMap<>();
                                                         map.put("like_number",intCurrentNum);
-                                                        task.getResult().getDocuments().get(position).getReference().set(map, SetOptions.merge());
+                                                        task.getResult().getDocuments().get(holder.getAdapterPosition()).getReference().set(map, SetOptions.merge());
                                                         holder.tvLikeNum.setText(intCurrentNum+"");
                                                     }
 
                                                     HashMap<String, Object> update_user_data=new HashMap<>();
                                                     update_user_data.put("pushDate", new Timestamp(new Date()));
                                                     update_user_data.put("uid",currentUserID);
-                                                    task.getResult().getDocuments().get(position).getReference().collection("LikeMember").document(currentUserID).set(update_user_data);
+                                                    task.getResult().getDocuments().get(holder.getAdapterPosition()).getReference().collection("LikeMember").document(currentUserID).set(update_user_data);
 
-                                                    if(task.getResult().getDocuments().get(position).contains("feed_uri")){
-                                                        final String selectFeed_uri=task.getResult().getDocuments().get(position).get("feed_uri").toString();
-                                                        final String docId=task.getResult().getDocuments().get(position).getId();
+                                                    if(task.getResult().getDocuments().get(holder.getAdapterPosition()).contains("feed_uri")){
+                                                        final String selectFeed_uri=task.getResult().getDocuments().get(holder.getAdapterPosition()).get("feed_uri").toString();
+                                                        final String docId=task.getResult().getDocuments().get(holder.getAdapterPosition()).getId();
 
                                                         db.collection("Users").document(currentUserID).collection("LikeFeed").document()
                                                                 .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -235,17 +235,17 @@ public class fragment_viewpage2 extends Fragment {
                                                 public void unLiked(LikeButton likeButton) {
                                                     int intCurrentNum=Integer.parseInt(holder.tvLikeNum.getText().toString())-1;
 
-                                                    if(task.getResult().getDocuments().get(position).contains("like_number")){
+                                                    if(task.getResult().getDocuments().get(holder.getAdapterPosition()).contains("like_number")){
                                                         HashMap<String, Object> map=new HashMap<>();
                                                         map.put("like_number",intCurrentNum);
-                                                        task.getResult().getDocuments().get(position).getReference().set(map,SetOptions.merge());
+                                                        task.getResult().getDocuments().get(holder.getAdapterPosition()).getReference().set(map,SetOptions.merge());
                                                         holder.tvLikeNum.setText(intCurrentNum+"");
                                                     }
-                                                    task.getResult().getDocuments().get(position).getReference().collection("LikeMember").document(currentUserID).delete();
+                                                    task.getResult().getDocuments().get(holder.getAdapterPosition()).getReference().collection("LikeMember").document(currentUserID).delete();
 
-                                                    if(task.getResult().getDocuments().get(position).contains("feed_uri")){
-                                                        final String selectFeed_uri=task.getResult().getDocuments().get(position).get("feed_uri").toString();
-                                                        final String docId=task.getResult().getDocuments().get(position).getId();
+                                                    if(task.getResult().getDocuments().get(holder.getAdapterPosition()).contains("feed_uri")){
+                                                        final String selectFeed_uri=task.getResult().getDocuments().get(holder.getAdapterPosition()).get("feed_uri").toString();
+                                                        final String docId=task.getResult().getDocuments().get(holder.getAdapterPosition()).getId();
 
                                                         db.collection("Users").document(currentUserID).collection("LikeFeed")
                                                                 .whereEqualTo("feed_uri",selectFeed_uri).whereEqualTo("doc_id",docId).get()

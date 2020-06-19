@@ -17,6 +17,8 @@ import androidx.core.app.NotificationCompat;
 
 import com.google.firebase.messaging.RemoteMessage;
 import com.sw.HeyBuddy2.Chat.ChatActivity;
+import com.sw.HeyBuddy2.FindBuddy.QListActivity;
+import com.sw.HeyBuddy2.FindBuddy.RequestActivity;
 import com.sw.HeyBuddy2.Main.MainActivity;
 import com.sw.HeyBuddy2.Main.QMainActivity;
 import com.sw.HeyBuddy2.R;
@@ -48,9 +50,9 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
     private void sendRequestNotification(String title, String body)
     {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, RequestActivity.class);
         intent.putExtra("callRequest", true);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
 
 
@@ -79,9 +81,9 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
     private void sendMatchResultNotification(String title, String body)
     {
-        Intent intent = new Intent(this, QMainActivity.class);
+        Intent intent = new Intent(this, QListActivity.class);
         intent.putExtra("matchResult", true);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
 
 
@@ -143,6 +145,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
     private void sendMatchEndNotification(String title, String body)
     {
+        Intent intent = new Intent(this, MainActivity.class);
         String chId = "matchend";
         Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION); // 알림 왔을때 사운드.
         NotificationCompat.Builder notiBuilder = new NotificationCompat.Builder(this, chId)

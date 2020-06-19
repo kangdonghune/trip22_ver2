@@ -90,19 +90,19 @@ public class SecondActivity extends AppCompatActivity {
 
                                     @Override
                                     protected void onBindViewHolder(@NonNull FindUserViewHolder holder, int position, @NonNull Contacts model) {
-                                        if(getSnapshots().getSnapshot(position).contains("uid")){
+                                        if(getSnapshots().getSnapshot(holder.getAdapterPosition()).contains("uid")){
                                             query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                                 @Override
                                                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                                     if(task.isSuccessful()){
-                                                        String userName=task.getResult().getDocuments().get(position).get("name").toString();
+                                                        String userName=task.getResult().getDocuments().get(holder.getAdapterPosition()).get("name").toString();
                                                         holder.userName.setText(userName);
 
-                                                        String userStatus=task.getResult().getDocuments().get(position).get("status").toString();
+                                                        String userStatus=task.getResult().getDocuments().get(holder.getAdapterPosition()).get("status").toString();
                                                         holder.userStatus.setText(userStatus);
 
-                                                        if(task.getResult().getDocuments().get(position).contains("user_image")){
-                                                            String user_uri=task.getResult().getDocuments().get(position).get("user_image").toString();
+                                                        if(task.getResult().getDocuments().get(holder.getAdapterPosition()).contains("user_image")){
+                                                            String user_uri=task.getResult().getDocuments().get(holder.getAdapterPosition()).get("user_image").toString();
                                                             Picasso.get().load(user_uri)
                                                                     .placeholder(R.drawable.default_profile_image)
                                                                     .error(R.drawable.default_profile_image)
