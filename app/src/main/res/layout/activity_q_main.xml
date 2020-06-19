@@ -6,26 +6,35 @@
     android:layout_height="match_parent"
     tools:context=".Main.QMainActivity">
 
-    //해당 영역에 스와이프 되는 화면이 들어감.
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/view_pager"
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </androidx.viewpager.widget.ViewPager>
+
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/q_dot_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             app:tabBackground="@drawable/tab_selector"
             app:tabGravity="center"
             app:tabIndicatorHeight="0dp"/>
 
 
-    </androidx.viewpager.widget.ViewPager>
+    </RelativeLayout>
+    //해당 영역에 스와이프 되는 화면이 들어감.
 
 
 
