@@ -63,7 +63,7 @@ public class FeedWriteActivity extends AppCompatActivity {
 
     String feed_uri;
     String feed_desc;
-    String feed_location;
+    String NLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,8 +166,6 @@ public class FeedWriteActivity extends AppCompatActivity {
         }
     }
     private void writefeed() {
-        feed_desc=text.getText().toString();
-
         final HashMap<String,Boolean> feed_keyword= new HashMap<>();
 
         if(restaurant.isChecked())
@@ -185,17 +183,12 @@ public class FeedWriteActivity extends AppCompatActivity {
         if(walk.isChecked())
             feed_keyword.put(walk.getText().toString(),true);
 
+        feed_desc=text.getText().toString();
+        NLocation=sp1.getSelectedItem().toString();
         final Map<String, Object> feed = new HashMap<>();
-        db.collection("Users").document(currentUserID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if(task.isSuccessful()){
-                    feed_location=task.getResult().get("NLocation").toString();
-                    feed.put("location",feed_location);
-                }
-            }
-        });
+
         feed.put("feed_desc",feed_desc);
+        feed.put("location",NLocation);
         feed.put("feed_time", FieldValue.serverTimestamp());
         feed.put("uid", currentUserID);
         feed.put("feed_area",feed_keyword);
