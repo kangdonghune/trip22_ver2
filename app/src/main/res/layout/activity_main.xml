@@ -73,7 +73,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/fabLayout2"
+        android:id="@+id/fabLayout3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="12dp"
@@ -93,7 +93,7 @@
             android:text="My Profile"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab2"
+            android:id="@+id/fab3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -102,38 +102,6 @@
             app:fabSize="mini"/>
     </LinearLayout>
 
-
-    <LinearLayout
-        android:id="@+id/fabLayout3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="12dp"
-        android:clipToPadding="false"
-        android:layout_marginRight="23dp"
-        android:gravity="center_vertical"
-        android:layout_marginBottom="23dp"
-        app:layout_behavior="com.sw.HeyBuddy2.utils.MoveUpwardBehavior"
-        android:layout_gravity="bottom|end"
-        android:visibility="gone">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textColor="@color/white"
-            android:text="요청 받기"/>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            app:srcCompat="@drawable/ic_baseline_add_ic_call_24"
-            android:tint="@android:color/white"
-            android:backgroundTint="@color/colorGreen"
-            app:borderWidth="0dp"
-            app:fabSize="mini"/>
-    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/fabLayout4"
@@ -153,16 +121,16 @@
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:textColor="@color/white"
-            android:text="Log out"/>
+            android:text="요청 받기"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            app:srcCompat="@drawable/ic_baseline_airplanemode_active_24"
+            app:srcCompat="@drawable/ic_baseline_add_ic_call_24"
             android:tint="@android:color/white"
-            android:backgroundTint="@color/colorPrimary"
+            android:backgroundTint="@color/colorGreen"
             app:borderWidth="0dp"
             app:fabSize="mini"/>
     </LinearLayout>
@@ -185,10 +153,42 @@
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:textColor="@color/white"
-            android:text="Evaluation"/>
+            android:text="Log out"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            app:srcCompat="@drawable/ic_baseline_airplanemode_active_24"
+            android:tint="@android:color/white"
+            android:backgroundTint="@color/colorPrimary"
+            app:borderWidth="0dp"
+            app:fabSize="mini"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/fabLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:clipToPadding="false"
+        android:layout_marginRight="23dp"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="23dp"
+        app:layout_behavior="com.sw.HeyBuddy2.utils.MoveUpwardBehavior"
+        android:layout_gravity="bottom|end"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:text="Evaluation"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
