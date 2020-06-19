@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,6 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
+import com.sw.HeyBuddy2.Feed.OtherProfileActivity;
 import com.sw.HeyBuddy2.R;
 import com.sw.HeyBuddy2.utils.Contacts;
 
@@ -100,6 +102,40 @@ public class SecondActivity extends AppCompatActivity {
                                                                     .resize(0,100)
                                                                     .into(holder.profileImage);
                                                         }
+
+                                                        holder.itemView.setOnClickListener(new View.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(View v) {
+                                                                String visitUserId = getSnapshots().getSnapshot(holder.getAdapterPosition()).getId();
+                                                                Intent profileIntent = new Intent(SecondActivity.this, OtherProfileActivity.class);
+                                                                profileIntent.putExtra("userId", visitUserId);
+                                                                startActivity(profileIntent);
+                                                            }
+                                                        });
+                                                        db.collection("Users").document(currentUserId).collection("Wishlist")
+                                                                .document(getSnapshots().getSnapshot(holder.getAdapterPosition()).getId()).get()
+                                                                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                                    @Override
+                                                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                                        if(task.isSuccessful()){
+                                                                            if(task.getResult().exists()){
+                                                                                holder.itemView.setBackgroundColor(Color.parseColor("#50FFC4C4"));
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                });
+                                                        db.collection("Users").document(currentUserId).collection("Matching")
+                                                                .document(getSnapshots().getSnapshot(holder.getAdapterPosition()).getId()).get()
+                                                                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                                    @Override
+                                                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                                        if(task.isSuccessful()){
+                                                                            if(task.getResult().exists()){
+                                                                                holder.itemView.setBackgroundColor(Color.parseColor("#50FFC4C4"));
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                });
 
                                                     }
                                                 }

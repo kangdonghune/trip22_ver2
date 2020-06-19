@@ -15,6 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".EvaluationActivity"></activity>
+        <activity android:name=".FindBuddy.UserEvaluationActivity"></activity>
         <activity
         android:name=".FindBuddy.ListActivity"
         android:theme="@style/AppTheme.NoActionBar"></activity>

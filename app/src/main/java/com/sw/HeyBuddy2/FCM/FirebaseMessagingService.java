@@ -28,11 +28,10 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
         if(remoteMessage.getData().get("pushType").equals("message")){
-            if(getTopActivity().equals("ChatActivity") && remoteMessage.getData().get("chatRoomId").equals(((ChatActivity) ChatActivity.context_chat).chatroomId)){
+            if(getTopActivity().equals("Chat.ChatActivity") && remoteMessage.getData().get("chatRoomId").equals(((ChatActivity) ChatActivity.context_chat).chatroomId)){
                 Log.i("MESSAGERECEIVED", "Do not show notification");
             } else{
                 sendMessageNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody(), remoteMessage.getData().get("chatRoomId"), remoteMessage.getData().get("visitUserId"), remoteMessage.getData().get("visitUserName"));
-
             }
         } else if(remoteMessage.getData().get("pushType").equals("request")){
             Log.i("MESSAGERECEIVED", "request Push");
