@@ -57,7 +57,7 @@ public class QMainActivity extends AppCompatActivity {
         fragmentPagerAdapter = new q_ViewPagerAdapter(getSupportFragmentManager());
 
         viewPager.setAdapter(fragmentPagerAdapter);
-        TabLayout tabLayout = findViewById(R.id.tabLayout2);
+        TabLayout tabLayout = findViewById(R.id.q_tabLayout);
         tabLayout.setupWithViewPager(viewPager);
 
 
