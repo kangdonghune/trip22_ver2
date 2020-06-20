@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.sw.HeyBuddy2.FindBuddy.QListActivity;
-import com.sw.HeyBuddy2.FindBuddy.SecondActivity;
+import com.sw.HeyBuddy2.FindBuddy.QSecondActivity;
 import com.sw.HeyBuddy2.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -45,7 +45,7 @@ public class fragment_q_viewpage1 extends Fragment {
         findbuddy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(getContext(), SecondActivity.class);
+                Intent intent =new Intent(getContext(), QSecondActivity.class);
                 startActivity(intent);
             }
         });

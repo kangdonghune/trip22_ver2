@@ -2,10 +2,13 @@ package com.sw.HeyBuddy2.FindBuddy;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,8 +28,13 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
+import com.sw.HeyBuddy2.Main.MainActivity;
+import com.sw.HeyBuddy2.Main.QMainActivity;
 import com.sw.HeyBuddy2.R;
+import com.sw.HeyBuddy2.Setting.SettingQuestionActivity;
 import com.sw.HeyBuddy2.utils.Contacts;
 
 import org.json.JSONObject;
@@ -49,7 +57,7 @@ public class RequestActivity extends AppCompatActivity {
     private String reqname,reqstatus, user_uri;
 
     public RequestActivity(){}
-
+    Query query;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,8 +73,21 @@ public class RequestActivity extends AppCompatActivity {
 
     public void onStart() {
         super.onStart();
+        query=db.collection("Users").document(currentUserId).collection("Matching").whereEqualTo("ismatched", false).whereEqualTo("received", true);
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.getResult().isEmpty()){
+                    AlertDialog.Builder alert=new AlertDialog.Builder(RequestActivity.this);
+                    alert.setIcon(R.drawable.ic_baseline_error_24);
+                    alert.setTitle("No Request");
+                    alert.setMessage("Sorry. No request came.");
+                    alert.show();
+                }
+            }
+        });
         FirestoreRecyclerOptions<Contacts> fsOptions =
-                new FirestoreRecyclerOptions.Builder<Contacts>().setQuery(db.collection("Users").document(currentUserId).collection("Matching").whereEqualTo("ismatched", false).whereEqualTo("received", true), Contacts.class).build();
+                new FirestoreRecyclerOptions.Builder<Contacts>().setQuery(query, Contacts.class).build();
 
         fsAdapter = new FirestoreRecyclerAdapter<Contacts, RequestsViewHolder>(fsOptions){
 

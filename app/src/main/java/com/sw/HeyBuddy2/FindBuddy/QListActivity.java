@@ -1,5 +1,6 @@
 package com.sw.HeyBuddy2.FindBuddy;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,10 +29,13 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.sw.HeyBuddy2.Chat.ChatActivity;
+import com.sw.HeyBuddy2.Main.QMainActivity;
 import com.sw.HeyBuddy2.R;
 import com.sw.HeyBuddy2.utils.Contacts;
 
@@ -45,6 +50,7 @@ public class QListActivity extends AppCompatActivity {
     String userstatus,user_uri;
     FirestoreRecyclerOptions<Contacts> options;
     FirestoreRecyclerAdapter<Contacts, ChatsViewHolder> fsAdapter;
+    Query query;
 
     public QListActivity(){}
 
@@ -62,9 +68,39 @@ public class QListActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        FirestoreRecyclerOptions<Contacts> options = new FirestoreRecyclerOptions.Builder<Contacts>()
-                .setQuery(db.collection("Users").document(currentUserId).collection("Matching").whereEqualTo("ismatched", true), Contacts.class).build();
+        query=db.collection("Users").document(currentUserId).collection("Matching").whereEqualTo("ismatched", true);
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.getResult().isEmpty()){
+                    AlertDialog.Builder alert=new AlertDialog.Builder(QListActivity.this);
+                    alert.setIcon(R.drawable.ic_baseline_error_24);
+                    alert.setTitle("No Buddy");
+                    alert.setMessage("Sorry. There are no registered Buddys.");
 
+                    alert.setPositiveButton("Find Buddy", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent goFindBuddy=new Intent(QListActivity.this, QSecondActivity.class);
+                            startActivity(goFindBuddy);
+                            dialog.dismiss();
+                        }
+                    });
+
+                    alert.setNegativeButton("Go Home", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent home=new Intent(QListActivity.this, QMainActivity.class);
+                            startActivity(home);
+                            dialog.dismiss();
+                        }
+                    });
+                    alert.show();
+                }
+            }
+        });
+        FirestoreRecyclerOptions<Contacts> options = new FirestoreRecyclerOptions.Builder<Contacts>()
+                .setQuery(query, Contacts.class).build();
         FirestoreRecyclerAdapter<Contacts, ChatsViewHolder> fsAdapter =
                 new FirestoreRecyclerAdapter<Contacts, ChatsViewHolder>(options) {
                     @Override

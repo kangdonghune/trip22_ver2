@@ -1,14 +1,15 @@
 package com.sw.HeyBuddy2.FindBuddy;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,15 +27,14 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 import com.sw.HeyBuddy2.Feed.OtherProfileActivity;
-import com.sw.HeyBuddy2.LoginRegiser.SelectActivity;
+import com.sw.HeyBuddy2.Main.QMainActivity;
 import com.sw.HeyBuddy2.R;
+import com.sw.HeyBuddy2.Setting.SettingQuestionActivity;
 import com.sw.HeyBuddy2.utils.Contacts;
-
-import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class SecondActivity extends AppCompatActivity {
+public class QSecondActivity extends AppCompatActivity {
     private static final String TAG = "SecondActivity";
     Button btn_next;
     private RecyclerView findUserRecyclerList;
@@ -56,7 +56,7 @@ public class SecondActivity extends AppCompatActivity {
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent wishList=new Intent(SecondActivity.this,WishListActivity.class);
+                Intent wishList=new Intent(QSecondActivity.this,WishListActivity.class);
                 startActivity(wishList);
             }
         });
@@ -75,6 +75,36 @@ public class SecondActivity extends AppCompatActivity {
 
                                 Query query=usersRef.whereEqualTo("NLocation",location)
                                         .whereEqualTo("question",false).whereEqualTo("newL",language);
+                                query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        if(task.getResult().isEmpty()){
+                                            AlertDialog.Builder alert=new AlertDialog.Builder(QSecondActivity.this);
+                                            alert.setIcon(R.drawable.ic_baseline_error_24);
+                                            alert.setTitle("No Buddys in the area");
+                                            alert.setMessage("Sorry. There are no friends in your area.");
+
+                                            alert.setPositiveButton("Region change", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    Intent goFindBuddy=new Intent(QSecondActivity.this, SettingQuestionActivity.class);
+                                                    startActivity(goFindBuddy);
+                                                    dialog.dismiss();
+                                                }
+                                            });
+
+                                            alert.setNegativeButton("Go Home", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    Intent home=new Intent(QSecondActivity.this, QMainActivity.class);
+                                                    startActivity(home);
+                                                    dialog.dismiss();
+                                                }
+                                            });
+                                            alert.show();
+                                        }
+                                    }
+                                });
                                 FirestoreRecyclerOptions<Contacts> fsOptions = new FirestoreRecyclerOptions.Builder<Contacts>()
                                         .setQuery(query, Contacts.class).build();
 
@@ -114,7 +144,7 @@ public class SecondActivity extends AppCompatActivity {
                                                             @Override
                                                             public void onClick(View v) {
                                                                 String visitUserId = getSnapshots().getSnapshot(holder.getAdapterPosition()).getId();
-                                                                Intent profileIntent = new Intent(SecondActivity.this, OtherProfileActivity.class);
+                                                                Intent profileIntent = new Intent(QSecondActivity.this, OtherProfileActivity.class);
                                                                 profileIntent.putExtra("userId", visitUserId);
                                                                 startActivity(profileIntent);
                                                             }
