@@ -55,9 +55,7 @@ import xyz.hasnat.sweettoast.SweetToast;
 
 public class respon_profile extends AppCompatActivity {
 
-    int REQUEST_IMAGE_CODE=1001;
     int REQUEST_EXTERNAL_STORAGE_PERMISSION=1002;
-    String profileback_download_url, feed_uri;
     private StorageReference mStorageRef;
 
     RecyclerView profile_feed;
@@ -124,14 +122,6 @@ public class respon_profile extends AppCompatActivity {
 
         ivUser=findViewById(R.id.profile_ivUser);
         ivBack=findViewById(R.id.profile_ivUserBackground);
-
-        ivBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent in=new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(in, REQUEST_IMAGE_CODE);
-            }
-        });
         db.collection("Users").document(currentUserID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -272,54 +262,6 @@ public class respon_profile extends AppCompatActivity {
             }
         });
     }
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        try {
-            if(requestCode==REQUEST_IMAGE_CODE && resultCode == respon_profile.this.RESULT_OK){
-                final Uri image=data.getData();
-                Picasso.get().load(image)
-                        .placeholder(R.drawable.profile_ivuserbackgroundimage)
-                        .error(R.drawable.profile_ivuserbackgroundimage)
-                        .resize(0,200)
-                        .into(ivBack);
-
-                final StorageReference storeRef = mStorageRef.child("Users").child(currentUserID).child("profile_back.jpg");
-                UploadTask uploadTask=storeRef.putFile(image);
-                Task<Uri> uriTask=uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                    @Override
-                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                        if(!task.isSuccessful()){
-                            SweetToast.error(respon_profile.this, "Profile Photo Error: " + task.getException().getMessage());
-                        }
-                        profileback_download_url=storeRef.getDownloadUrl().toString();
-                        return storeRef.getDownloadUrl();
-                    }
-                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Uri> task) {
-                        if(task.isSuccessful()){
-                            profileback_download_url=task.getResult().toString();
-
-                            HashMap<String, Object> update_user_data=new HashMap<>();
-                            update_user_data.put("user_back_image",profileback_download_url);
-
-                            db.collection("Users").document(currentUserID).set(update_user_data, SetOptions.merge())
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-
-                                        }
-                                    });
-
-
-                        }
-                    }
-                });
-            }
-        }catch (Exception e){
-
-        }
-    }
     public void onStart(){
         super.onStart();
         FirestoreRecyclerOptions<Feed> options =new FirestoreRecyclerOptions.Builder<Feed>()
@@ -336,7 +278,7 @@ public class respon_profile extends AppCompatActivity {
                                         public void onComplete(@NonNull final Task<QuerySnapshot> task) {
                                             if(task.isSuccessful()){
                                                 if(task.getResult().getDocuments().get(holder.getAdapterPosition()).contains("feed_uri")){
-                                                    feed_uri=task.getResult().getDocuments().get(holder.getAdapterPosition()).get("feed_uri").toString();
+                                                    String feed_uri=task.getResult().getDocuments().get(holder.getAdapterPosition()).get("feed_uri").toString();
                                                     Picasso.get().load(feed_uri)
                                                             .placeholder(R.drawable.load)
                                                             .error(R.drawable.load)
@@ -357,7 +299,7 @@ public class respon_profile extends AppCompatActivity {
                                                         @Override
                                                         public void onClick(View v) {
                                                             if(task.getResult().getDocuments().get(holder.getAdapterPosition()).contains("feed_uri")) {
-                                                                feed_uri = task.getResult().getDocuments().get(holder.getAdapterPosition()).get("feed_uri").toString();
+                                                                String feed_uri = task.getResult().getDocuments().get(holder.getAdapterPosition()).get("feed_uri").toString();
                                                                 Intent intent = new Intent(getApplication(), fullScreenImageViewer.class);
                                                                 intent.putExtra("uri",feed_uri );
                                                                 startActivity(intent);
