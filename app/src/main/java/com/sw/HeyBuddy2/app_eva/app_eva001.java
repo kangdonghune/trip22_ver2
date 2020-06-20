@@ -16,7 +16,7 @@ public class app_eva001 extends AppCompatActivity {
 
     public static HashMap evainfo;
     private EditText ev;
-    private Button btn_next, btn_skip;
+    private Button btn_next;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +26,6 @@ public class app_eva001 extends AppCompatActivity {
         evainfo = new HashMap();
         ev = (EditText) findViewById(R.id.ev1);
         btn_next = (Button) findViewById(R.id.next1);
-        btn_skip = (Button) findViewById(R.id.skip1);
 
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,13 +36,11 @@ public class app_eva001 extends AppCompatActivity {
                 finish();
             }
         });
-        btn_skip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                evainfo.clear();
-                finish();
-            }
-        });
 
+    }
+    @Override
+    protected void onStop(){
+        super.onStop();
+        evainfo.clear();
     }
 }

@@ -38,6 +38,8 @@ public class fragment_q_viewpage1 extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_q_viewpage1, container, false);
 
+
+
         ask=(ImageView)view.findViewById(R.id.Ask);
         findbuddy=(ImageView)view.findViewById(R.id.Find_Buddy);
 

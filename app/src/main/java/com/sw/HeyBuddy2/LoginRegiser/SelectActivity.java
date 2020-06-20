@@ -46,20 +46,7 @@ public class SelectActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
 
 
-        SharedPreferences pref = getSharedPreferences("checkFirst", Activity.MODE_PRIVATE);
-        boolean checkFirst = pref.getBoolean("checkFirst", false);
-        if(checkFirst==false){
-            //앱 최초실행시
-            SharedPreferences.Editor editor = pref.edit();
-            editor.putBoolean("checkFirst", true);
-            editor.commit();
 
-            Intent intent = new Intent(SelectActivity.this, Tutorial.class);
-            startActivity(intent);
-        }
-        else{
-
-        }
 
 
         questioner.setOnClickListener(new View.OnClickListener() {
