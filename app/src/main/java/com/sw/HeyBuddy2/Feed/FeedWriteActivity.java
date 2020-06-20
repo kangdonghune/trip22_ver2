@@ -77,6 +77,7 @@ public class FeedWriteActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         currentUserID = mAuth.getCurrentUser().getUid();
+        //커밋 테스트용
         // 유저 로케이션 가져오도록 수정
         // 기존 문제는 유저 db에 접근할 때 시간이 걸려서 발생하는 문제로 추정
         db.collection("Users").document(currentUserID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
