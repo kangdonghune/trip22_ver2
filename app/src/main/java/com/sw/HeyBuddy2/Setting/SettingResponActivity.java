@@ -60,12 +60,12 @@ public class SettingResponActivity extends AppCompatActivity {
     String profile_download_url;
     private RadioGroup rg;
     private RadioButton r1,r2,r3;
-
+    private ImageView ivBack;
     private OkHttpClient client=new OkHttpClient();
 
 
 
-    private String currentUserID, name;
+    private String currentUserID, name, profileback_download_url;
     private FirebaseAuth mAuth;
     // cloudfirestore로 변환중
     private FirebaseFirestore db;
@@ -73,6 +73,7 @@ public class SettingResponActivity extends AppCompatActivity {
     //이미지 관련 부분
     private static final String TAG = "ProfileFragment";
     int REQUEST_IMAGE_CODE=1001;
+    int GALLERY_IMAGE_CODE=1002;
     private CircleImageView ivUser;
     private ImageView editPhotoIcon;
     private StorageReference mStorageRef;
@@ -89,6 +90,8 @@ public class SettingResponActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         currentUserID = mAuth.getCurrentUser().getUid();
         db = FirebaseFirestore.getInstance();
+
+        ivBack=findViewById(R.id.profile_ivUserBackground);
 
         if(ContextCompat.checkSelfPermission(SettingResponActivity.this,
                 Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -147,6 +150,13 @@ public class SettingResponActivity extends AppCompatActivity {
                 startActivityForResult(in, REQUEST_IMAGE_CODE);
             }
         });
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent in=new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(in, GALLERY_IMAGE_CODE);
+            }
+        });
         db.collection("Users").document(currentUserID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -178,6 +188,29 @@ public class SettingResponActivity extends AppCompatActivity {
                                                     .resize(0,170)
                                                     .into(ivUser);
 
+                                        }
+                                    });
+                        }
+                        if (map.containsKey("user_back_image")) {
+                            final String userbackUri = map.get("user_back_image").toString();
+                            Picasso.get().load(userbackUri)
+                                    .networkPolicy(NetworkPolicy.OFFLINE) // for offline
+                                    .placeholder(R.drawable.profile_ivuserbackgroundimage)
+                                    .error(R.drawable.profile_ivuserbackgroundimage)
+                                    .resize(0,400)
+                                    .into(ivBack, new Callback() {
+                                        @Override
+                                        public void onSuccess() {
+
+                                        }
+
+                                        @Override
+                                        public void onError(Exception e) {
+                                            Picasso.get().load(userbackUri)
+                                                    .placeholder(R.drawable.profile_ivuserbackgroundimage)
+                                                    .error(R.drawable.profile_ivuserbackgroundimage)
+                                                    .resize(0,400)
+                                                    .into(ivBack);
                                         }
                                     });
                         }
@@ -294,6 +327,47 @@ public class SettingResponActivity extends AppCompatActivity {
                     }
                 });
 
+            }
+            if(requestCode==GALLERY_IMAGE_CODE && resultCode == SettingResponActivity.this.RESULT_OK){
+                final Uri image=data.getData();
+                Picasso.get().load(image)
+                        .placeholder(R.drawable.profile_ivuserbackgroundimage)
+                        .error(R.drawable.profile_ivuserbackgroundimage)
+                        .resize(0,200)
+                        .into(ivBack);
+
+                final StorageReference storeRef = mStorageRef.child("Users").child(currentUserID).child("profile_back.jpg");
+                UploadTask uploadTask=storeRef.putFile(image);
+                Task<Uri> uriTask=uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                    @Override
+                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                        if(!task.isSuccessful()){
+                            SweetToast.error(SettingResponActivity.this, "Profile Photo Error: " + task.getException().getMessage());
+                        }
+                        profileback_download_url=storeRef.getDownloadUrl().toString();
+                        return storeRef.getDownloadUrl();
+                    }
+                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Uri> task) {
+                        if(task.isSuccessful()){
+                            profileback_download_url=task.getResult().toString();
+
+                            HashMap<String, Object> update_user_data=new HashMap<>();
+                            update_user_data.put("user_back_image",profileback_download_url);
+
+                            db.collection("Users").document(currentUserID).set(update_user_data, SetOptions.merge())
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+
+                                        }
+                                    });
+
+
+                        }
+                    }
+                });
             }
         }catch (Exception e){
 
