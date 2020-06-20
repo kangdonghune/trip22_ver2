@@ -84,6 +84,7 @@ public class QListActivity extends AppCompatActivity {
                             Intent goFindBuddy=new Intent(QListActivity.this, QSecondActivity.class);
                             startActivity(goFindBuddy);
                             dialog.dismiss();
+                            finish();
                         }
                     });
 
@@ -93,6 +94,7 @@ public class QListActivity extends AppCompatActivity {
                             Intent home=new Intent(QListActivity.this, QMainActivity.class);
                             startActivity(home);
                             dialog.dismiss();
+                            finish();
                         }
                     });
                     alert.show();

@@ -81,6 +81,7 @@ public class ListActivity extends AppCompatActivity {
                             Intent goFindBuddy=new Intent(ListActivity.this,RequestActivity.class);
                             startActivity(goFindBuddy);
                             dialog.dismiss();
+                            finish();
                         }
                     });
 
@@ -90,6 +91,7 @@ public class ListActivity extends AppCompatActivity {
                             Intent home=new Intent(ListActivity.this, MainActivity.class);
                             startActivity(home);
                             dialog.dismiss();
+                            finish();
                         }
                     });
                     alert.show();
