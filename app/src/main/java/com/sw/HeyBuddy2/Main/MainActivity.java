@@ -54,12 +54,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SharedPreferences pref = getSharedPreferences("checkFirst", Activity.MODE_PRIVATE);
-        boolean checkFirst = pref.getBoolean("checkFirst", false);
+        SharedPreferences pref = getSharedPreferences("checkFirst2", Activity.MODE_PRIVATE);
+        boolean checkFirst = pref.getBoolean("checkFirst2", false);
         if(checkFirst==false){
             //앱 최초실행시
             SharedPreferences.Editor editor = pref.edit();
-            editor.putBoolean("checkFirst", true);
+            editor.putBoolean("checkFirst2", true);
             editor.commit();
 
             Intent intent = new Intent(MainActivity.this, Tutorial.class);
