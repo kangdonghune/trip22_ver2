@@ -44,7 +44,7 @@
             android:name=".Tutorial"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".FindBuddy.SecondActivity"
+            android:name=".FindBuddy.QSecondActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Feed.DeleteFeedActivity"

@@ -2,12 +2,15 @@ package com.sw.HeyBuddy2.Main;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +19,8 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.sw.HeyBuddy2.Feed.FeedDetailActivity;
+import com.sw.HeyBuddy2.FindBuddy.QSecondActivity;
+import com.sw.HeyBuddy2.Setting.SettingQuestionActivity;
 import com.sw.HeyBuddy2.utils.fullScreenImageViewer;
 import com.sw.HeyBuddy2.R;
 import com.sw.HeyBuddy2.utils.Feed;
@@ -43,7 +48,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class fragment_q_viewpage2 extends Fragment {
     private View view;
-
+    private static final String TAG = "fragment_q_viewpage2";
     RecyclerView feedList;
     private FirebaseFirestore db;
     private String currentUserID;
@@ -89,6 +94,37 @@ public class fragment_q_viewpage2 extends Fragment {
                             if(task.getResult().contains("NQLocation")){
                                 String qlocation=task.getResult().get("NQLocation").toString();
                                 query=db.collection("Feeds").whereEqualTo("location", qlocation);
+                                query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        if(task.getResult().isEmpty()){
+                                            Log.d(TAG, "여기까쥐~~ ");
+                                            AlertDialog.Builder alert=new AlertDialog.Builder(getActivity());
+                                            alert.setIcon(R.drawable.ic_baseline_error_24);
+                                            alert.setTitle("No Feed");
+                                            alert.setMessage("Sorry. There are no feeds available for this region.");
+
+                                            alert.setPositiveButton("Region change", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    Intent goFindBuddy=new Intent(getContext(), SettingQuestionActivity.class);
+                                                    startActivity(goFindBuddy);
+                                                    dialog.dismiss();
+                                                }
+                                            });
+
+                                            alert.setNegativeButton("Go Home", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    Intent home=new Intent(getActivity(), QMainActivity.class);
+                                                    startActivity(home);
+                                                    dialog.dismiss();
+                                                }
+                                            });
+                                            alert.show();
+                                        }
+                                    }
+                                });
                                 FirestoreRecyclerOptions<Feed> options = new FirestoreRecyclerOptions.Builder<Feed>()
                                         .setQuery(query, Feed.class).build();
                                 final FirestoreRecyclerAdapter<Feed, fragment_viewpage2.FeedViewHolder> feedAdapter=
@@ -101,6 +137,7 @@ public class fragment_q_viewpage2 extends Fragment {
                                                             @Override
                                                             public void onComplete(@NonNull final Task<QuerySnapshot> task) {
                                                                 if(task.isSuccessful()){
+
                                                                     timestamp=task.getResult().getDocuments().get(holder.getAdapterPosition()).getTimestamp("feed_time", DocumentSnapshot.ServerTimestampBehavior.ESTIMATE);
                                                                     SimpleDateFormat sdf=new SimpleDateFormat("MMM dd EEE", Locale.ENGLISH);
                                                                     String time=sdf.format(timestamp.toDate());
@@ -274,6 +311,7 @@ public class fragment_q_viewpage2 extends Fragment {
                                                 return new fragment_viewpage2.FeedViewHolder(view);
                                             }
                                         };
+
                                 feedList.setAdapter(feedAdapter);
                                 feedAdapter.startListening();
                             }
