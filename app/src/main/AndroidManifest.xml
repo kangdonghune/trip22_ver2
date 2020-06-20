@@ -14,15 +14,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".app_eva.app_eva005"/>
+        <activity android:name=".app_eva.app_eva004" />
+        <activity android:name=".app_eva.app_eva003" />
+        <activity android:name=".app_eva.app_eva002" />
+        <activity android:name=".app_eva.app_eva001" />
         <activity
             android:name=".FindBuddy.WishListActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".FindBuddy.UserEvaluationActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".EvaluationActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+
         <activity
             android:name=".FindBuddy.ListActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -34,6 +37,7 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name=".ChatActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -91,6 +95,7 @@
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -101,6 +106,7 @@
         <activity
             android:name=".Main.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <service android:name=".FCM.FirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
