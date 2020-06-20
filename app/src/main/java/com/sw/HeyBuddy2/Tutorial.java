@@ -99,7 +99,6 @@ public class Tutorial extends AppCompatActivity {
     }
 
     private void moveMainPage(){
-        startActivity(new Intent(Tutorial.this, SelectActivity.class));
         finish();
     }
 
