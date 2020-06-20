@@ -44,7 +44,7 @@
     <!-- add friend -->
     <string name="add_to_wishlist" translatable="false">Add to Wishlist</string>
     <string name="remove_wishlist" translatable="false">Remove</string>
-    <string name="add_friend" translatable="false">Add friend</string>
+    <string name="add_buddy" translatable="false">Add buddy</string>
     <string name="cancel_invite" translatable="false">Cancel invite</string>
 
     <string name="eva_help">Was this app helpful?</string>

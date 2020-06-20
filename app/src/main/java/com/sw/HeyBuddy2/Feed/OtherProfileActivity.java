@@ -396,7 +396,7 @@ public class OtherProfileActivity extends AppCompatActivity {
                     }
                 }
             });
-            sendMessageRequestButton.setText(R.string.add_friend);
+            sendMessageRequestButton.setText(R.string.add_buddy);
         } else{
             Map<String, Object> requestInfo_send = new HashMap<>();
             requestInfo_send.put("sent", true);
