@@ -34,15 +34,6 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/skip1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/next_eva"
-        android:background="@color/white"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true">
-    </Button>
 
     <Button
         android:id="@+id/next1"
