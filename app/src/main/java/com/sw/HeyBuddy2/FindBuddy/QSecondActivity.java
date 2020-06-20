@@ -90,6 +90,7 @@ public class QSecondActivity extends AppCompatActivity {
                                                     Intent goFindBuddy=new Intent(QSecondActivity.this, SettingQuestionActivity.class);
                                                     startActivity(goFindBuddy);
                                                     dialog.dismiss();
+                                                    finish();
                                                 }
                                             });
 
@@ -99,6 +100,7 @@ public class QSecondActivity extends AppCompatActivity {
                                                     Intent home=new Intent(QSecondActivity.this, QMainActivity.class);
                                                     startActivity(home);
                                                     dialog.dismiss();
+                                                    finish();
                                                 }
                                             });
                                             alert.show();

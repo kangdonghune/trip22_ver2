@@ -57,8 +57,8 @@ public class QMainActivity extends AppCompatActivity {
         fragmentPagerAdapter = new q_ViewPagerAdapter(getSupportFragmentManager());
 
         viewPager.setAdapter(fragmentPagerAdapter);
-        TabLayout tabLayout = findViewById(R.id.q_dot_layout);
-        tabLayout.setupWithViewPager(viewPager, true);
+        TabLayout tabLayout = findViewById(R.id.tabLayout2);
+        tabLayout.setupWithViewPager(viewPager);
 
 
         //플롯 버튼 제어

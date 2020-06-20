@@ -6,37 +6,61 @@
     android:layout_height="match_parent"
     tools:context=".Main.QMainActivity">
 
-
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/view_pager"
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout3"
+            app:tabIndicatorColor="#38B6FF"
+            app:tabRippleColor="#FFFFFF"
+            app:tabSelectedTextColor="#38B6FF"
+            app:tabTextColor="#000000">
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Home" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Feed" />
+
+        </com.google.android.material.tabs.TabLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout3"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/tabLayout2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-        </androidx.viewpager.widget.ViewPager>
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </androidx.viewpager.widget.ViewPager>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/q_dot_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerInParent="true"
-            app:tabBackground="@drawable/tab_selector"
-            app:tabGravity="center"
-            app:tabIndicatorHeight="0dp"/>
-
-
-    </RelativeLayout>
-
-
+    </androidx.constraintlayout.widget.ConstraintLayout>
     <View
         android:id="@+id/fabBGLayout"
         android:layout_width="match_parent"
