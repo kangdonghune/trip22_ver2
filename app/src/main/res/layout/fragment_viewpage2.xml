@@ -4,31 +4,51 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     >
-    <RadioGroup
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2sp"
+        android:id="@+id/sorting"
+        android:background="@drawable/q_feed_location"
+        android:layout_margin="10sp"
+        android:gravity="center">
+    <RadioGroup
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:id="@+id/radioGroup">
+        android:id="@+id/radioGroup"
+        android:layout_gravity="center"
+        android:gravity="center"
+
+        >
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
+            android:layout_gravity="center"
+
+
             android:id="@+id/rbtRecent"
-            android:text="@string/recent"/>
+            android:text="@string/recent"
+
+            android:layout_weight="1"/>
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/rbtLike"
-            android:text="@string/likeOrder"/>
+            android:layout_gravity="center"
+
+            android:text="@string/likeOrder"
+            android:layout_weight="1"/>
     </RadioGroup>
+    </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/feed_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/radioGroup">
+        android:layout_below="@+id/sorting">
 
     </androidx.recyclerview.widget.RecyclerView>
 
