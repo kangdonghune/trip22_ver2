@@ -57,8 +57,8 @@ public class MainActivity extends AppCompatActivity {
         fragmentPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         viewPager.setAdapter(fragmentPagerAdapter);
-        TabLayout tabLayout = findViewById(R.id.dot_layout);
-        tabLayout.setupWithViewPager(viewPager, true);
+        TabLayout tabLayout =findViewById(R.id.tabLayout);
+        tabLayout.setupWithViewPager(viewPager);
 
         //플롯 버튼 제어
         fabLayout1 = (LinearLayout) findViewById(R.id.fabLayout1);
