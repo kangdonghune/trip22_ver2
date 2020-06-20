@@ -7,8 +7,10 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.animation.Animator;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +20,7 @@ import android.widget.LinearLayout;
 import com.sw.HeyBuddy2.Feed.FeedWriteActivity;
 import com.sw.HeyBuddy2.FindBuddy.RequestActivity;
 import com.sw.HeyBuddy2.LoginRegiser.LoginActivity;
+import com.sw.HeyBuddy2.LoginRegiser.SelectActivity;
 import com.sw.HeyBuddy2.R;
 import com.sw.HeyBuddy2.Setting.SettingResponActivity;
 import com.sw.HeyBuddy2.Profile.respon_profile;
@@ -29,6 +32,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.sw.HeyBuddy2.Tutorial;
 import com.sw.HeyBuddy2.app_eva.app_eva001;
 
 
@@ -49,6 +53,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        SharedPreferences pref = getSharedPreferences("checkFirst", Activity.MODE_PRIVATE);
+        boolean checkFirst = pref.getBoolean("checkFirst", false);
+        if(checkFirst==false){
+            //앱 최초실행시
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putBoolean("checkFirst", true);
+            editor.commit();
+
+            Intent intent = new Intent(MainActivity.this, Tutorial.class);
+            startActivity(intent);
+        }
+        else{
+
+        }
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
