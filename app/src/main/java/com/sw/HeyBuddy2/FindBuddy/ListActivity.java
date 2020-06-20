@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -136,6 +137,7 @@ public class ListActivity extends AppCompatActivity {
         fsAdapter.startListening();
 
         if(fsAdapter.getItemCount()==0){
+            AlertDialog.Builder alert=new AlertDialog.Builder(ListActivity.this);
 
         }
     }
