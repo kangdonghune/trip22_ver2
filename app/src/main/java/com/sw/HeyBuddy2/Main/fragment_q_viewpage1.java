@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -20,6 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class fragment_q_viewpage1 extends Fragment {
     private View view;
     ImageView ask;
+    ImageView ask_arrow;
     ImageView findbuddy;
     private FirebaseFirestore db;
     private String currentUserID;
@@ -58,6 +61,9 @@ public class fragment_q_viewpage1 extends Fragment {
                 startActivity(intent);
             }
         });
+        ask_arrow = view.findViewById(R.id.ask_arrow);
+        Animation anim = AnimationUtils.loadAnimation(getContext(), R.anim.arrow_move);
+        ask_arrow.startAnimation(anim);
 
 
 

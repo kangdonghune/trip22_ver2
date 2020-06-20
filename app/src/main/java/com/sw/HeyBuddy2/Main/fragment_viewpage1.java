@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,6 +24,7 @@ public class fragment_viewpage1 extends Fragment {
     TextView checkLang;
     TextView checkLo;
     ImageView answer;
+    ImageView answer_arrow;
     ImageView findbuddy;
     private FirebaseFirestore db;
     private String currentUserID;
@@ -47,6 +50,9 @@ public class fragment_viewpage1 extends Fragment {
                 startActivity(intent);
             }
         });
+        answer_arrow = view.findViewById(R.id.answer_arrow);
+        Animation anim = AnimationUtils.loadAnimation(getContext(), R.anim.arrow_move);
+        answer_arrow.startAnimation(anim);
 
 
 
