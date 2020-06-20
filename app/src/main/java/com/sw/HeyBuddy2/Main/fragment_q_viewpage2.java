@@ -112,15 +112,6 @@ public class fragment_q_viewpage2 extends Fragment {
                                                     dialog.dismiss();
                                                 }
                                             });
-
-                                            alert.setNegativeButton("Go Home", new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialog, int which) {
-                                                    Intent home=new Intent(getActivity(), QMainActivity.class);
-                                                    startActivity(home);
-                                                    dialog.dismiss();
-                                                }
-                                            });
                                             alert.show();
                                         }
                                     }
