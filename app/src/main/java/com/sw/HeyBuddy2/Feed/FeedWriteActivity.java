@@ -43,7 +43,7 @@ import java.util.Map;
 import xyz.hasnat.sweettoast.SweetToast;
 
 public class FeedWriteActivity extends AppCompatActivity {
-    private static final String TAG = "FeedWriteActivity";
+    private static final String TAG = "피드작성";
     private ImageView imageview;
     Button btn_ok;
     EditText text;
@@ -64,6 +64,8 @@ public class FeedWriteActivity extends AppCompatActivity {
     String feed_uri;
     String feed_desc;
     String NLocation;
+    private String userLocation;
+    private Uri imageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +77,21 @@ public class FeedWriteActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         currentUserID = mAuth.getCurrentUser().getUid();
-
+        // 유저 로케이션 가져오도록 수정
+        // 기존 문제는 유저 db에 접근할 때 시간이 걸려서 발생하는 문제로 추정
+        db.collection("Users").document(currentUserID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isComplete()){
+                    userLocation = task.getResult().get("NLocation").toString();
+                    for(int i=0; i<sp1.getCount(); i++){
+                        if(sp1.getItemAtPosition(i).equals(userLocation)){
+                            sp1.setSelection(i);
+                        }
+                    }
+                }
+            }
+        });
         storageRef = FirebaseStorage.getInstance().getReference();
         documentId=db.collection("Feeds").document().getId();
 
@@ -126,43 +142,13 @@ public class FeedWriteActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==REQUEST_IMAGE_CODE && resultCode==RESULT_OK){
-            final Uri image=data.getData();
-            Picasso.get().load(image)
+            imageUri=data.getData();
+            Picasso.get().load(imageUri)
                     .placeholder(R.drawable.default_profile_image)
                     .error(R.drawable.default_profile_image)
                     .resize(0,400)
                     .into(imageview);
-
-            final StorageReference riversRef = storageRef.child("Feeds").child(currentUserID).child(documentId).child("feed.jpg");
-            UploadTask uploadTask=riversRef.putFile(image);
-            Task<Uri> uriTask=uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                @Override
-                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                    if(!task.isSuccessful()){
-                        SweetToast.error(FeedWriteActivity.this, "Feed Photo Error: " + task.getException().getMessage());
-                    }
-                    feed_uri=riversRef.getDownloadUrl().toString();
-                    return riversRef.getDownloadUrl();
-                }
-            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    if(task.isSuccessful()){
-                        feed_uri=task.getResult().toString();
-
-                        HashMap<String, Object> update_feed_data=new HashMap<>();
-                        update_feed_data.put("feed_uri",feed_uri);
-
-                        db.collection("Feeds").document(documentId).set(update_feed_data, SetOptions.merge())
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                    }
-                                });
-                    }
-                }
-            });
-
+            Log.d(TAG, "onActivityResult: "+ imageUri);
         }
     }
     private void writefeed() {
@@ -186,35 +172,50 @@ public class FeedWriteActivity extends AppCompatActivity {
         feed_desc=text.getText().toString();
         NLocation=sp1.getSelectedItem().toString();
         final Map<String, Object> feed = new HashMap<>();
-
+        //
         feed.put("feed_desc",feed_desc);
         feed.put("location",NLocation);
         feed.put("feed_time", FieldValue.serverTimestamp());
         feed.put("uid", currentUserID);
         feed.put("feed_area",feed_keyword);
         feed.put("like_number",0);
-        Log.e("버그발생", feed.get("uid").toString());
 
-        db.collection("Feeds").document(documentId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if(task.isSuccessful()){
-                    if(task.getResult().contains("feed_uri")){
-                        task.getResult().getReference().set(feed,SetOptions.merge())
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
+        if(imageUri != null){
+            final StorageReference riversRef = storageRef.child("Feeds").child(currentUserID).child(documentId).child("feed.jpg");
+            UploadTask uploadTask=riversRef.putFile(imageUri);
+            uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                @Override
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    if(!task.isSuccessful()){
+                        SweetToast.error(FeedWriteActivity.this, "Feed Photo Error: " + task.getException().getMessage());
+                    }
+                    feed_uri=riversRef.getDownloadUrl().toString();
+                    return riversRef.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if(task.isSuccessful()){
+                        feed_uri=task.getResult().toString();
+                        feed.put("feed_uri",feed_uri);
+                        if(feed.containsKey("feed_uri")){
+                            db.collection("Feeds").document(documentId).set(feed, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+
                                         Toast.makeText(FeedWriteActivity.this, "피드 등록이 완료되었습니다.",Toast.LENGTH_LONG).show();
                                         finish();
                                     }
-                                });
-                    }
-                    else {
-                        SweetToast.error(FeedWriteActivity.this, "Image is required");
+                                }
+                            });
+                        }
                     }
                 }
-            }
-        });
+            });
+        } else{
+            SweetToast.error(FeedWriteActivity.this, "Image is required");
+        }
     }
 
 }
