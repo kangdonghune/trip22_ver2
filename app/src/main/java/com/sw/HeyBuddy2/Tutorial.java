@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,10 +49,13 @@ public class Tutorial extends AppCompatActivity {
                 R.layout.tuto_page1,
                 R.layout.tuto_page2,
                 R.layout.tuto_page3,
-                R.layout.tuto_page4
+                R.layout.tuto_page4,
+                R.layout.tuto_page5,
+                R.layout.tuto_page6
         };
 
         addBottomDots(0);
+
         changeStatusBarColor();
 
         pagerAdapter = new PagerAdapter();
@@ -83,15 +87,22 @@ public class Tutorial extends AppCompatActivity {
     private void addBottomDots(int currentPage){
         dots = new TextView[layouts.length];
 
+        int[] colorsActive = getResources().getIntArray(R.array.array_dot_active);
+        int[] colorsInactive = getResources().getIntArray(R.array.array_dot_inactive);
+
 
         dotsLayout.removeAllViews();
         for(int i = 0; i< dots.length; i++){
             dots[i] = new TextView(this);
+            dots[i].setText(Html.fromHtml("&#8226"));
             dots[i].setTextSize(35);
+            dots[i].setTextColor(colorsInactive[currentPage]);
             dotsLayout.addView(dots[i]);
         }
 
-        if(dots.length > 0);
+        if(dots.length > 0){
+            dots[currentPage].setTextColor(colorsActive[currentPage]);
+        };
     }
 
     private int getItem(int i){
