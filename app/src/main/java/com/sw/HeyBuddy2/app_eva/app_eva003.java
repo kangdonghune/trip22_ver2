@@ -17,7 +17,7 @@ import static com.sw.HeyBuddy2.app_eva.app_eva001.evainfo;
 public class app_eva003 extends AppCompatActivity {
 
     private EditText ev;
-    private Button btn_next, btn_skip;
+    private Button btn_next;
 
 
     @Override
@@ -27,7 +27,6 @@ public class app_eva003 extends AppCompatActivity {
 
         ev = (EditText) findViewById(R.id.ev3);
         btn_next = (Button) findViewById(R.id.next3);
-        btn_skip = (Button) findViewById(R.id.skip3);
 
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,13 +37,11 @@ public class app_eva003 extends AppCompatActivity {
                 finish();
             }
         });
-        btn_skip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                evainfo.clear();
-                finish();
-            }
-        });
 
+    }
+    @Override
+    protected void onStop(){
+        super.onStop();
+        evainfo.clear();
     }
 }

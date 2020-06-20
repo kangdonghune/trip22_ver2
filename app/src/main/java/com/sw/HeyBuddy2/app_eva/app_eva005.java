@@ -32,7 +32,6 @@ public class app_eva005 extends AppCompatActivity {
 
         ev = (EditText) findViewById(R.id.ev5);
         btn_next = (Button) findViewById(R.id.next5);
-        btn_skip = (Button) findViewById(R.id.skip5);
         rating = (RatingBar) findViewById(R.id.rating5);
         db = FirebaseFirestore.getInstance();
 
@@ -46,13 +45,11 @@ public class app_eva005 extends AppCompatActivity {
                 finish();
             }
         });
-        btn_skip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                evainfo.clear();
-                finish();
-            }
-        });
 
+    }
+    @Override
+    protected void onStop(){
+        super.onStop();
+        evainfo.clear();
     }
 }

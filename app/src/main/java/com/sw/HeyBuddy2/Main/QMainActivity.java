@@ -7,8 +7,10 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.animation.Animator;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +18,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import com.sw.HeyBuddy2.LoginRegiser.LoginActivity;
+import com.sw.HeyBuddy2.LoginRegiser.SelectActivity;
 import com.sw.HeyBuddy2.Profile.question_profile;
 import com.sw.HeyBuddy2.R;
 import com.sw.HeyBuddy2.Setting.SettingQuestionActivity;
@@ -46,6 +49,22 @@ public class QMainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_q_main);
+
+        SharedPreferences pref = getSharedPreferences("checkFirst", Activity.MODE_PRIVATE);
+        boolean checkFirst = pref.getBoolean("checkFirst", false);
+        if(checkFirst==false){
+            //앱 최초실행시
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putBoolean("checkFirst", true);
+            editor.commit();
+
+            Intent intent = new Intent(QMainActivity.this, Tutorial.class);
+            startActivity(intent);
+        }
+        else{
+
+        }
+
         Intent intent=getIntent();
         String Newl=intent.getStringExtra("NLocation");
         String NewLang = intent.getStringExtra("NewL");
