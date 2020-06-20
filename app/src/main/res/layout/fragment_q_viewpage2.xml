@@ -4,11 +4,23 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Location : "
+        android:id="@+id/feed_locationTextView"
+        android:layout_margin="10sp"
+        android:padding="3sp"
+
+        android:background="@drawable/q_feed_location"
+        android:textSize="15sp"
+        android:gravity="center"></TextView>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/feed_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/feed_locationTextView">
 
     </androidx.recyclerview.widget.RecyclerView>
 

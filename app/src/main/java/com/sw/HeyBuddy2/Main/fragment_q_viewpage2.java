@@ -56,6 +56,7 @@ public class fragment_q_viewpage2 extends Fragment {
 
     private String username,user_uri,feed_uri, feed_desc,feed_uid;
     private Timestamp timestamp;
+    TextView feed_location;
 
     RadioButton rbtArea, rbtLike;
     Query query;
@@ -79,7 +80,7 @@ public class fragment_q_viewpage2 extends Fragment {
         feedLayoutManager.setReverseLayout(true);
         feedLayoutManager.setStackFromEnd(true);
         feedList.setLayoutManager(feedLayoutManager);
-
+        feed_location=view.findViewById(R.id.feed_locationTextView);
         rbtLike=view.findViewById(R.id.rbtLike);
         return view;
     }
@@ -93,6 +94,10 @@ public class fragment_q_viewpage2 extends Fragment {
                         if(task.isSuccessful()){
                             if(task.getResult().contains("NQLocation")){
                                 String qlocation=task.getResult().get("NQLocation").toString();
+                                String feed_location_change="";
+
+                                feed_location_change="Location : "+ qlocation;
+                                feed_location.setText(feed_location_change);
                                 query=db.collection("Feeds").whereEqualTo("location", qlocation);
                                 query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                     @Override
