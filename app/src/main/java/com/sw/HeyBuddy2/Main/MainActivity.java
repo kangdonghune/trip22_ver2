@@ -15,7 +15,6 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
-import com.sw.HeyBuddy2.EvaluationActivity;
 import com.sw.HeyBuddy2.Feed.FeedWriteActivity;
 import com.sw.HeyBuddy2.FindBuddy.RequestActivity;
 import com.sw.HeyBuddy2.LoginRegiser.LoginActivity;
@@ -30,6 +29,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.sw.HeyBuddy2.app_eva.app_eva001;
 
 
 import java.util.Map;
@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
         fab2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent evaluation=new Intent(MainActivity.this, EvaluationActivity.class);
+                Intent evaluation=new Intent(MainActivity.this, app_eva001.class);
                 startActivity(evaluation);
             }
         });

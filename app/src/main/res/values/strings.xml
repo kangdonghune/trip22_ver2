@@ -39,7 +39,8 @@
     <string name="wherevisit">wherevisit</string>
     <string name="skip">skip</string>
     <string name="start">start</string>
-    <string name="next_eva">Rate next</string>
+    <string name="next_eva">Rate evaluation</string>
+    <string name="thank">thank you!</string>
     <!-- add friend -->
     <string name="add_to_wishlist" translatable="false">Add to Wishlist</string>
     <string name="remove_wishlist" translatable="false">Remove</string>
