@@ -35,6 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="you "
+                android:id="@+id/report_you"
                 android:textSize="15sp"
                 android:layout_marginLeft="10sp"></TextView>
         </LinearLayout>
@@ -53,6 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="buddy "
+                android:id="@+id/report_buddy"
                 android:textSize="15sp"
                 android:layout_marginLeft="10sp"></TextView>
 
@@ -68,7 +70,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
+            android:id="@+id/report_contents"
             android:layout_marginRight="50sp"
             android:layout_marginLeft="50sp"
             android:lines="5"
@@ -79,6 +81,7 @@
 
         <Button
             android:layout_width="wrap_content"
+            android:id="@+id/report_submit"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_gravity="center"
