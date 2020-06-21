@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".app_eva.app_eva005"/>
+        <activity android:name=".app_eva.app_evaluation"></activity>
+        <activity android:name=".app_eva.app_eva005" />
         <activity android:name=".app_eva.app_eva004" />
         <activity android:name=".app_eva.app_eva003" />
         <activity android:name=".app_eva.app_eva002" />
@@ -25,7 +26,6 @@
         <activity
             android:name=".FindBuddy.UserEvaluationActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".FindBuddy.ListActivity"
             android:theme="@style/defaultAppTheme" />
@@ -47,11 +47,9 @@
         <activity
             android:name=".tutorial.Tutorial"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".tutorial.Local_Tutorial"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".FindBuddy.QSecondActivity"
             android:theme="@style/defaultAppTheme" />
