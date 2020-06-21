@@ -19,6 +19,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.sw.HeyBuddy2.Main.QMainActivity;
 import com.sw.HeyBuddy2.R;
 import com.sw.HeyBuddy2.Setting.SettingQuestionActivity;
+import com.sw.HeyBuddy2.Setting.SettingResponActivity;
 
 public class Local_Tutorial extends AppCompatActivity {
 
@@ -114,7 +115,7 @@ public class Local_Tutorial extends AppCompatActivity {
         editor.putBoolean("checkFirst2", true);
         editor.commit();
 
-        Intent settingsIntent = new Intent(Local_Tutorial.this, SettingQuestionActivity.class);
+        Intent settingsIntent = new Intent(Local_Tutorial.this, SettingResponActivity.class);
         startActivity(settingsIntent);
         finish();
     }
