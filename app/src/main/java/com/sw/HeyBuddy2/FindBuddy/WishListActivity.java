@@ -9,11 +9,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -34,7 +36,9 @@ import com.nordan.dialog.DialogType;
 import com.nordan.dialog.NordanAlertDialog;
 import com.nordan.dialog.NordanAlertDialogListener;
 import com.squareup.picasso.Picasso;
+import com.sw.HeyBuddy2.Main.QMainActivity;
 import com.sw.HeyBuddy2.R;
+import com.sw.HeyBuddy2.Setting.SettingQuestionActivity;
 import com.sw.HeyBuddy2.utils.Contacts;
 
 import org.json.JSONObject;
@@ -42,7 +46,9 @@ import org.json.JSONObject;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -56,6 +62,7 @@ public class WishListActivity extends AppCompatActivity {
     private FirestoreRecyclerAdapter fsAdapter;
     private String wishName, wishStatus, user_uri;
     private ConstraintLayout notfound;
+    private Button sendAll;
     Query query;
 
     public WishListActivity(){
@@ -71,6 +78,7 @@ public class WishListActivity extends AppCompatActivity {
         currentUserId = mAuth.getCurrentUser().getUid();
         db = FirebaseFirestore.getInstance();
         notfound = findViewById(R.id.wishlist_notfound);
+        sendAll = findViewById(R.id.send_request_all);
         mWishList =(RecyclerView)findViewById(R.id.wishlist_view);
         mWishList.setLayoutManager(new LinearLayoutManager(getApplication()));
     }
@@ -94,12 +102,13 @@ public class WishListActivity extends AppCompatActivity {
             @Override
             protected void onBindViewHolder(@NonNull final WishlistViewHolder holder, int position, @NonNull Contacts model) {
                 notfound.setVisibility(View.INVISIBLE);
-                final String listUserId = getSnapshots().getSnapshot(holder.getAdapterPosition()).getId();
+                String listUserId = getSnapshots().getSnapshot(holder.getAdapterPosition()).getId();
+                Log.d("바인드!", "onBindViewHolder: "+listUserId);
                 DocumentReference docRef = getSnapshots().getSnapshot(holder.getAdapterPosition()).getReference();
                 docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                        if(documentSnapshot.exists()){
+                        if(documentSnapshot.exists()){ // 만약 위시리스트에 문서가 있다면
                             db.collection("Users").document(listUserId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -116,53 +125,26 @@ public class WishListActivity extends AppCompatActivity {
                                         }
                                         holder.userName.setText(wishName);
                                         holder.userStatus.setText(wishStatus);
+                                        db.collection("Users").document(currentUserId).collection("Matching").document(listUserId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                if(task.getResult().contains("sent")){
+                                                    holder.sendButton.setText("Cancel Request"); // 리퀘스트 취소가 뜨도록
+                                                } else{
+                                                    holder.sendButton.setText("Send Request");
+                                                }
+                                            }
+                                        });
+
                                     }
                                 }
                             });
+
                             //요청보내기
                             holder.itemView.findViewById(R.id.wishlist_send_request_btn).setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    //요청전송
-                                    if(holder.sendButton.getText().equals("Send Request")){
-                                        Map<String, Object> requestInfo_send = new HashMap<>();
-                                        requestInfo_send.put("sent", true);
-                                        requestInfo_send.put("ismatched", false);
-                                        db.collection("Users").document(currentUserId).collection("Matching").document(listUserId).set(requestInfo_send, SetOptions.merge()).addOnCompleteListener(
-                                                new OnCompleteListener<Void>() {
-                                                    @Override
-                                                    public void onComplete(@NonNull Task<Void> task) {
-                                                        if(task.isSuccessful()){
-                                                            Map<String, Object> requestInfo_receive = new HashMap<>();
-                                                            requestInfo_receive.put("received", true);
-                                                            requestInfo_receive.put("ismatched", false);
-                                                            db.collection("Users").document(listUserId)
-                                                                    .collection("Matching").document(currentUserId)
-                                                                    .set(requestInfo_receive, SetOptions.merge());
-//                                                            sendFCM(listUserId);
-                                                        }
-                                                    }
-                                                }
-                                        );
-                                        holder.sendButton.setText("Cancel Request");
-                                    } else{ // 요청취소
-                                        Map<String, Object> removeSent = new HashMap<>();
-                                        removeSent.put("sent", FieldValue.delete());
-                                        db.collection("Users").document(currentUserId).collection("Matching")
-                                                .document(listUserId).update(removeSent).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if(task.isSuccessful()){
-                                                    Map<String,Object> removereceived = new HashMap<>();
-                                                    removereceived.put("received", FieldValue.delete());
-                                                    //removereceived.put("ismatched", false);
-                                                    db.collection("Users").document(listUserId)
-                                                            .collection("Matching").document(currentUserId).update(removereceived);
-                                                }
-                                            }
-                                        });
-                                        holder.sendButton.setText("Send Request");
-                                    }
+                                    sendReq(holder, listUserId);
                                 }
                             });
                             //위시리스트에서 삭제
@@ -187,6 +169,122 @@ public class WishListActivity extends AppCompatActivity {
         };
         mWishList.setAdapter(fsAdapter);
         fsAdapter.startListening();
+
+        sendAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Toast.makeText(getApplicationContext(), "Request Sent to All Users", Toast.LENGTH_LONG).show();
+                sendReqAll();
+                NordanAlertDialog.Builder alert=new NordanAlertDialog.Builder(WishListActivity.this);
+                alert.setAnimation(Animation.SLIDE);
+                alert.setDialogType(DialogType.INFORMATION);
+                alert.setTitle("Request Sent!");
+                alert.setMessage("Request has been sent to all!");
+                alert.isCancellable(true);
+                alert.setPositiveBtnText("Back to Home");
+                alert.onPositiveClicked(new NordanAlertDialogListener() {
+                    @Override
+                    public void onClick() {
+                        alert.build().dismiss();
+                        Intent goFindBuddy=new Intent(getApplicationContext(), QMainActivity.class);
+                        startActivity(goFindBuddy);
+                        finish();
+                    }
+                });
+                alert.build().show();
+            }
+        });
+    }
+    private void sendReq(WishlistViewHolder holder, String listUserId){
+        //요청전송
+        if(holder.sendButton.getText().equals("Send Request")){
+            DocumentReference df = db.collection("Users").document(currentUserId).collection("Wishlist").document(listUserId);
+
+            Map<String, Object> requestInfo_send = new HashMap<>();
+            requestInfo_send.put("sent", true);
+            requestInfo_send.put("ismatched", false);
+            db.collection("Users").document(currentUserId).collection("Matching").document(listUserId).set(requestInfo_send, SetOptions.merge()).addOnCompleteListener(
+                    new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                Map<String, Object> requestInfo_receive = new HashMap<>();
+                                requestInfo_receive.put("received", true);
+                                requestInfo_receive.put("ismatched", false);
+                                db.collection("Users").document(listUserId)
+                                        .collection("Matching").document(currentUserId)
+                                        .set(requestInfo_receive, SetOptions.merge());
+                                sendFCM(listUserId);
+                            }
+                        }
+                    }
+            );
+//            Map<String, Object> wdata = new HashMap<>();
+//            wdata.put("sent", true);
+//            df.set(wdata, SetOptions.merge());
+            holder.sendButton.setText("Cancel Request");
+        } else{ // 요청취소
+            Map<String, Object> removeSent = new HashMap<>();
+            removeSent.put("sent", FieldValue.delete());
+            db.collection("Users").document(currentUserId).collection("Matching")
+                    .document(listUserId).update(removeSent).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if(task.isSuccessful()){
+                        Map<String,Object> removereceived = new HashMap<>();
+                        removereceived.put("received", FieldValue.delete());
+                        //removereceived.put("ismatched", false);
+                        db.collection("Users").document(listUserId)
+                                .collection("Matching").document(currentUserId).update(removereceived);
+                    }
+                }
+            });
+//            Map<String, Object> wdata = new HashMap<>();
+//            wdata.put("sent", FieldValue.delete());
+//            db.collection("Users").document(currentUserId).collection("Wishlist").document(listUserId).set(wdata, SetOptions.merge());
+            holder.sendButton.setText("Send Request");
+        }
+    }
+
+    private void sendReqAll(){
+        db.collection("Users").document(currentUserId).collection("Wishlist").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                List<DocumentSnapshot> wl = task.getResult().getDocuments();
+                for(int i=0;i<wl.size();i++){
+                    String wluid = wl.get(i).getId();
+                    Log.d("전체요청", "위시리스트uid: "+wluid);
+                    db.collection("Users").document(currentUserId).collection("Matching").document(wluid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            DocumentReference df = db.collection("Users").document(currentUserId).collection("Wishlist").document(wluid);
+
+                            Map<String, Object> requestInfo_send = new HashMap<>();
+                            requestInfo_send.put("sent", true);
+                            requestInfo_send.put("ismatched", false);
+                            db.collection("Users").document(currentUserId).collection("Matching").document(wluid).set(requestInfo_send, SetOptions.merge()).addOnCompleteListener(
+                                    new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if(task.isSuccessful()){
+                                                Map<String, Object> requestInfo_receive = new HashMap<>();
+                                                requestInfo_receive.put("received", true);
+                                                requestInfo_receive.put("ismatched", false);
+                                                db.collection("Users").document(wluid)
+                                                        .collection("Matching").document(currentUserId)
+                                                        .set(requestInfo_receive, SetOptions.merge());
+                                                sendFCM(wluid);
+                                            }
+                                        }
+                                    }
+                            );
+                        }
+                    });
+                }
+
+            }
+        });
+
     }
 
     private void sendFCM(final String receiverId){
