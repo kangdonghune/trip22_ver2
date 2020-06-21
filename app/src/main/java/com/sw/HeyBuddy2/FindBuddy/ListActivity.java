@@ -3,6 +3,7 @@ package com.sw.HeyBuddy2.FindBuddy;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -49,6 +51,7 @@ public class ListActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
     private String currentUserId;
+    private ConstraintLayout notfound;
     String userstatus,user_uri;
     FirestoreRecyclerOptions<Contacts> options;
     FirestoreRecyclerAdapter<Contacts, ChatsViewHolder> fsAdapter;
@@ -62,8 +65,11 @@ public class ListActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         currentUserId = mAuth.getCurrentUser().getUid();
         setContentView(R.layout.activity_list);
+        notfound = findViewById(R.id.list_notfound);
         chatsList = (RecyclerView) findViewById(R.id.chats_list);
         chatsList.setLayoutManager(new LinearLayoutManager(getApplication()));
+
+
     }
 
     @Override
@@ -74,6 +80,7 @@ public class ListActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.getResult().isEmpty()){
+                    notfound.setVisibility(View.VISIBLE);
                     NordanAlertDialog.Builder alert=new NordanAlertDialog.Builder(ListActivity.this);
                     alert.setAnimation(Animation.SLIDE);
                     alert.setDialogType(DialogType.INFORMATION);
@@ -101,6 +108,7 @@ public class ListActivity extends AppCompatActivity {
                 new FirestoreRecyclerAdapter<Contacts, ChatsViewHolder>(options) {
                     @Override
                     protected void onBindViewHolder(@NonNull final ChatsViewHolder holder, int position, @NonNull Contacts model) {
+                        notfound.setVisibility(View.INVISIBLE);
                         final String user_uid = getSnapshots().getSnapshot(holder.getAdapterPosition()).getId();
                         DocumentReference docRef = getSnapshots().getSnapshot(holder.getAdapterPosition()).getReference();
                         docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {

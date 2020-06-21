@@ -3,6 +3,7 @@ package com.sw.HeyBuddy2.FindBuddy;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -48,11 +49,13 @@ public class QSecondActivity extends AppCompatActivity {
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();;
     private String currentUserId  = mAuth.getCurrentUser().getUid();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private ConstraintLayout notfound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
+        notfound = findViewById(R.id.find_notfound);
 
         btn_next=(Button)findViewById(R.id.btn_next);
         usersRef = db.collection("Users");
@@ -84,6 +87,7 @@ public class QSecondActivity extends AppCompatActivity {
                                     @Override
                                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                         if(task.getResult().isEmpty()){
+                                            notfound.setVisibility(View.VISIBLE);
                                             NordanAlertDialog.Builder alert=new NordanAlertDialog.Builder(QSecondActivity.this);
                                             alert.setAnimation(Animation.SLIDE);
                                             alert.setDialogType(DialogType.INFORMATION);
@@ -119,6 +123,7 @@ public class QSecondActivity extends AppCompatActivity {
 
                                     @Override
                                     protected void onBindViewHolder(@NonNull FindUserViewHolder holder, int position, @NonNull Contacts model) {
+                                        notfound.setVisibility(View.INVISIBLE);
                                         if(getSnapshots().getSnapshot(holder.getAdapterPosition()).contains("uid")){
                                             query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                                 @Override
