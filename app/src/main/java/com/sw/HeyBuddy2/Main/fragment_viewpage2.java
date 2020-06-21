@@ -190,6 +190,7 @@ public class fragment_viewpage2 extends Fragment {
                                                         final Intent detail = new Intent(getContext(), FeedDetailActivity.class);
                                                         detail.putExtra("userId", task.getResult().getDocuments().get(holder.getAdapterPosition()).get("uid").toString());
                                                         detail.putExtra("feedId",task.getResult().getDocuments().get(holder.getAdapterPosition()).getId());
+                                                        detail.putExtra("btnExist",1);
                                                         startActivity(detail);
                                                     }
                                                 }

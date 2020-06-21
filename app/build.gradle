@@ -63,4 +63,5 @@ dependencies {
     implementation 'com.github.chrisbanes:PhotoView:2.0.0'
     implementation 'com.hlab.fabrevealmenu:fab-reveal-menu:1.0.4'
 
+
 }

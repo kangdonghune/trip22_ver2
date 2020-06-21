@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -41,6 +42,7 @@ public class FeedDetailActivity extends Activity {
     private FirebaseAuth mAuth;
     TextView tvUser, time, tvFeedArea,tvDesc,tvLikeNum;
     Intent intent;
+    Button btn_Profoile, btn_Cancel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,12 +63,23 @@ public class FeedDetailActivity extends Activity {
         btnLike=findViewById(R.id.btn_like);
         tvLikeNum=findViewById(R.id.tv_likeNum);
 
+        btn_Profoile=findViewById(R.id.btnProfile);
+        btn_Cancel=findViewById(R.id.btnCancel);
+
         intent=getIntent();
         Log.d(TAG, "유저 아이디: "+intent.getExtras().get("userId").toString());
         Log.d(TAG, "피드 아이디: "+intent.getExtras().get("feedId").toString());
     }
     public void onStart(){
         super.onStart();
+        if(Integer.parseInt(intent.getExtras().get("btnExist").toString())==1){
+            btn_Profoile.setVisibility(View.VISIBLE);
+            btn_Cancel.setVisibility(View.VISIBLE);
+        }
+        else {
+            btn_Profoile.setVisibility(View.INVISIBLE);
+            btn_Cancel.setVisibility(View.INVISIBLE);
+        }
         db.collection("Users").document(intent.getExtras().get("userId").toString()).get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
