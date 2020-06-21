@@ -65,12 +65,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
         else{
-            SharedPreferences.Editor editor = pref.edit();
-            editor.putBoolean("checkFirst", true);
-            editor.commit();
 
-            Intent intent = new Intent(MainActivity.this, Tutorial.class);
-            startActivity(intent);
         }
 
         mAuth = FirebaseAuth.getInstance();
