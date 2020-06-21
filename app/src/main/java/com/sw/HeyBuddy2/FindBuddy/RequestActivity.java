@@ -165,7 +165,13 @@ public class RequestActivity extends AppCompatActivity {
                                                                     @Override
                                                                     public void onComplete(@NonNull Task<Void> task) {
                                                                         sendFCM(listUserId, currentUserId, true);
-                                                                        Toast.makeText(getApplication(), "매칭이 수락되었습니다",Toast.LENGTH_SHORT).show();
+                                                                        //매칭이 수락되면 위시리스트에서 제거
+                                                                        db.collection("Users").document(listUserId).collection("Wishlist").document(currentUserId).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                            @Override
+                                                                            public void onComplete(@NonNull Task<Void> task) {
+                                                                                Toast.makeText(getApplication(), "매칭이 수락되었습니다",Toast.LENGTH_SHORT).show();
+                                                                            }
+                                                                        });
                                                                     }
                                                                 });
                                                             }
