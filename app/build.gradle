@@ -64,6 +64,7 @@ dependencies {
     implementation 'com.hlab.fabrevealmenu:fab-reveal-menu:1.0.4'
 
     implementation 'com.github.Dan629pl:nordan-material-dialog-android:1.0.4'
+    implementation 'com.github.HITGIF:TextFieldBoxes:1.4.5'
 
 
 }
