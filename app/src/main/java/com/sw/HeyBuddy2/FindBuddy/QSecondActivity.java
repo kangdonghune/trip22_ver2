@@ -60,6 +60,7 @@ public class QSecondActivity extends AppCompatActivity {
         btn_next=(Button)findViewById(R.id.btn_next);
         usersRef = db.collection("Users");
         findUserRecyclerList = (RecyclerView)findViewById(R.id.findUser_recycler_list);
+        findUserRecyclerList.clearDisappearingChildren();
         findUserRecyclerList.setLayoutManager(new LinearLayoutManager(this));
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -184,6 +184,7 @@ public class question_profile extends AppCompatActivity {
 
         profile_feed=(RecyclerView)findViewById(R.id.feed_list);
         GridLayoutManager proFeedGridManger=new GridLayoutManager(question_profile.this,3);
+        profile_feed.clearDisappearingChildren();
         profile_feed.setLayoutManager(proFeedGridManger);
 
     }

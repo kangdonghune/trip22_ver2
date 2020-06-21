@@ -67,6 +67,7 @@ public class ListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list);
         notfound = findViewById(R.id.list_notfound);
         chatsList = (RecyclerView) findViewById(R.id.chats_list);
+        chatsList.clearDisappearingChildren();
         chatsList.setLayoutManager(new LinearLayoutManager(getApplication()));
 
 
