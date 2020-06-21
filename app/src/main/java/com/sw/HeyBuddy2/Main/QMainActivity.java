@@ -65,10 +65,6 @@ public class QMainActivity extends AppCompatActivity {
 
         }
 
-        Intent intent=getIntent();
-        String Newl=intent.getStringExtra("NLocation");
-        String NewLang = intent.getStringExtra("NewL");
-
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
@@ -232,6 +228,7 @@ public class QMainActivity extends AppCompatActivity {
                     fabLayout1.setVisibility(View.GONE);
                     fabLayout2.setVisibility(View.GONE);
                     fabLayout3.setVisibility(View.GONE);
+                    fabLayout4.setVisibility(View.GONE);
                 }
             }
             @Override
