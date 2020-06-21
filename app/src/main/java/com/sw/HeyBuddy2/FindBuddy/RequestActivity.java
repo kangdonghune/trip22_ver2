@@ -141,6 +141,7 @@ public class RequestActivity extends AppCompatActivity {
                                         }
                                     }
                                 });
+
                                 //수락한 경우
                                 holder.itemView.findViewById(R.id.requests_accept_btn).setOnClickListener(new View.OnClickListener() {
                                     @Override
