@@ -3,9 +3,11 @@ package com.sw.HeyBuddy2.FindBuddy;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +26,13 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
+import com.nordan.dialog.Animation;
+import com.nordan.dialog.DialogType;
+import com.nordan.dialog.NordanAlertDialog;
+import com.nordan.dialog.NordanAlertDialogListener;
 import com.squareup.picasso.Picasso;
 import com.sw.HeyBuddy2.R;
 import com.sw.HeyBuddy2.utils.Contacts;
@@ -47,6 +55,8 @@ public class WishListActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private FirestoreRecyclerAdapter fsAdapter;
     private String wishName, wishStatus, user_uri;
+    private ConstraintLayout notfound;
+    Query query;
 
     public WishListActivity(){
 
@@ -60,19 +70,30 @@ public class WishListActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         currentUserId = mAuth.getCurrentUser().getUid();
         db = FirebaseFirestore.getInstance();
-
+        notfound = findViewById(R.id.wishlist_notfound);
         mWishList =(RecyclerView)findViewById(R.id.wishlist_view);
         mWishList.setLayoutManager(new LinearLayoutManager(getApplication()));
     }
     @Override
     public void onStart() {
         super.onStart();
+        query=db.collection("Users").document(currentUserId).collection("Wishlist");
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.getResult().isEmpty()){
+                    notfound.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
         FirestoreRecyclerOptions<Contacts> fsOptions =
-                new FirestoreRecyclerOptions.Builder<Contacts>().setQuery(db.collection("Users").document(currentUserId).collection("Wishlist"), Contacts.class).build();
+                new FirestoreRecyclerOptions.Builder<Contacts>().setQuery(query, Contacts.class).build();
 
         fsAdapter = new FirestoreRecyclerAdapter<Contacts, WishlistViewHolder>(fsOptions) {
             @Override
             protected void onBindViewHolder(@NonNull final WishlistViewHolder holder, int position, @NonNull Contacts model) {
+                notfound.setVisibility(View.INVISIBLE);
                 final String listUserId = getSnapshots().getSnapshot(holder.getAdapterPosition()).getId();
                 DocumentReference docRef = getSnapshots().getSnapshot(holder.getAdapterPosition()).getReference();
                 docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
