@@ -17,12 +17,13 @@
         android:id="@+id/send_request_all"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Send Request All"
+        android:layout_alignBottom="@id/wishlist_view"
+        android:background="@color/colorAccent"
         android:paddingTop="1dp"
         android:paddingBottom="1dp"
-        android:layout_alignBottom="@id/wishlist_view"
-        android:textSize="20sp"
-        >
+        android:text="Send BUDDY REQUEST All"
+        android:textColor="@color/white"
+        android:textSize="20sp">
 
     </Button>
     <androidx.constraintlayout.widget.ConstraintLayout

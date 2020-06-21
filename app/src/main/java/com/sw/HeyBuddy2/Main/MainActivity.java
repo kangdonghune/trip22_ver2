@@ -31,6 +31,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.sw.HeyBuddy2.app_eva.evaluation;
 import com.sw.HeyBuddy2.tutorial.Local_Tutorial;
 import com.sw.HeyBuddy2.tutorial.Tutorial;
 import com.sw.HeyBuddy2.app_eva.app_eva001;
