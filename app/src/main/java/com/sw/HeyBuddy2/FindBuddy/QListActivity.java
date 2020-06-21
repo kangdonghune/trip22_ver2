@@ -206,6 +206,10 @@ public class QListActivity extends AppCompatActivity {
         switch(item.getItemId()){
             case R.id.listmenu_report:
                 SweetToast.info(getApplicationContext(), "신고하기\n"+getvUid());
+                Intent reportIntent = new Intent(QListActivity.this,Report.class);
+                reportIntent.putExtra("you",currentUserId);
+                reportIntent.putExtra("another",getvUid());
+                startActivity(reportIntent);
                 return true;
             case R.id.listmenu_endmatch:
                 SweetToast.info(getApplicationContext(), "매칭종료 및 평가");
