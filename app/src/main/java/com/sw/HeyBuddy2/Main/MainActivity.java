@@ -20,7 +20,6 @@ import android.widget.LinearLayout;
 import com.sw.HeyBuddy2.Feed.FeedWriteActivity;
 import com.sw.HeyBuddy2.FindBuddy.RequestActivity;
 import com.sw.HeyBuddy2.LoginRegiser.LoginActivity;
-import com.sw.HeyBuddy2.LoginRegiser.SelectActivity;
 import com.sw.HeyBuddy2.R;
 import com.sw.HeyBuddy2.Setting.SettingResponActivity;
 import com.sw.HeyBuddy2.Profile.respon_profile;
@@ -32,7 +31,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.sw.HeyBuddy2.Tutorial;
+import com.sw.HeyBuddy2.tutorial.Local_Tutorial;
+import com.sw.HeyBuddy2.tutorial.Tutorial;
 import com.sw.HeyBuddy2.app_eva.app_eva001;
 
 
@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
             editor.putBoolean("checkFirst", true);
             editor.commit();
 
-            Intent intent = new Intent(MainActivity.this, Tutorial.class);
+            Intent intent = new Intent(MainActivity.this, Local_Tutorial.class);
             startActivity(intent);
         }
         else{
