@@ -54,21 +54,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SharedPreferences pref = getSharedPreferences("checkFirst2", Activity.MODE_PRIVATE);
-        boolean checkFirst = pref.getBoolean("checkFirst2", false);
-        if(checkFirst==false){
-            //앱 최초실행시
-            SharedPreferences.Editor editor = pref.edit();
-            editor.putBoolean("checkFirst2", true);
-            editor.commit();
-
-            Intent intent = new Intent(MainActivity.this, Local_Tutorial.class);
-            startActivity(intent);
-        }
-        else{
-
-        }
-
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
@@ -177,17 +162,26 @@ public class MainActivity extends AppCompatActivity {
 
     protected void onStart(){
         super.onStart();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-
-        if(currentUser == null){
-            Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
-            loginIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(loginIntent);
-            finish();
+        SharedPreferences pref = getSharedPreferences("checkFirst2", Activity.MODE_PRIVATE);
+        boolean checkFirst = pref.getBoolean("checkFirst2", false);
+        if(checkFirst==false){
+            //앱 최초실행시
+            Intent intent = new Intent(MainActivity.this, Local_Tutorial.class);
+            startActivity(intent);
         }
         else{
-            VerifyUserExistance();
+            FirebaseUser currentUser = mAuth.getCurrentUser();
 
+            if(currentUser == null){
+                Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+                loginIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(loginIntent);
+                finish();
+            }
+            else{
+                VerifyUserExistance();
+
+            }
         }
     }
     private void VerifyUserExistance() {
