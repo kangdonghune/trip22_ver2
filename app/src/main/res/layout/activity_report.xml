@@ -73,10 +73,10 @@
             android:id="@+id/report_contents"
             android:layout_marginRight="50sp"
             android:layout_marginLeft="50sp"
-            android:lines="5"
+            android:lines="2"
             android:textSize="12sp"
             android:hint="write down your report content"
-            android:background="null"></EditText>
+            ></EditText>
 
 
         <Button

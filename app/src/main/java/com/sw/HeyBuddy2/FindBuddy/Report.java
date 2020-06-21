@@ -27,6 +27,11 @@ public class Report extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report);
 
+        report_submit=(Button)findViewById(R.id.report_submit);
+        report_you=(TextView)findViewById(R.id.report_you);
+        report_buddy=(TextView)findViewById(R.id.report_buddy);
+        report_content=(EditText)findViewById(R.id.report_contents);
+
         reportyou=getIntent().getExtras().get("you").toString();
         reportbuddy=getIntent().getExtras().get("another").toString();
 
