@@ -55,8 +55,12 @@
                     android:id="@+id/wishlist_send_request_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
+                    android:minHeight="0dp"
+                    android:paddingTop="1dp"
+                    android:paddingBottom="1dp"
+                    android:textColor="@android:color/background_light"
                     android:background="@android:color/holo_green_light"
-                    android:text="Send Request"
+                    android:text="Send"
                     android:textAllCaps="false"
                     android:textSize="16sp"/>
 
@@ -65,6 +69,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:layout_marginStart="15dp"
+                    android:minHeight="0dp"
+                    android:paddingTop="1dp"
+                    android:paddingBottom="1dp"
                     android:background="@android:color/holo_red_dark"
                     android:textColor="@android:color/background_light"
                     android:text="remove"
