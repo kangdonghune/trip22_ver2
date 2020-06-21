@@ -73,6 +73,7 @@ public class RequestActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         notfound = findViewById(R.id.request_notfound);
         mRequestsList = (RecyclerView)findViewById(R.id.chat_requests_list);
+        mRequestsList.clearDisappearingChildren();
         mRequestsList.setLayoutManager(new LinearLayoutManager(getApplication()));
     }
 

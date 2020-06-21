@@ -83,6 +83,7 @@ public class fragment_q_viewpage2 extends Fragment {
         LinearLayoutManager feedLayoutManager = new LinearLayoutManager(getContext());
         feedLayoutManager.setReverseLayout(true);
         feedLayoutManager.setStackFromEnd(true);
+        feedList.clearDisappearingChildren();
         feedList.setLayoutManager(feedLayoutManager);
         feed_location=view.findViewById(R.id.feed_locationTextView);
         rbtLike=view.findViewById(R.id.rbtLike);

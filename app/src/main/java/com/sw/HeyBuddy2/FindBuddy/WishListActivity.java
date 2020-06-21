@@ -80,6 +80,7 @@ public class WishListActivity extends AppCompatActivity {
         notfound = findViewById(R.id.wishlist_notfound);
         sendAll = findViewById(R.id.send_request_all);
         mWishList =(RecyclerView)findViewById(R.id.wishlist_view);
+        mWishList.clearDisappearingChildren();
         mWishList.setLayoutManager(new LinearLayoutManager(getApplication()));
     }
     @Override

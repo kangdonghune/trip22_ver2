@@ -78,6 +78,7 @@ public class fragment_viewpage2 extends Fragment {
         LinearLayoutManager feedLayoutManager = new LinearLayoutManager(getContext());
         feedLayoutManager.setReverseLayout(true);
         feedLayoutManager.setStackFromEnd(true);
+        feedList.clearDisappearingChildren();
         feedList.setLayoutManager(feedLayoutManager);
 
         rbtRecent=view.findViewById(R.id.rbtRecent);

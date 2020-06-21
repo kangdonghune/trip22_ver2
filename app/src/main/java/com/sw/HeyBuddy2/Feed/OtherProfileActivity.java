@@ -188,6 +188,7 @@ public class OtherProfileActivity extends AppCompatActivity {
 
         profile_feed=(RecyclerView)findViewById(R.id.feed_list);
         GridLayoutManager proFeedGridManger=new GridLayoutManager(getApplication(),3);
+        profile_feed.clearDisappearingChildren();
         profile_feed.setLayoutManager(proFeedGridManger);
     }
     private void RetrieveUserInfo(){
