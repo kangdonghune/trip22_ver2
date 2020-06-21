@@ -45,7 +45,7 @@
             android:name=".FindBuddy.RequestActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Tutorial"
+            android:name=".tutorial.Tutorial"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".FindBuddy.QSecondActivity"
