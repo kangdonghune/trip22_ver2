@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".FindBuddy.Report"></activity>
+        <activity android:name=".FindBuddy.Report"
+            android:theme="@style/defaultAppTheme" />
         <activity android:name=".app_eva.app_eva005" />
         <activity android:name=".app_eva.app_eva004" />
         <activity android:name=".app_eva.app_eva003" />

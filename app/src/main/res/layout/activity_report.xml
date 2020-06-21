@@ -15,9 +15,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20sp"
-            android:text="Report"
+            android:text="Report User"
             android:gravity="center"
-            android:textSize="20sp"
+            android:textSize="30sp"
             ></TextView>
 
         <LinearLayout
@@ -25,19 +25,6 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20sp"
             android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="your name : "
-                android:textSize="15sp"
-                android:layout_marginLeft="10sp"></TextView>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="you "
-                android:id="@+id/report_you"
-                android:textSize="15sp"
-                android:layout_marginLeft="10sp"></TextView>
         </LinearLayout>
         <LinearLayout
             android:layout_width="wrap_content"
@@ -47,15 +34,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="buddy name : "
-                android:textSize="15sp"
+                android:text="Username : "
+                android:textSize="20sp"
                 android:layout_marginLeft="10sp"></TextView>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="buddy "
-                android:id="@+id/report_buddy"
-                android:textSize="15sp"
+                android:id="@+id/reportName"
+                android:textSize="20sp"
                 android:layout_marginLeft="10sp"></TextView>
 
         </LinearLayout>
@@ -64,6 +51,7 @@
             android:layout_height="wrap_content"
             android:text="Report Contents"
             android:gravity="center"
+            android:textSize="25sp"
             android:layout_marginBottom="30sp"
             ></TextView>
 
@@ -74,7 +62,7 @@
             android:layout_marginRight="50sp"
             android:layout_marginLeft="50sp"
             android:lines="2"
-            android:textSize="12sp"
+            android:textSize="20sp"
             android:hint="write down your report content"
             ></EditText>
 

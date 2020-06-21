@@ -161,6 +161,7 @@ public class QListActivity extends AppCompatActivity {
                                                 @Override
                                                 public boolean onLongClick(View v) {
                                                     setvUid(user_uid);
+                                                    setvName(user_uid);
                                                     Log.d("롱클릭", "onLongClick: ");
                                                     return false;
                                                 }
@@ -187,8 +188,19 @@ public class QListActivity extends AppCompatActivity {
         fsAdapter.startListening();
     }
     private String vUid;
+    private String vName;
     public String getvUid(){
         return vUid;
+    }
+    public String getvName() { return vName; }
+    public void setvName(String vUid){
+        db.collection("Users").document(vUid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                vName = task.getResult().get("name").toString();
+            }
+        });
+        this.vName = vName;
     }
     public void setvUid(String vUid){
         this.vUid = vUid;
@@ -205,10 +217,10 @@ public class QListActivity extends AppCompatActivity {
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()){
             case R.id.listmenu_report:
-                SweetToast.info(getApplicationContext(), "신고하기\n"+getvUid());
+//                SweetToast.info(getApplicationContext(), "신고하기\n"+getvUid());
                 Intent reportIntent = new Intent(QListActivity.this,Report.class);
-                reportIntent.putExtra("you",currentUserId);
-                reportIntent.putExtra("another",getvUid());
+                reportIntent.putExtra("reportId",getvUid());
+                reportIntent.putExtra("reportName", getvName());
                 startActivity(reportIntent);
                 return true;
             case R.id.listmenu_endmatch:
