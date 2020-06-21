@@ -18,7 +18,6 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import com.sw.HeyBuddy2.LoginRegiser.LoginActivity;
-import com.sw.HeyBuddy2.LoginRegiser.SelectActivity;
 import com.sw.HeyBuddy2.Profile.question_profile;
 import com.sw.HeyBuddy2.R;
 import com.sw.HeyBuddy2.Setting.SettingQuestionActivity;
@@ -30,7 +29,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.sw.HeyBuddy2.Tutorial;
+import com.sw.HeyBuddy2.tutorial.Local_Tutorial;
+import com.sw.HeyBuddy2.tutorial.Tutorial;
 import com.sw.HeyBuddy2.app_eva.app_eva001;
 
 import java.util.Map;
@@ -60,6 +60,7 @@ public class QMainActivity extends AppCompatActivity {
 
             Intent intent = new Intent(QMainActivity.this, Tutorial.class);
             startActivity(intent);
+
         }
         else{
 
@@ -72,7 +73,7 @@ public class QMainActivity extends AppCompatActivity {
         fragmentPagerAdapter = new q_ViewPagerAdapter(getSupportFragmentManager());
 
         viewPager.setAdapter(fragmentPagerAdapter);
-        TabLayout tabLayout = findViewById(R.id.tabLayout2);
+        TabLayout tabLayout = findViewById(R.id.q_tabLayout);
         tabLayout.setupWithViewPager(viewPager);
 
 
@@ -146,7 +147,7 @@ public class QMainActivity extends AppCompatActivity {
         fab4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent tuto=new Intent(getApplication(), Tutorial.class);
+                Intent tuto=new Intent(getApplication(), Local_Tutorial.class);
                 startActivity(tuto);
             }
         });

@@ -13,10 +13,10 @@
         android:background="@color/white">
 
         <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabLayout2"
+            android:id="@+id/q_tabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#FFFFFF"
+            android:background="@drawable/layout_border_top"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +42,7 @@
             android:id="@+id/constraintLayout3"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/tabLayout2"
+            app:layout_constraintBottom_toTopOf="@+id/q_tabLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
