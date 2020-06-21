@@ -21,4 +21,7 @@
     <color name="glow_color_red">#FF4C98</color>
     <color name="pink_1">#FFC4C4</color>
     <color name="black_overlay">#90000000</color>
+
+    <color name="dot_light_screen1">#dfdfdf</color>
+
 </resources>
