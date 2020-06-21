@@ -58,9 +58,10 @@
                     android:minHeight="0dp"
                     android:paddingTop="1dp"
                     android:paddingBottom="1dp"
+                    android:paddingHorizontal="5dp"
                     android:textColor="@android:color/background_light"
                     android:background="@android:color/holo_green_light"
-                    android:text="Send"
+                    android:text="Send Request"
                     android:textAllCaps="false"
                     android:textSize="16sp"/>
 
