@@ -12,6 +12,20 @@
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"/>
+
+    <Button
+        android:id="@+id/send_request_all"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/wishlist_view"
+        android:background="@color/colorAccent"
+        android:paddingTop="1dp"
+        android:paddingBottom="1dp"
+        android:text="Send BUDDY REQUEST All"
+        android:textColor="@color/white"
+        android:textSize="20sp">
+
+    </Button>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/wishlist_notfound"
         android:layout_width="match_parent"

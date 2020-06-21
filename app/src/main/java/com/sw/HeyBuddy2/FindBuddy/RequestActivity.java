@@ -109,8 +109,7 @@ public class RequestActivity extends AppCompatActivity {
 
             @Override
             protected void onBindViewHolder(@NonNull final RequestsViewHolder holder, int position, @NonNull final Contacts model) {
-                holder.itemView.findViewById(R.id.requests_accept_btn).setVisibility(View.VISIBLE);
-                holder.itemView.findViewById(R.id.requests_cancel_btn).setVisibility(View.VISIBLE);
+
                 notfound.setVisibility(View.INVISIBLE);
 
                 // listuserid는 나의 매칭 항목에 있는 상대방의 uid 목록
@@ -293,6 +292,8 @@ public class RequestActivity extends AppCompatActivity {
             profileImage = itemView.findViewById(R.id.users_profile_image);
             acceptButton = (Button)itemView.findViewById(R.id.requests_accept_btn);
             cancelButton = (Button)itemView.findViewById(R.id.requests_cancel_btn);
+            acceptButton.setVisibility(View.VISIBLE);
+            cancelButton.setVisibility(View.VISIBLE);
 
         }
     }
