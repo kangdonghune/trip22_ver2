@@ -25,8 +25,13 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.nordan.dialog.Animation;
+import com.nordan.dialog.DialogType;
+import com.nordan.dialog.NordanAlertDialog;
+import com.nordan.dialog.NordanAlertDialogListener;
 import com.squareup.picasso.Picasso;
 import com.sw.HeyBuddy2.Feed.OtherProfileActivity;
+import com.sw.HeyBuddy2.Main.MainActivity;
 import com.sw.HeyBuddy2.Main.QMainActivity;
 import com.sw.HeyBuddy2.R;
 import com.sw.HeyBuddy2.Setting.SettingQuestionActivity;
@@ -79,31 +84,23 @@ public class QSecondActivity extends AppCompatActivity {
                                     @Override
                                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                         if(task.getResult().isEmpty()){
-                                            AlertDialog.Builder alert=new AlertDialog.Builder(QSecondActivity.this);
-                                            alert.setIcon(R.drawable.ic_baseline_error_24);
+                                            NordanAlertDialog.Builder alert=new NordanAlertDialog.Builder(QSecondActivity.this);
+                                            alert.setAnimation(Animation.SLIDE);
+                                            alert.setDialogType(DialogType.INFORMATION);
                                             alert.setTitle("No Buddys in the area");
                                             alert.setMessage("Sorry. There are no friends in your area.");
-
-                                            alert.setPositiveButton("Region change", new DialogInterface.OnClickListener() {
+                                            alert.isCancellable(true);
+                                            alert.setPositiveBtnText("Region change");
+                                            alert.onPositiveClicked(new NordanAlertDialogListener() {
                                                 @Override
-                                                public void onClick(DialogInterface dialog, int which) {
+                                                public void onClick() {
                                                     Intent goFindBuddy=new Intent(QSecondActivity.this, SettingQuestionActivity.class);
                                                     startActivity(goFindBuddy);
-                                                    dialog.dismiss();
+                                                    alert.build().dismiss();
                                                     finish();
                                                 }
                                             });
-
-                                            alert.setNegativeButton("Go Home", new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialog, int which) {
-                                                    Intent home=new Intent(QSecondActivity.this, QMainActivity.class);
-                                                    startActivity(home);
-                                                    dialog.dismiss();
-                                                    finish();
-                                                }
-                                            });
-                                            alert.show();
+                                            alert.build().show();
                                         }
                                     }
                                 });

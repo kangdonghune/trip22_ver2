@@ -28,10 +28,10 @@
 
         <activity
             android:name=".FindBuddy.ListActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/defaultAppTheme" />
         <activity
             android:name=".FindBuddy.QListActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/defaultAppTheme" />
         <activity
             android:name=".Chat.ChatActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -43,13 +43,13 @@
         </activity>
         <activity
             android:name=".FindBuddy.RequestActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/defaultAppTheme" />
         <activity
             android:name=".Tutorial"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".FindBuddy.QSecondActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/defaultAppTheme" />
         <activity
             android:name=".Feed.DeleteFeedActivity"
             android:theme="@android:style/Theme.Dialog" />
@@ -76,7 +76,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Main.QMainActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/defaultAppTheme" />
         <activity
             android:name=".LoginRegiser.SelectActivity"
             android:theme="@style/AppTheme.NoActionBar" />

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -94,7 +95,8 @@
             app:srcCompat="@drawable/ic_baseline_create_24"
             android:backgroundTint="@color/red"
             app:borderWidth="0dp"
-            app:fabSize="mini"/>
+            app:fabSize="mini"
+            app:tint="@color/white"/>
     </LinearLayout>
 
     <LinearLayout
@@ -124,7 +126,8 @@
             android:layout_marginLeft="10dp"
             app:srcCompat="@drawable/ic_baseline_account_circle_24"
             app:borderWidth="0dp"
-            app:fabSize="mini"/>
+            app:fabSize="mini"
+            app:tint="@color/white"/>
     </LinearLayout>
 
 
@@ -157,7 +160,8 @@
             android:tint="@android:color/white"
             android:backgroundTint="@color/colorPrimary"
             app:borderWidth="0dp"
-            app:fabSize="mini"/>
+            app:fabSize="mini"
+            app:tint="@color/white"/>
     </LinearLayout>
 
     <LinearLayout
@@ -188,7 +192,8 @@
             android:tint="@android:color/white"
             android:backgroundTint="@color/colorPrimary"
             app:borderWidth="0dp"
-            app:fabSize="mini"/>
+            app:fabSize="mini"
+            app:tint="@color/white"/>
     </LinearLayout>
 
 
@@ -213,7 +218,8 @@
             app:srcCompat="@drawable/ic_toys"
             android:backgroundTint="@color/PrimaryColor"
             app:borderWidth="0dp"
-            app:fabSize="normal"/>
+            app:fabSize="normal"
+            app:tint="@color/white"/>
     </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
