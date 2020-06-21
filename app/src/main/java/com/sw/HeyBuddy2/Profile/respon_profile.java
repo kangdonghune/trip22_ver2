@@ -298,11 +298,12 @@ public class respon_profile extends AppCompatActivity {
                                                     holder.itemView.setOnClickListener(new View.OnClickListener() {
                                                         @Override
                                                         public void onClick(View v) {
-                                                            if(task.getResult().getDocuments().get(holder.getAdapterPosition()).contains("feed_uri")) {
-                                                                String feed_uri = task.getResult().getDocuments().get(holder.getAdapterPosition()).get("feed_uri").toString();
-                                                                Intent intent = new Intent(getApplication(), fullScreenImageViewer.class);
-                                                                intent.putExtra("uri",feed_uri );
-                                                                startActivity(intent);
+                                                            if(task.getResult().getDocuments().get(holder.getAdapterPosition()).contains("uid")) {
+                                                                final Intent detail = new Intent(respon_profile.this, FeedDetailActivity.class);
+                                                                detail.putExtra("userId", task.getResult().getDocuments().get(holder.getAdapterPosition()).get("uid").toString());
+                                                                detail.putExtra("feedId",task.getResult().getDocuments().get(holder.getAdapterPosition()).getId());
+                                                                detail.putExtra("btnExist",2);
+                                                                startActivity(detail);
                                                             }
                                                         }
                                                     });

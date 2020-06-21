@@ -30,6 +30,10 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firestore.v1.Cursor;
+import com.nordan.dialog.Animation;
+import com.nordan.dialog.DialogType;
+import com.nordan.dialog.NordanAlertDialog;
+import com.nordan.dialog.NordanAlertDialogListener;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -70,31 +74,23 @@ public class ListActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.getResult().isEmpty()){
-                    AlertDialog.Builder alert=new AlertDialog.Builder(ListActivity.this);
-                    alert.setIcon(R.drawable.ic_baseline_error_24);
+                    NordanAlertDialog.Builder alert=new NordanAlertDialog.Builder(ListActivity.this);
+                    alert.setAnimation(Animation.SLIDE);
+                    alert.setDialogType(DialogType.INFORMATION);
                     alert.setTitle("No Buddy");
                     alert.setMessage("Sorry. There are no registered Buddys.");
-
-                    alert.setPositiveButton("Go Request List", new DialogInterface.OnClickListener() {
+                    alert.isCancellable(true);
+                    alert.setPositiveBtnText("Go Request List");
+                    alert.onPositiveClicked(new NordanAlertDialogListener() {
                         @Override
-                        public void onClick(DialogInterface dialog, int which) {
+                        public void onClick() {
                             Intent goFindBuddy=new Intent(ListActivity.this,RequestActivity.class);
                             startActivity(goFindBuddy);
-                            dialog.dismiss();
+                            alert.build().dismiss();
                             finish();
                         }
                     });
-
-                    alert.setNegativeButton("Go Home", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Intent home=new Intent(ListActivity.this, MainActivity.class);
-                            startActivity(home);
-                            dialog.dismiss();
-                            finish();
-                        }
-                    });
-                    alert.show();
+                    alert.build().show();
                 }
             }
         });

@@ -347,6 +347,7 @@ public class OtherProfileActivity extends AppCompatActivity {
                                 Intent profileIntent = new Intent(getApplication(), FeedDetailActivity.class);
                                 profileIntent.putExtra("userId", userId);
                                 profileIntent.putExtra("feedId", feedId);
+                                profileIntent.putExtra("btnExist",2);
                                 startActivity(profileIntent);
                             }
                         });

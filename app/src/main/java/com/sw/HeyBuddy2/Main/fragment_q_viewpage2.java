@@ -18,6 +18,10 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.nordan.dialog.Animation;
+import com.nordan.dialog.DialogType;
+import com.nordan.dialog.NordanAlertDialog;
+import com.nordan.dialog.NordanAlertDialogListener;
 import com.sw.HeyBuddy2.Feed.FeedDetailActivity;
 import com.sw.HeyBuddy2.FindBuddy.QSecondActivity;
 import com.sw.HeyBuddy2.Setting.SettingQuestionActivity;
@@ -104,20 +108,22 @@ public class fragment_q_viewpage2 extends Fragment {
                                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                         if(task.getResult().isEmpty()){
                                             Log.d(TAG, "여기까쥐~~ ");
-                                            AlertDialog.Builder alert=new AlertDialog.Builder(getActivity());
-                                            alert.setIcon(R.drawable.ic_baseline_error_24);
+                                            NordanAlertDialog.Builder alert=new NordanAlertDialog.Builder(getActivity());
+                                            alert.setAnimation(Animation.SLIDE);
+                                            alert.setDialogType(DialogType.INFORMATION);
                                             alert.setTitle("No Feed");
                                             alert.setMessage("Sorry. There are no feeds available for this region.");
-
-                                            alert.setPositiveButton("Region change", new DialogInterface.OnClickListener() {
+                                            alert.setPositiveBtnText("Region change");
+                                            alert.isCancellable(true);
+                                            alert.onPositiveClicked(new NordanAlertDialogListener() {
                                                 @Override
-                                                public void onClick(DialogInterface dialog, int which) {
+                                                public void onClick() {
                                                     Intent goFindBuddy=new Intent(getContext(), SettingQuestionActivity.class);
                                                     startActivity(goFindBuddy);
-                                                    dialog.dismiss();
+                                                    alert.build().dismiss();
                                                 }
                                             });
-                                            alert.show();
+                                            alert.build().show();
                                         }
                                     }
                                 });
@@ -219,6 +225,7 @@ public class fragment_q_viewpage2 extends Fragment {
                                                                                 final Intent detail = new Intent(getContext(), FeedDetailActivity.class);
                                                                                 detail.putExtra("userId", task.getResult().getDocuments().get(holder.getAdapterPosition()).get("uid").toString());
                                                                                 detail.putExtra("feedId",task.getResult().getDocuments().get(holder.getAdapterPosition()).getId());
+                                                                                detail.putExtra("btnExist",1);
                                                                                 startActivity(detail);
                                                                             }
                                                                         }

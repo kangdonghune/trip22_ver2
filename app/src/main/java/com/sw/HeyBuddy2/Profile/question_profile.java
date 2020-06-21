@@ -261,6 +261,7 @@ public class question_profile extends AppCompatActivity {
                                             Intent profileIntent = new Intent(question_profile.this, FeedDetailActivity.class);
                                             profileIntent.putExtra("userId", userId);
                                             profileIntent.putExtra("feedId", feedId);
+                                            profileIntent.putExtra("btnExist",1);
                                             startActivity(profileIntent);
 
                                         }

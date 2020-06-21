@@ -30,6 +30,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.nordan.dialog.Animation;
+import com.nordan.dialog.DialogType;
+import com.nordan.dialog.NordanAlertDialog;
 import com.squareup.picasso.Picasso;
 import com.sw.HeyBuddy2.Main.MainActivity;
 import com.sw.HeyBuddy2.Main.QMainActivity;
@@ -78,11 +81,13 @@ public class RequestActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.getResult().isEmpty()){
-                    AlertDialog.Builder alert=new AlertDialog.Builder(RequestActivity.this);
-                    alert.setIcon(R.drawable.ic_baseline_error_24);
+                    NordanAlertDialog.Builder alert=new NordanAlertDialog.Builder(RequestActivity.this);
+                    alert.setAnimation(Animation.SLIDE);
+                    alert.setDialogType(DialogType.INFORMATION);
                     alert.setTitle("No Request");
                     alert.setMessage("Sorry. No request came.");
-                    alert.show();
+                    alert.isCancellable(true);
+                    alert.build().show();
                 }
             }
         });

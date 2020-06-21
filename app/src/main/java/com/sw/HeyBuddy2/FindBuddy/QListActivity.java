@@ -31,10 +31,15 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.nordan.dialog.Animation;
+import com.nordan.dialog.DialogType;
+import com.nordan.dialog.NordanAlertDialog;
+import com.nordan.dialog.NordanAlertDialogListener;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.sw.HeyBuddy2.Chat.ChatActivity;
+import com.sw.HeyBuddy2.Main.MainActivity;
 import com.sw.HeyBuddy2.Main.QMainActivity;
 import com.sw.HeyBuddy2.R;
 import com.sw.HeyBuddy2.utils.Contacts;
@@ -73,31 +78,23 @@ public class QListActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.getResult().isEmpty()){
-                    AlertDialog.Builder alert=new AlertDialog.Builder(QListActivity.this);
-                    alert.setIcon(R.drawable.ic_baseline_error_24);
+                    NordanAlertDialog.Builder alert=new NordanAlertDialog.Builder(QListActivity.this);
+                    alert.setAnimation(Animation.SLIDE);
+                    alert.setDialogType(DialogType.INFORMATION);
                     alert.setTitle("No Buddy");
                     alert.setMessage("Sorry. There are no registered Buddys.");
-
-                    alert.setPositiveButton("Find Buddy", new DialogInterface.OnClickListener() {
+                    alert.isCancellable(true);
+                    alert.setPositiveBtnText("Find Buddy");
+                    alert.onPositiveClicked(new NordanAlertDialogListener() {
                         @Override
-                        public void onClick(DialogInterface dialog, int which) {
+                        public void onClick() {
                             Intent goFindBuddy=new Intent(QListActivity.this, QSecondActivity.class);
                             startActivity(goFindBuddy);
-                            dialog.dismiss();
+                            alert.build().dismiss();
                             finish();
                         }
                     });
-
-                    alert.setNegativeButton("Go Home", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Intent home=new Intent(QListActivity.this, QMainActivity.class);
-                            startActivity(home);
-                            dialog.dismiss();
-                            finish();
-                        }
-                    });
-                    alert.show();
+                    alert.build().show();
                 }
             }
         });
