@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -61,9 +62,10 @@
                     android:paddingHorizontal="5dp"
                     android:textColor="@android:color/background_light"
                     android:background="@android:color/holo_green_light"
+                    app:backgroundTint="@android:color/holo_green_light"
                     android:text="Send Request"
                     android:textAllCaps="false"
-                    android:textSize="16sp"/>
+                    android:textSize="14sp"/>
 
                 <Button
                     android:id="@+id/wishlist_cancel_btn"
@@ -74,10 +76,11 @@
                     android:paddingTop="1dp"
                     android:paddingBottom="1dp"
                     android:background="@android:color/holo_red_dark"
+                    app:backgroundTint="@android:color/holo_red_dark"
                     android:textColor="@android:color/background_light"
                     android:text="remove"
                     android:textAllCaps="false"
-                    android:textSize="16sp"/>
+                    android:textSize="14sp"/>
             </LinearLayout>
 
 
