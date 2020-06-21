@@ -5,8 +5,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,8 +25,10 @@ import android.widget.TextView;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 import com.sw.HeyBuddy2.LoginRegiser.SelectActivity;
+import com.sw.HeyBuddy2.Main.QMainActivity;
 import com.sw.HeyBuddy2.Main.ViewPagerAdapter;
 import com.sw.HeyBuddy2.R;
+import com.sw.HeyBuddy2.Setting.SettingQuestionActivity;
 
 public class Tutorial extends AppCompatActivity {
 
@@ -113,6 +117,13 @@ public class Tutorial extends AppCompatActivity {
     }
 
     private void moveMainPage(){
+        SharedPreferences pref = getSharedPreferences("checkFirst1", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean("checkFirst1", true);
+        editor.commit();
+
+        Intent settingsIntent = new Intent(Tutorial.this, SettingQuestionActivity.class);
+        startActivity(settingsIntent);
         finish();
     }
 

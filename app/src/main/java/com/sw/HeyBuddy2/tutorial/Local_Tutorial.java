@@ -1,6 +1,9 @@
 package com.sw.HeyBuddy2.tutorial;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -13,7 +16,10 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import com.sw.HeyBuddy2.Main.QMainActivity;
 import com.sw.HeyBuddy2.R;
+import com.sw.HeyBuddy2.Setting.SettingQuestionActivity;
+import com.sw.HeyBuddy2.Setting.SettingResponActivity;
 
 public class Local_Tutorial extends AppCompatActivity {
 
@@ -104,6 +110,13 @@ public class Local_Tutorial extends AppCompatActivity {
     }
 
     private void moveMainPage(){
+        SharedPreferences pref = getSharedPreferences("checkFirst2", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean("checkFirst2", true);
+        editor.commit();
+
+        Intent settingsIntent = new Intent(Local_Tutorial.this, SettingResponActivity.class);
+        startActivity(settingsIntent);
         finish();
     }
 
