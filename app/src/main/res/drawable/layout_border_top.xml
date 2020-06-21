@@ -8,7 +8,7 @@
 
         <shape android:shape="rectangle">
 
-            <solid android:color="@color/dot_light_screen3" />
+            <solid android:color="@color/dot_light_screen1" />
 
         </shape>
 

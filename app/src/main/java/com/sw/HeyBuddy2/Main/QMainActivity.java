@@ -29,6 +29,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.sw.HeyBuddy2.tutorial.Local_Tutorial;
 import com.sw.HeyBuddy2.tutorial.Tutorial;
 import com.sw.HeyBuddy2.app_eva.app_eva001;
 
@@ -146,7 +147,7 @@ public class QMainActivity extends AppCompatActivity {
         fab4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent tuto=new Intent(getApplication(), Tutorial.class);
+                Intent tuto=new Intent(getApplication(), Local_Tutorial.class);
                 startActivity(tuto);
             }
         });
