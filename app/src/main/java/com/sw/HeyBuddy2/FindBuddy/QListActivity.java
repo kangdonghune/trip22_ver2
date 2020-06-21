@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -52,6 +53,7 @@ public class QListActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
     private String currentUserId;
+    private ConstraintLayout notfound;
     String userstatus,user_uri;
     FirestoreRecyclerOptions<Contacts> options;
     FirestoreRecyclerAdapter<Contacts, ChatsViewHolder> fsAdapter;
@@ -66,6 +68,7 @@ public class QListActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         currentUserId = mAuth.getCurrentUser().getUid();
         setContentView(R.layout.activity_list);
+        notfound = findViewById(R.id.list_notfound);
         chatsList = (RecyclerView) findViewById(R.id.chats_list);
         chatsList.setLayoutManager(new LinearLayoutManager(getApplication()));
     }
@@ -78,6 +81,7 @@ public class QListActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.getResult().isEmpty()){
+                    notfound.setVisibility(View.VISIBLE);
                     NordanAlertDialog.Builder alert=new NordanAlertDialog.Builder(QListActivity.this);
                     alert.setAnimation(Animation.SLIDE);
                     alert.setDialogType(DialogType.INFORMATION);
@@ -104,6 +108,7 @@ public class QListActivity extends AppCompatActivity {
                 new FirestoreRecyclerAdapter<Contacts, ChatsViewHolder>(options) {
                     @Override
                     protected void onBindViewHolder(@NonNull final ChatsViewHolder holder, int position, @NonNull Contacts model) {
+                        notfound.setVisibility(View.INVISIBLE);
                         final String user_uid = getSnapshots().getSnapshot(holder.getAdapterPosition()).getId();
                         DocumentReference docRef = getSnapshots().getSnapshot(holder.getAdapterPosition()).getReference();
                         docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {

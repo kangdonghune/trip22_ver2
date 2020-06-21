@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -58,6 +59,7 @@ public class RequestActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private FirestoreRecyclerAdapter fsAdapter;
     private String reqname,reqstatus, user_uri;
+    private ConstraintLayout notfound;
 
     public RequestActivity(){}
     Query query;
@@ -69,7 +71,7 @@ public class RequestActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         currentUserId = mAuth.getCurrentUser().getUid();
         db = FirebaseFirestore.getInstance();
-
+        notfound = findViewById(R.id.request_notfound);
         mRequestsList = (RecyclerView)findViewById(R.id.chat_requests_list);
         mRequestsList.setLayoutManager(new LinearLayoutManager(getApplication()));
     }
@@ -81,6 +83,7 @@ public class RequestActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.getResult().isEmpty()){
+                    notfound.setVisibility(View.VISIBLE);
                     NordanAlertDialog.Builder alert=new NordanAlertDialog.Builder(RequestActivity.this);
                     alert.setAnimation(Animation.SLIDE);
                     alert.setDialogType(DialogType.INFORMATION);
@@ -108,6 +111,7 @@ public class RequestActivity extends AppCompatActivity {
             protected void onBindViewHolder(@NonNull final RequestsViewHolder holder, int position, @NonNull final Contacts model) {
                 holder.itemView.findViewById(R.id.requests_accept_btn).setVisibility(View.VISIBLE);
                 holder.itemView.findViewById(R.id.requests_cancel_btn).setVisibility(View.VISIBLE);
+                notfound.setVisibility(View.INVISIBLE);
 
                 // listuserid는 나의 매칭 항목에 있는 상대방의 uid 목록
                 final String listUserId = getSnapshots().getSnapshot(holder.getAdapterPosition()).getId();
@@ -165,7 +169,13 @@ public class RequestActivity extends AppCompatActivity {
                                                                     @Override
                                                                     public void onComplete(@NonNull Task<Void> task) {
                                                                         sendFCM(listUserId, currentUserId, true);
-                                                                        Toast.makeText(getApplication(), "매칭이 수락되었습니다",Toast.LENGTH_SHORT).show();
+                                                                        //매칭이 수락되면 위시리스트에서 제거
+                                                                        db.collection("Users").document(listUserId).collection("Wishlist").document(currentUserId).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                            @Override
+                                                                            public void onComplete(@NonNull Task<Void> task) {
+                                                                                Toast.makeText(getApplication(), "매칭이 수락되었습니다",Toast.LENGTH_SHORT).show();
+                                                                            }
+                                                                        });
                                                                     }
                                                                 });
                                                             }
