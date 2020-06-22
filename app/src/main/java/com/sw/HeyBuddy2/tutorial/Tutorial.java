@@ -44,6 +44,10 @@ public class Tutorial extends AppCompatActivity {
 
 
         super.onCreate(savedInstanceState);
+        //상태바를 없애기 위함
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
 
         setContentView(R.layout.activity_tutorial);
 
