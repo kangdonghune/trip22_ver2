@@ -16,6 +16,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.nordan.dialog.Animation;
+import com.nordan.dialog.DialogType;
+import com.nordan.dialog.NordanAlertDialog;
+import com.nordan.dialog.NordanAlertDialogListener;
 import com.sw.HeyBuddy2.R;
 
 import org.json.JSONObject;
@@ -55,22 +59,24 @@ public class UserEvaluationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                SweetToast.info(v.getContext(), String.valueOf(accuracyStar.getRating())+"\n"+String.valueOf(speedStar.getRating())+"\n"+String.valueOf(kindStar.getRating()));
-                AlertDialog.Builder confirmDialog = new AlertDialog.Builder(v.getContext(), android.R.style.Theme_DeviceDefault_Dialog);
-                confirmDialog.setMessage("정말 매칭을 종료하시겠습니까?\n").setTitle("매칭 종료").setPositiveButton("예", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        evalUser();
-                        SweetToast.info(getApplicationContext(), "매칭 종료");
-                        endMatch();
-                        finish();
-                    }
-                }).setNegativeButton("아니오", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        SweetToast.info(getApplicationContext(), "평가 취소");
-                    }
-                }).setCancelable(false).show();
-
+                new NordanAlertDialog.Builder(UserEvaluationActivity.this)
+                        .setAnimation(Animation.SLIDE)
+                        .setDialogType(DialogType.INFORMATION)
+                        .setTitle("End Match")
+                        .setMessage("Are you sure?")
+                        .isCancellable(true)
+                        .setPositiveBtnText("OK")
+                        .setNegativeBtnText("Cancel")
+                        .onPositiveClicked(new NordanAlertDialogListener() {
+                                               @Override
+                                               public void onClick() {
+                                                   evalUser();
+                                                   SweetToast.info(getApplicationContext(), "매칭 종료");
+                                                   endMatch();
+                                                   finish();
+                                               }
+                                           })
+                        .build().show();
             }
         });
 
