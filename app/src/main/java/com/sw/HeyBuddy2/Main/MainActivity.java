@@ -163,8 +163,8 @@ public class MainActivity extends AppCompatActivity {
 
     protected void onStart(){
         super.onStart();
-        SharedPreferences pref = getSharedPreferences("checkFirst2", Activity.MODE_PRIVATE);
-        boolean checkFirst = pref.getBoolean("checkFirst2", false);
+        SharedPreferences pref = getSharedPreferences("checkFirst", Activity.MODE_PRIVATE);
+        boolean checkFirst = pref.getBoolean("checkFirst", false);
         if(checkFirst==false){
             //앱 최초실행시
             Intent intent = new Intent(MainActivity.this, Local_Tutorial.class);

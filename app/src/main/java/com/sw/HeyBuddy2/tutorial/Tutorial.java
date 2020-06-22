@@ -117,9 +117,9 @@ public class Tutorial extends AppCompatActivity {
     }
 
     private void moveMainPage(){
-        SharedPreferences pref = getSharedPreferences("checkFirst1", Activity.MODE_PRIVATE);
+        SharedPreferences pref = getSharedPreferences("checkFirst", Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
-        editor.putBoolean("checkFirst1", true);
+        editor.putBoolean("QcheckFirst", true);
         editor.commit();
 
         Intent settingsIntent = new Intent(Tutorial.this, SettingQuestionActivity.class);

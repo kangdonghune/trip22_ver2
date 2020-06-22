@@ -16,6 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="20sp"
             android:text="Report User"
+            android:textStyle="bold"
             android:gravity="center"
             android:textSize="30sp"
             ></TextView>

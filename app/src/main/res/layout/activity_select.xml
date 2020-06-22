@@ -18,6 +18,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView3">
+        <CheckBox
+            android:id="@+id/review_tutorial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tutorial review"
+            android:layout_gravity="center"/>
 
         <Button
             android:id="@+id/selection_questioner"

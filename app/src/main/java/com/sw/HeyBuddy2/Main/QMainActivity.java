@@ -139,8 +139,8 @@ public class QMainActivity extends AppCompatActivity {
     }
     protected void onStart(){
         super.onStart();
-        SharedPreferences pref = getSharedPreferences("checkFirst1", Activity.MODE_PRIVATE);
-        boolean checkFirst = pref.getBoolean("checkFirst1", false);
+        SharedPreferences pref = getSharedPreferences("checkFirst", Activity.MODE_PRIVATE);
+        boolean checkFirst = pref.getBoolean("QcheckFirst", false);
         if(checkFirst==false){
             //앱 최초실행시
             Intent intent = new Intent(QMainActivity.this, Tutorial.class);

@@ -3,11 +3,14 @@ package com.sw.HeyBuddy2.LoginRegiser;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 
 import com.sw.HeyBuddy2.Main.MainActivity;
 import com.sw.HeyBuddy2.Main.QMainActivity;
@@ -30,6 +33,7 @@ public class SelectActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
     private String currentUserId;
+    private CheckBox tutorial;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +45,21 @@ public class SelectActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         currentUserId = mAuth.getCurrentUser().getUid();
         db = FirebaseFirestore.getInstance();
+        tutorial=(CheckBox)findViewById(R.id.review_tutorial);
+
+        tutorial.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(tutorial.isChecked()){
+                    SharedPreferences pref = getSharedPreferences("checkFirst", Activity.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = pref.edit();
+                    editor.putBoolean("checkFirst", false);
+                    editor.putBoolean("QcheckFirst", false);
+                    editor.commit();
+                }
+            }
+        });
+
 
 
 

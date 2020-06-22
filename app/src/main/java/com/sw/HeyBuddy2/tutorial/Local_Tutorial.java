@@ -110,9 +110,9 @@ public class Local_Tutorial extends AppCompatActivity {
     }
 
     private void moveMainPage(){
-        SharedPreferences pref = getSharedPreferences("checkFirst2", Activity.MODE_PRIVATE);
+        SharedPreferences pref = getSharedPreferences("checkFirst", Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
-        editor.putBoolean("checkFirst2", true);
+        editor.putBoolean("checkFirst", true);
         editor.commit();
 
         Intent settingsIntent = new Intent(Local_Tutorial.this, SettingResponActivity.class);
