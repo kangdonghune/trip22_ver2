@@ -29,9 +29,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.sw.HeyBuddy2.app_eva.app__evaluation;
 import com.sw.HeyBuddy2.tutorial.Local_Tutorial;
 import com.sw.HeyBuddy2.tutorial.Tutorial;
-import com.sw.HeyBuddy2.app_eva.app_eva001;
 
 import java.util.Map;
 
@@ -86,7 +86,7 @@ public class QMainActivity extends AppCompatActivity {
         fab1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent evaluation=new Intent(QMainActivity.this, app_eva001.class);
+                Intent evaluation=new Intent(QMainActivity.this, app__evaluation.class);
                 startActivity(evaluation);
             }
         });

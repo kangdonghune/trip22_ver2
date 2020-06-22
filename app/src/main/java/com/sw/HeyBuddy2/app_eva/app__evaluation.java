@@ -33,6 +33,10 @@ public class app__evaluation extends AppCompatActivity {
         ev4 = (EditText) findViewById(R.id.ev4);
         ev5 = (EditText) findViewById(R.id.ev5);
 
+        evaInfo = new HashMap();
+
+        db = FirebaseFirestore.getInstance();
+
         rating = (RatingBar) findViewById(R.id.rating5);
 
         btn_submit = (Button) findViewById(R.id.btn_submit);
@@ -47,6 +51,8 @@ public class app__evaluation extends AppCompatActivity {
                 evaInfo.put("etc", ev5.getText().toString());
                 evaInfo.put("rating", rating.getRating());
                 db.collection("app_Evaluation").document().set(evaInfo);
+
+                finish();
             }
         });
     }
