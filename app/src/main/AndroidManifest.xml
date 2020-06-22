@@ -23,7 +23,7 @@
         <activity android:name=".app_eva.app_eva001" />
         <activity
             android:name=".FindBuddy.WishListActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/defaultAppTheme" />
         <activity
             android:name=".FindBuddy.UserEvaluationActivity"
             android:theme="@style/defaultAppTheme" />
